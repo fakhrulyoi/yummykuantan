@@ -22,6 +22,8 @@ export const category = pgTable('category', {
   id: uuid().primaryKey().defaultRandom(),
   name: text().notNull(),
   slug: text().notNull().unique(),
+  description: text().notNull().default(''),
+  imageUrl: text(),
   sortOrder: integer().notNull().default(0),
 });
 

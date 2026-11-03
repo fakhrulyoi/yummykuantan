@@ -26,6 +26,7 @@ export const KANDUNGAN_MULA: NilaiKandungan = {
       { url: '/seed/12_01.jpg', nama: 'Italian Cake Wedding 12 inci', posisi: '50% 50%' },
       { url: '/seed/11_01.jpg', nama: 'Vintage Love Cake', posisi: '50% 45%' },
     ],
+    ticker: ['Kek batik', 'Brownies', 'Italian cake', 'Kek kahwin', 'Burnt cheesecake', 'Vintage love cake', 'Red velvet', 'Pandan gula melaka'],
   },
   hubungi: {
     whatsapp: '601123023447',
@@ -50,13 +51,41 @@ export const KANDUNGAN_MULA: NilaiKandungan = {
     DIBATALKAN: 'Salam, tempahan {ref} telah dibatalkan.',
     caraBayar: '[Cara bayar: pindahan bank atau DuitNow QR]',
   },
+  galeri: {
+    gambar: ['04_03', '07_01', '21_01', '23_01', '30_01', '32_01', '10_01', '20_01', '16_01', '25_01', '15_01', '05_01'].map((k) => `/seed/${k}.jpg`),
+  },
+  ulasan: {
+    petikan: [
+      { teks: 'Sekali rasa sedap, terus repeat untuk majlis kahwin. Kek yang sangat cantik mengikut citarasa saya.', oleh: 'Pelanggan kek kahwin' },
+      { teks: 'Semua cakap sedap, habis terus dah semalam.', oleh: 'Pelanggan kek hari jadi' },
+      { teks: 'Sedap, kek lembut sangat. Hilang craving lepas makan kek ni.', oleh: 'Pelanggan brownies' },
+      { teks: 'Repeat sebab sini paling sedap dan murah!', oleh: 'Pelanggan kek batik' },
+    ],
+  },
+};
+
+const JENIS: Record<string, { blurb: string; gambar: string }> = {
+  'Kek batik': { blurb: 'Indulgence cheese, ganache, mewah dengan mascarpone, Cadbury dan crunchy.', gambar: '22_01.jpg' },
+  'Brownies dan bar': { blurb: 'Brownies berhias, plain, tower dan congo bars.', gambar: '17_01.jpg' },
+  'Italian cake': { blurb: 'Krim segar gaya vintage dengan strawberi penuh.', gambar: '04_01.jpg' },
+  'Kek kahwin': { blurb: 'Satu dan dua tingkat, Italian dan tiramisu.', gambar: '09_01.jpg' },
+  'Hari jadi dan majlis': { blurb: 'Birthday cake, vintage love cake dan kek petak.', gambar: '10_01.jpg' },
+  'Kek mentega': { blurb: 'Victoria sandwich, pandan gula melaka, red velvet.', gambar: '23_01.jpg' },
 };
 
 export async function seedDb(db: Db): Promise<void> {
   await db.transaction(async (tx) => {
     const kat = await tx
       .insert(s.category)
-      .values(katalog.kategori.map((name, i) => ({ id: idTetap(`kategori:${name}`), name, slug: slug(name), sortOrder: i })))
+      .values(
+        await Promise.all(
+          katalog.kategori.map(async (name, i) => ({
+            id: idTetap(`kategori:${name}`), name, slug: slug(name), sortOrder: i,
+            description: JENIS[name]?.blurb ?? '',
+            imageUrl: JENIS[name] ? await urlGambarMula(JENIS[name].gambar, 'produk') : null,
+          })),
+        ),
+      )
       .returning();
     const idKat = new Map(kat.map((k) => [k.name, k.id]));
 

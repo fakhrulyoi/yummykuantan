@@ -21,7 +21,8 @@ export default defineConfig({
   ],
   webServer: {
     command: process.env.E2E_COMMAND ?? `npm run build && npx next start -p ${PORT}`,
-    url: `http://localhost:${PORT}`,
+    // Fail statik: laman utama perlukan data mula, yang dimuat oleh globalSetup selepas pelayan hidup.
+    url: `http://localhost:${PORT}/logo-krim.png`,
     reuseExistingServer: !process.env.CI,
     timeout: 300_000,
     env: { DATABASE_URL: E2E_DB, IP_HASH_SALT: process.env.IP_HASH_SALT!, E2E: '1' },

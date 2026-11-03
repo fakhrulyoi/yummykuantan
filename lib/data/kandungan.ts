@@ -16,10 +16,8 @@ export function bacaKandungan<K extends KunciKandungan>(k: K): Promise<NilaiKand
   return unstable_cache(() => baca(k), ['kandungan', k], { tags: [TAG.kandungan] })();
 }
 
-export async function senaraiKategori() {
-  return unstable_cache(
-    () => db.select().from(s.category).orderBy(s.category.sortOrder),
-    ['kategori'],
-    { tags: [TAG.produk] },
-  )();
-}
+export const senaraiKategori = unstable_cache(
+  () => db.select().from(s.category).orderBy(s.category.sortOrder),
+  ['kategori'],
+  { tags: [TAG.produk] },
+);
