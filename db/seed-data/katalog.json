@@ -1,0 +1,761 @@
+{
+ "kategori": [
+  "Kek batik",
+  "Brownies dan bar",
+  "Italian cake",
+  "Kek kahwin",
+  "Hari jadi dan majlis",
+  "Kek mentega"
+ ],
+ "produk": [
+  {
+   "kod": "01",
+   "nama": "Kekbatik Indulgence Cheese",
+   "slug": "kekbatik-indulgence-cheese",
+   "kategori": "Kek batik",
+   "saiz": [
+    {
+     "label": "7 inci",
+     "harga": 55
+    },
+    {
+     "label": "10 inci",
+     "harga": 110
+    }
+   ],
+   "penerangan": "Kek batik berlapis cheese dan ganache coklat.",
+   "popular": 33,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "01_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "20",
+   "nama": "Kekbatik 7x14 inci",
+   "slug": "kekbatik-7x14-inci",
+   "kategori": "Kek batik",
+   "saiz": [
+    {
+     "label": "7x14 inci",
+     "harga": 160
+    }
+   ],
+   "penerangan": "Saiz dulang panjang untuk majlis dan jamuan.",
+   "popular": 10,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "20_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "22",
+   "nama": "Kekbatik Mewah",
+   "slug": "kekbatik-mewah",
+   "kategori": "Kek batik",
+   "saiz": [
+    {
+     "label": "Satu saiz",
+     "harga": 120
+    }
+   ],
+   "penerangan": "Mascarpone cheese, mentega tulen dan ganache coklat couverture.",
+   "popular": 25,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "22_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "26",
+   "nama": "Kekbatik Mewah Resipi Mr Ali",
+   "slug": "kekbatik-mewah-resipi-mr-ali",
+   "kategori": "Kek batik",
+   "saiz": [
+    {
+     "label": "Satu saiz",
+     "harga": 110
+    }
+   ],
+   "penerangan": "Coklat couverture, mascarpone dan mentega tulen.",
+   "popular": 9,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "26_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "27",
+   "nama": "Kekbatik Indulgence Matcha",
+   "slug": "kekbatik-indulgence-matcha",
+   "kategori": "Kek batik",
+   "saiz": [
+    {
+     "label": "Satu saiz",
+     "harga": 65
+    }
+   ],
+   "penerangan": "Kek batik dengan lapisan matcha.",
+   "popular": 8,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "27_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "29",
+   "nama": "Kekbatik Ganache",
+   "slug": "kekbatik-ganache",
+   "kategori": "Kek batik",
+   "saiz": [
+    {
+     "label": "7 inci",
+     "harga": 48
+    },
+    {
+     "label": "10 inci",
+     "harga": 95
+    }
+   ],
+   "penerangan": "Tiada lapisan cheese, hanya lapisan ganache coklat.",
+   "popular": 29,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "29_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "33",
+   "nama": "Kekbatik Crunchy",
+   "slug": "kekbatik-crunchy",
+   "kategori": "Kek batik",
+   "saiz": [
+    {
+     "label": "8 inci",
+     "harga": 50
+    }
+   ],
+   "penerangan": "Menggunakan mentega tulen.",
+   "popular": 7,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "33_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "34",
+   "nama": "Kekbatik Cadbury",
+   "slug": "kekbatik-cadbury",
+   "kategori": "Kek batik",
+   "saiz": [
+    {
+     "label": "7 inci",
+     "harga": 50
+    },
+    {
+     "label": "10 inci",
+     "harga": 90
+    }
+   ],
+   "penerangan": "Kek batik dengan coklat Cadbury.",
+   "popular": 19,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "34_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "05",
+   "nama": "Brownies Petak",
+   "slug": "brownies-petak",
+   "kategori": "Brownies dan bar",
+   "saiz": [
+    {
+     "label": "Ikut hiasan",
+     "harga": 70
+    }
+   ],
+   "penerangan": "Harga bergantung jenis hiasan kek.",
+   "popular": 20,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "05_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "17",
+   "nama": "Brownies",
+   "slug": "brownies",
+   "kategori": "Brownies dan bar",
+   "saiz": [
+    {
+     "label": "7 inci",
+     "harga": 60
+    },
+    {
+     "label": "10 inci",
+     "harga": 120
+    }
+   ],
+   "penerangan": "Brownies coklat dengan hiasan.",
+   "popular": 31,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "17_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "28",
+   "nama": "Brownies Plain",
+   "slug": "brownies-plain",
+   "kategori": "Brownies dan bar",
+   "saiz": [
+    {
+     "label": "7 inci",
+     "harga": 45
+    },
+    {
+     "label": "10 inci",
+     "harga": 80
+    }
+   ],
+   "penerangan": "Brownies tanpa hiasan.",
+   "popular": 11,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "28_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "32",
+   "nama": "Brownies Tower",
+   "slug": "brownies-tower",
+   "kategori": "Brownies dan bar",
+   "saiz": [
+    {
+     "label": "Satu set",
+     "harga": 95
+    }
+   ],
+   "penerangan": "Termasuk kotak lutsinar.",
+   "popular": 13,
+   "meja": 8,
+   "reka": false,
+   "gambar": [
+    "32_01.jpg"
+   ],
+   "gambarMeja": "cut_32.webp"
+  },
+  {
+   "kod": "25",
+   "nama": "Congo Bars",
+   "slug": "congo-bars",
+   "kategori": "Brownies dan bar",
+   "saiz": [
+    {
+     "label": "Choc chip",
+     "harga": 50
+    },
+    {
+     "label": "Walnut",
+     "harga": 55
+    }
+   ],
+   "penerangan": "Pilihan choc chip atau walnut.",
+   "popular": 12,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "25_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "04",
+   "nama": "Italian Cake",
+   "slug": "italian-cake",
+   "kategori": "Italian cake",
+   "saiz": [
+    {
+     "label": "6 inci",
+     "harga": 100
+    },
+    {
+     "label": "8 inci",
+     "harga": 280
+    },
+    {
+     "label": "10 inci",
+     "harga": 380
+    }
+   ],
+   "penerangan": "Kek krim gaya vintage dengan strawberi segar di atas.",
+   "popular": 32,
+   "meja": 1,
+   "reka": true,
+   "gambar": [
+    "04_01.jpg",
+    "04_02.jpg",
+    "04_03.jpg",
+    "04_04.jpg",
+    "04_05.jpg",
+    "04_06.jpg",
+    "04_07.jpg",
+    "04_08.jpg"
+   ],
+   "gambarMeja": "cut_04.webp"
+  },
+  {
+   "kod": "07",
+   "nama": "Italian Cake Full Strawberry",
+   "slug": "italian-cake-full-strawberry",
+   "kategori": "Italian cake",
+   "saiz": [
+    {
+     "label": "12 inci",
+     "harga": 500
+    }
+   ],
+   "penerangan": "Penuh strawberi segar di atas.",
+   "popular": 23,
+   "meja": null,
+   "reka": true,
+   "gambar": [
+    "07_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "15",
+   "nama": "Tall Cake Italian",
+   "slug": "tall-cake-italian",
+   "kategori": "Italian cake",
+   "saiz": [
+    {
+     "label": "7 inci",
+     "harga": 250
+    }
+   ],
+   "penerangan": "Kek tinggi gaya Italian.",
+   "popular": 14,
+   "meja": 5,
+   "reka": true,
+   "gambar": [
+    "15_01.jpg"
+   ],
+   "gambarMeja": "cut_15.webp"
+  },
+  {
+   "kod": "16",
+   "nama": "Burnt Cheese Cake Italian",
+   "slug": "burnt-cheese-cake-italian",
+   "kategori": "Italian cake",
+   "saiz": [
+    {
+     "label": "6 inci",
+     "harga": 80
+    },
+    {
+     "label": "8 inci",
+     "harga": 190
+    }
+   ],
+   "penerangan": "Termasuk topper nama custom.",
+   "popular": 22,
+   "meja": 6,
+   "reka": false,
+   "gambar": [
+    "16_01.jpg"
+   ],
+   "gambarMeja": "cut_16.webp"
+  },
+  {
+   "kod": "06",
+   "nama": "Italian Wedding Cake 2 Tingkat",
+   "slug": "italian-wedding-cake-2-tingkat",
+   "kategori": "Kek kahwin",
+   "saiz": [
+    {
+     "label": "2 tingkat",
+     "harga": 350
+    }
+   ],
+   "penerangan": "Kek kahwin dua tingkat gaya Italian.",
+   "popular": 18,
+   "meja": null,
+   "reka": true,
+   "gambar": [
+    "06_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "09",
+   "nama": "2 Tier Wedding Cake",
+   "slug": "2-tier-wedding-cake",
+   "kategori": "Kek kahwin",
+   "saiz": [
+    {
+     "label": "2 tingkat",
+     "harga": 350
+    }
+   ],
+   "penerangan": "Kek kahwin dua tingkat.",
+   "popular": 30,
+   "meja": 2,
+   "reka": true,
+   "gambar": [
+    "09_01.jpg"
+   ],
+   "gambarMeja": "cut_09.webp"
+  },
+  {
+   "kod": "12",
+   "nama": "Italian Cake Wedding 12 inci",
+   "slug": "italian-cake-wedding-12-inci",
+   "kategori": "Kek kahwin",
+   "saiz": [
+    {
+     "label": "12 inci",
+     "harga": 400
+    }
+   ],
+   "penerangan": "Kek kahwin satu tingkat besar.",
+   "popular": 15,
+   "meja": null,
+   "reka": true,
+   "gambar": [
+    "12_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "18",
+   "nama": "1 Tier Wedding Cake",
+   "slug": "1-tier-wedding-cake",
+   "kategori": "Kek kahwin",
+   "saiz": [
+    {
+     "label": "7 inci",
+     "harga": 150
+    }
+   ],
+   "penerangan": "Kek kahwin satu tingkat.",
+   "popular": 16,
+   "meja": 7,
+   "reka": true,
+   "gambar": [
+    "18_01.jpg"
+   ],
+   "gambarMeja": "cut_18.webp"
+  },
+  {
+   "kod": "21",
+   "nama": "Tiramisu Wedding 12 inci",
+   "slug": "tiramisu-wedding-12-inci",
+   "kategori": "Kek kahwin",
+   "saiz": [
+    {
+     "label": "12 inci",
+     "harga": 250
+    }
+   ],
+   "penerangan": "Tidak termasuk topper nama custom.",
+   "popular": 17,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "21_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "08",
+   "nama": "Kek Petak Sponge",
+   "slug": "kek-petak-sponge",
+   "kategori": "Hari jadi dan majlis",
+   "saiz": [
+    {
+     "label": "12 inci",
+     "harga": 130
+    }
+   ],
+   "penerangan": "1 lapisan. Pilihan sponge vanila, pandan atau coklat.",
+   "popular": 6,
+   "meja": null,
+   "reka": true,
+   "gambar": [
+    "08_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "10",
+   "nama": "Birthday Cake",
+   "slug": "birthday-cake",
+   "kategori": "Hari jadi dan majlis",
+   "saiz": [
+    {
+     "label": "6 inci",
+     "harga": 150
+    },
+    {
+     "label": "8 inci",
+     "harga": 250
+    }
+   ],
+   "penerangan": "8 inci lebih kurang 3.5 kg.",
+   "popular": 24,
+   "meja": 3,
+   "reka": true,
+   "gambar": [
+    "10_01.jpg"
+   ],
+   "gambarMeja": "cut_10.webp"
+  },
+  {
+   "kod": "11",
+   "nama": "Vintage Love Cake",
+   "slug": "vintage-love-cake",
+   "kategori": "Hari jadi dan majlis",
+   "saiz": [
+    {
+     "label": "6 inci",
+     "harga": 110
+    }
+   ],
+   "penerangan": "Kek gaya vintage.",
+   "popular": 28,
+   "meja": 4,
+   "reka": true,
+   "gambar": [
+    "11_01.jpg"
+   ],
+   "gambarMeja": "cut_11.webp"
+  },
+  {
+   "kod": "19",
+   "nama": "Slice Cake",
+   "slug": "slice-cake",
+   "kategori": "Hari jadi dan majlis",
+   "saiz": [
+    {
+     "label": "10 inci",
+     "harga": 80
+    }
+   ],
+   "penerangan": "Kek dulang untuk dipotong.",
+   "popular": 5,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "19_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "03",
+   "nama": "Victoria Sandwich Cake 8 inci",
+   "slug": "victoria-sandwich-cake-8-inci",
+   "kategori": "Kek mentega",
+   "saiz": [
+    {
+     "label": "8 inci",
+     "harga": 280
+    }
+   ],
+   "penerangan": "Buttercake, swiss meringue buttercream dan kompot buah buatan sendiri. Mentega tulen.",
+   "popular": 4,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "03_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "24",
+   "nama": "Victoria Sandwich Cake",
+   "slug": "victoria-sandwich-cake",
+   "kategori": "Kek mentega",
+   "saiz": [
+    {
+     "label": "Satu saiz",
+     "harga": 100
+    }
+   ],
+   "penerangan": "Buttercake dengan kompot buah.",
+   "popular": 3,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "24_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "13",
+   "nama": "Buttercake",
+   "slug": "buttercake",
+   "kategori": "Kek mentega",
+   "saiz": [
+    {
+     "label": "Satu saiz",
+     "harga": 55
+    }
+   ],
+   "penerangan": "Mentega tulen.",
+   "popular": 2,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "13_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "23",
+   "nama": "Pandan Gula Melaka",
+   "slug": "pandan-gula-melaka",
+   "kategori": "Kek mentega",
+   "saiz": [
+    {
+     "label": "Satu saiz",
+     "harga": 90
+    }
+   ],
+   "penerangan": "Buttercake pandan, SMBC pandan, sos gula melaka. Mentega tulen.",
+   "popular": 27,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "23_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "30",
+   "nama": "Red Velvet",
+   "slug": "red-velvet",
+   "kategori": "Kek mentega",
+   "saiz": [
+    {
+     "label": "8 inci",
+     "harga": 89
+    }
+   ],
+   "penerangan": "Kek moist dengan cream cheese butter frosting.",
+   "popular": 26,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "30_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "31",
+   "nama": "Chocolate Moist",
+   "slug": "chocolate-moist",
+   "kategori": "Kek mentega",
+   "saiz": [
+    {
+     "label": "7 inci",
+     "harga": 48
+    }
+   ],
+   "penerangan": "Kek coklat moist.",
+   "popular": 21,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "31_01.jpg"
+   ],
+   "gambarMeja": null
+  },
+  {
+   "kod": "35",
+   "nama": "Double Chocolate Banana Cake",
+   "slug": "double-chocolate-banana-cake",
+   "kategori": "Kek mentega",
+   "saiz": [
+    {
+     "label": "9 inci",
+     "harga": 50
+    }
+   ],
+   "penerangan": "Kek pisang dengan dua jenis coklat.",
+   "popular": 1,
+   "meja": null,
+   "reka": false,
+   "gambar": [
+    "35_01.jpg"
+   ],
+   "gambarMeja": null
+  }
+ ],
+ "soalan": [
+  {
+   "soalan": "Macam mana nak tempah?",
+   "jawapan": "Pilih kek atau reka kek sendiri, kemudian tekan Tempah. WhatsApp akan dibuka dengan butiran kek, tarikh dan cara terima yang siap ditulis. Tekan hantar, dan kami sahkan harga serta slot di WhatsApp."
+  },
+  {
+   "soalan": "Berapa hari awal perlu tempah?",
+   "jawapan": "Sekurang-kurangnya [3 hari] untuk kek biasa dan [7 hari] untuk kek kahwin atau kek 3 tingkat. Tarikh yang masih kosong ada di laman utama."
+  },
+  {
+   "soalan": "Bayar macam mana? Perlu deposit?",
+   "jawapan": "Tiada bayaran di laman ini. Selepas tempahan disahkan di WhatsApp, bayar melalui [pindahan bank atau DuitNow QR]. [Deposit 50% untuk kunci slot, baki semasa ambil atau sebelum hantar.]"
+  },
+  {
+   "soalan": "Kawasan mana yang dihantar? Berapa caj?",
+   "jawapan": "Kami hantar ke Kuantan dan Pekan sahaja. Caj ikut kawasan: [Kuantan RM__, Pekan RM__]. Ambil sendiri tiada caj."
+  },
+  {
+   "soalan": "Boleh ambil sendiri? Di mana?",
+   "jawapan": "Boleh. Alamat: [alamat dapur dan pin Google Maps]. Waktu ambil: [hari dan jam operasi]."
+  },
+  {
+   "soalan": "Kek ini halal?",
+   "jawapan": "[Untuk diisi oleh pemilik: status halal atau penerangan bahan yang digunakan.]"
+  },
+  {
+   "soalan": "Kek tahan berapa lama dan simpan macam mana?",
+   "jawapan": "[Untuk diisi oleh pemilik: contohnya simpan dalam peti sejuk, keluarkan 20 minit sebelum hidang, elok dimakan dalam 3 hari.]"
+  },
+  {
+   "soalan": "Boleh tukar tarikh atau batal tempahan?",
+   "jawapan": "[Untuk diisi oleh pemilik: contohnya tukar tarikh percuma jika maklum 3 hari awal; deposit tidak dikembalikan jika batal.]"
+  },
+  {
+   "soalan": "Boleh pilih warna krim gelap?",
+   "jawapan": "Tidak. Krim segar hanya dalam warna lembut kerana warna terlalu gelap atau terang boleh menjejaskan rasa dan meninggalkan kesan pada tangan dan mulut."
+  },
+  {
+   "soalan": "Saya ada gambar contoh. Boleh hantar?",
+   "jawapan": "Boleh. Di halaman Reka kek, tambah sehingga 4 gambar rujukan. Pautannya dimasukkan terus dalam mesej WhatsApp anda."
+  }
+ ]
+}
