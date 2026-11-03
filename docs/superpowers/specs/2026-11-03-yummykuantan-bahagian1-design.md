@@ -282,7 +282,7 @@ Semua halaman di bawah `/admin` memanggil `requireAdmin()` (server). Staf tidak 
 
 - 6 kategori dan 33 produk dari katalog WhatsApp (nama, saiz, harga, penerangan, gambar sebenar).
 - 8 kek meja (Italian Cake, 2 Tier Wedding Cake, Birthday Cake, Vintage Love Cake, Tall Cake Italian, Burnt Cheese Cake Italian, 1 Tier Wedding Cake, Brownies Tower) dengan gambar tanpa latar sedia ada.
-- 10 soalan lazim. Soalan yang jawapannya sudah pasti (cara tempah, kawasan hantar, warna krim, gambar contoh) diterbitkan. Soalan dengan jawapan `[...]` (halal, bayaran, caj hantar, alamat, cara simpan, batal) disimpan sebagai draf tersembunyi sehingga pemilik isi.
+- 10 soalan lazim. Soalan yang jawapannya sudah pasti (cara tempah, warna krim, gambar contoh) diterbitkan. Soalan dengan jawapan `[...]` (tempah awal, bayaran dan deposit, kawasan dan caj hantar, alamat, halal, cara simpan, batal) disimpan sebagai draf tersembunyi sehingga pemilik isi.
 - Tetapan contoh: tempah awal 3 hari (kek kahwin 7), kapasiti 12 sehari, slot 10:00–12:00 (3), 2:00–4:00 (2), 4:00–6:00 (2).
 - Tambahan contoh: lilin set RM6, lilin nombor RM5, kad ucapan RM3, pisau dan piring RM4, beg hadiah RM4.
 - Akaun Pemilik dicipta melalui skrip setup (emel diberi semasa setup).
