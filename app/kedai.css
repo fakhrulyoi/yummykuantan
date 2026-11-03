@@ -1,5 +1,6 @@
 /* Port dari design yang diluluskan (design/prototype/build.py CSS_B + faq.py). Kelas sama nama supaya mudah dibanding. */
-.b a{color:#F2E7DE}.b a:hover{color:#EBCFC3}
+@layer components {
+:where(.b) a{color:#F2E7DE}:where(.b) a:hover{color:#EBCFC3}
 .b *{box-sizing:border-box}
 .b img{display:block;max-width:100%}
 .b h1,.b h2,.b h3{margin:0;font-weight:400;font-family:var(--font-serif)}
@@ -126,3 +127,4 @@ textarea.b-in{padding:12px 14px;min-height:96px;resize:vertical}
 @media (prefers-reduced-motion:reduce){.b *{transition:none!important}}
 
 .yk-faq{border-bottom:1px solid #74343C}.yk-faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:56px;padding:14px 0;line-height:1.2}.yk-faq summary::-webkit-details-marker{display:none}.yk-faq summary::after{content:"+";font-family:var(--font-sans);font-size:22px;color:#EBCFC3;flex:none;transition:transform .25s ease}.yk-faq[open] summary::after{transform:rotate(45deg)}.yk-faq summary:focus-visible{outline:2px solid #EBCFC3;outline-offset:2px}.yk-tbc{background:rgba(227,181,122,.14);color:#F2C28E;padding:0 3px}
+}
