@@ -18,7 +18,7 @@ export default async function SuntingProduk({ params }: { params: Promise<{ id: 
   return (
     <>
       <Link href="/admin/produk" className="text-[13.5px] font-semibold">&larr; Semua produk</Link>
-      <BorangProduk key={JSON.stringify(draf)} id={id} slug={p.slug} awal={draf} kategori={kategori} pemilik={a.role === 'OWNER'} />
+      <BorangProduk id={id} slug={p.slug} awal={draf} kategori={kategori} pemilik={a.role === 'OWNER'} />
     </>
   );
 }
