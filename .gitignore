@@ -11,3 +11,6 @@ test-results/
 .DS_Store
 *.log
 .superpowers/
+/test-results/
+/playwright-report/
+*.tsbuildinfo

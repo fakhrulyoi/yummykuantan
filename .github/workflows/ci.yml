@@ -1,0 +1,35 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ujian:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: yk
+          POSTGRES_PASSWORD: yk
+          POSTGRES_DB: yk_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U yk" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://yk:yk@localhost:5432/yk_test
+      DIRECT_URL: postgresql://yk:yk@localhost:5432/yk_test
+      TEST_DATABASE_URL: postgresql://yk:yk@localhost:5432/yk_test
+      IP_HASH_SALT: ci-garam
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e
