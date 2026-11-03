@@ -146,7 +146,7 @@ Disimpan dalam `localStorage` (`yk-senarai-v1`): `[{productId, sizeId, qty, cake
 5. Pendua: kek + saiz + IP sama dalam 10 minit → pulangkan tempahan sedia ada. Had kadar sama seperti 6.3.
 
 ### 6.3 Senarai tempahan
-1. Pelanggan isi cara terima, kawasan dan alamat (jika hantar), tarikh (jalur 14 hari dengan baki slot), slot, nama, telefon (pilihan), nota, tambahan.
+1. Pelanggan isi cara terima, kawasan dan alamat (jika hantar), tarikh (jalur 14 hari dengan baki slot), slot, nama, telefon (wajib, supaya pelanggan boleh semak status), nota, tambahan.
 2. Server action `buatTempahan(input)`:
    - Zod: medan wajib, panjang teks (ucapan kek ≤ 30, kad ≤ 120, nota ≤ 500), telefon Malaysia.
    - Kira semula harga dari database. Produk dan saiz mesti aktif. Kuantiti 1–10.
@@ -162,7 +162,7 @@ Disimpan dalam `localStorage` (`yk-senarai-v1`): `[{productId, sizeId, qty, cake
 "Tekan hantar di WhatsApp" + butang "Buka WhatsApp semula" + "Salin mesej" + ringkasan tempahan + pautan semak status. Perlu `token` yang betul; tanpa token papar 404.
 
 ### 6.5 Semak status
-Input rujukan + 4 digit akhir telefon. Papar langkah status ikut design (Dihantar di WhatsApp → Disahkan dan dibayar → Dalam penyediaan → Sedia untuk diambil / Dalam penghantaran → Selesai). Had 20 cubaan / jam / IP.
+Input rujukan + 4 digit akhir telefon. Tempahan cepat boleh disemak selepas admin isi nombor telefon. Papar langkah status ikut design (Dihantar di WhatsApp → Disahkan dan dibayar → Dalam penyediaan → Sedia untuk diambil / Dalam penghantaran → Selesai). Had 20 cubaan / jam / IP.
 
 ### 6.6 Mesej WhatsApp (format)
 Dibina oleh `binaMesejWhatsApp(order)` sahaja.
