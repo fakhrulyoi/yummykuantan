@@ -15,6 +15,7 @@
     "cipta-pemilik": "tsx --env-file-if-exists=.env scripts/cipta-pemilik.ts"
   },
   "dependencies": {
+    "@imgly/background-removal": "^1.7.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.118.0",
     "drizzle-orm": "^0.45.4",

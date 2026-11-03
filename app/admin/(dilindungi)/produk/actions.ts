@@ -2,7 +2,12 @@
 
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { eq } from 'drizzle-orm';
 import { requireAdminTindakan } from '@/lib/auth/admin';
+import { rekodAudit } from '@/lib/data/audit';
+import { db } from '@/lib/data/db';
+import * as s from '@/lib/data/skema';
+import { urlGambarSah } from '@/lib/data/urlGambar';
 import { TAG } from '@/lib/data/cache';
 import { ciptaProduk, padamProduk, simpanDrafProduk, terbitProduk, type HasilProduk } from '@/lib/data/terbit';
 
@@ -46,4 +51,49 @@ export async function padam(id: string): Promise<{ ok: true; dipadam: boolean } 
     segar(id);
   }
   return r;
+}
+
+type HasilMeja = { ok: true } | { ok: false; ralat: string };
+
+async function produkMeja(id: string) {
+  if (!/^[0-9a-f-]{36}$/i.test(id)) return null;
+  const [p] = await db.select({ id: s.product.id, url: s.product.tableImageUrl, asal: s.product.tableImageOriginalUrl, draf: s.product.tableImageDraftUrl }).from(s.product).where(eq(s.product.id, id));
+  return p ?? null;
+}
+
+export async function simpanDrafGambarMeja(productId: string, url: string): Promise<HasilMeja> {
+  const a = await requireAdminTindakan();
+  if (!urlGambarSah(url)) return { ok: false, ralat: 'Alamat gambar tidak sah.' };
+  const p = await produkMeja(productId);
+  if (!p) return { ok: false, ralat: 'Produk tidak dijumpai.' };
+  await db.update(s.product).set({ tableImageDraftUrl: url }).where(eq(s.product.id, productId));
+  await rekodAudit(a.userId, 'draf_gambar_meja', 'product', productId, { tableImageDraftUrl: [p.draf, url] });
+  segar(productId);
+  return { ok: true };
+}
+
+/** Gambar draf jadi gambar meja; gambar semasa disimpan sebagai "sebelum ini". */
+export async function terbitGambarMeja(productId: string): Promise<HasilMeja> {
+  const a = await requireAdminTindakan();
+  const p = await produkMeja(productId);
+  if (!p) return { ok: false, ralat: 'Produk tidak dijumpai.' };
+  if (!p.draf) return { ok: false, ralat: 'Tiada gambar baru untuk diterbitkan.' };
+  await db.update(s.product).set({ tableImageUrl: p.draf, tableImageOriginalUrl: p.url, tableImageDraftUrl: null }).where(eq(s.product.id, productId));
+  await rekodAudit(a.userId, 'terbit_gambar_meja', 'product', productId, { tableImageUrl: [p.url, p.draf] });
+  revalidateTag(TAG.produk);
+  segar(productId);
+  return { ok: true };
+}
+
+/** Kembali ke gambar sebelum ini (gambar semasa pula disimpan sebagai "sebelum ini"). */
+export async function pulihGambarMeja(productId: string): Promise<HasilMeja> {
+  const a = await requireAdminTindakan();
+  const p = await produkMeja(productId);
+  if (!p) return { ok: false, ralat: 'Produk tidak dijumpai.' };
+  if (!p.asal) return { ok: false, ralat: 'Tiada gambar sebelum ini.' };
+  await db.update(s.product).set({ tableImageUrl: p.asal, tableImageOriginalUrl: p.url, tableImageDraftUrl: null }).where(eq(s.product.id, productId));
+  await rekodAudit(a.userId, 'pulih_gambar_meja', 'product', productId, { tableImageUrl: [p.url, p.asal] });
+  revalidateTag(TAG.produk);
+  segar(productId);
+  return { ok: true };
 }

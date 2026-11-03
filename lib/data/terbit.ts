@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { rekodAudit } from './audit';
 import { db } from './db';
 import * as s from './skema';
+import { urlGambarSah } from './urlGambar';
 
 const skemaDraf = z.object({
   name: z.string().trim().min(1, { error: 'Isi nama kek' }).max(80),
@@ -20,7 +21,7 @@ const skemaDraf = z.object({
     .array(z.object({ id: z.uuid().optional(), label: z.string().trim().min(1, { error: 'Isi nama saiz' }).max(40), priceSen: z.number().int().min(100, { error: 'Harga minimum RM 1' }).max(10_000_00) }))
     .min(1, { error: 'Sekurang-kurangnya satu saiz' })
     .max(12),
-  images: z.array(z.object({ url: z.string().min(1).max(500), alt: z.string().max(200) })).max(12),
+  images: z.array(z.object({ url: z.string().min(1).max(500).refine(urlGambarSah, { error: 'Alamat gambar tidak sah' }), alt: z.string().max(200) })).max(12),
 });
 
 export type DrafProduk = z.infer<typeof skemaDraf>;
