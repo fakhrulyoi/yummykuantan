@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Admin: Papan pemuka</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_ADMIN@@</style>
+</helmet>
+<div class="ad" style="display: flex; flex-wrap: wrap; min-height: 100vh; font-family: 'Manrope', system-ui, sans-serif; color: #1E1611; background: #F6F2EC; font-size: 14.5px; line-height: 1.5">
+@@SIDEBAR:dash@@
+<main style="flex: 999 1 760px; min-width: 0; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 20px">
+@@TOP:Papan pemuka|Selamat pagi. Ini ringkasan perniagaan anda.@@
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{ranges}}" as="r" hint-placeholder-count="4"><button class="ad-tab" onClick="{{r.pick}}" aria-pressed="{{r.on}}">{{r.name}}</button></sc-for></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+<div class="ad-card" style="padding: 18px"><p style="font-size: 13px; color: #6B5B4E">{{k.label}}</p><p style="font-size: 30px; font-weight: 700; margin-top: 4px; letter-spacing: -0.01em">{{k.value}}</p><p style="font-size: 13px; color: {{k.color}}; margin-top: 2px">{{k.note}}</p></div>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<section class="ad-card" aria-labelledby="h-rev" style="flex: 2 1 520px; padding: 20px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><h2 id="h-rev" style="font-size: 16px">Jualan mingguan</h2><span style="font-size: 13px; color: #6B5B4E">12 minggu terakhir, RM</span></div>
+<div role="img" aria-label="Carta jualan mingguan" style="display: flex; align-items: flex-end; gap: 10px; height: 220px; margin-top: 18px; border-bottom: 1px solid #E6DDD2">
+<sc-for list="{{bars}}" as="b" hint-placeholder-count="12"><div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end"><span style="font-size: 11.5px; color: #6B5B4E">{{b.v}}</span><div style="width: 100%; height: {{b.h}}; background: {{b.c}}; border-radius: 4px 4px 0 0"></div></div></sc-for>
+</div>
+<div style="display: flex; gap: 10px; margin-top: 6px"><sc-for list="{{bars}}" as="b" hint-placeholder-count="12"><span style="flex: 1; text-align: center; font-size: 11.5px; color: #6B5B4E">{{b.w}}</span></sc-for></div>
+</section>
+<section class="ad-card" aria-labelledby="h-st" style="flex: 1 1 300px; padding: 20px">
+<h2 id="h-st" style="font-size: 16px">Status tempahan aktif</h2>
+<div style="display: flex; height: 14px; border-radius: 999px; overflow: hidden; margin-top: 16px"><sc-for list="{{status}}" as="s" hint-placeholder-count="5"><span style="width: {{s.w}}; background: {{s.c}}"></span></sc-for></div>
+<ul style="list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 10px"><sc-for list="{{status}}" as="s" hint-placeholder-count="5"><li style="display: flex; justify-content: space-between; align-items: center"><span style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{s.c}}"></span>{{s.name}}</span><strong>{{s.n}}</strong></li></sc-for></ul>
+<a class="ad-btn ad-btn2" href="Admin_Tempahan.dc.html" style="width: 100%; margin-top: 16px">Urus tempahan</a>
+</section>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<section class="ad-card" aria-labelledby="h-up" style="flex: 2 1 520px; overflow: hidden">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 20px"><h2 id="h-up" style="font-size: 16px">Tempahan 3 hari akan datang</h2><a href="Admin_Kalendar.dc.html" style="font-size: 13.5px; font-weight: 600">Buka kalendar</a></div>
+<div style="display: grid; grid-template-columns: 110px 1.6fr 1fr 110px 140px; gap: 12px; padding: 8px 20px; background: #FBF8F4" class="ad-th"><span>Tarikh</span><span>Kek</span><span>Pelanggan</span><span>Cara</span><span>Status</span></div>
+<sc-for list="{{upcoming}}" as="u" hint-placeholder-count="6"><a href="Admin_Tempahan.dc.html" class="ad-row" style="grid-template-columns: 110px 1.6fr 1fr 110px 140px; text-decoration: none"><span>{{u.when}}</span><span style="font-weight: 600">{{u.cake}}</span><span>{{u.cust}}</span><span>{{u.mode}}</span><span><span class="ad-badge" style="background: {{u.bg}}; color: {{u.fg}}">{{u.status}}</span></span></a></sc-for>
+</section>
+<section class="ad-card" aria-labelledby="h-best" style="flex: 1 1 300px; padding: 20px">
+<h2 id="h-best" style="font-size: 16px">Paling laris bulan ini</h2>
+<ol style="list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 12px"><sc-for list="{{best}}" as="b" hint-placeholder-count="5"><li style="display: flex; gap: 12px; align-items: center"><img src="{{b.img}}" alt="" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover"><span style="flex: 1; min-width: 0"><span style="display: block; font-weight: 600">{{b.name}}</span><span style="font-size: 12.5px; color: #6B5B4E">{{b.n}} tempahan</span></span><strong>RM {{b.rev}}</strong></li></sc-for></ol>
+</section>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { range: 2 }; }
+  renderVals() {
+    const s = this.state;
+    const ranges = ['Hari ini', 'Minggu ini', 'Bulan ini', 'Tahun ini'];
+    const k = [
+      [['Jualan hari ini', 'RM 640', '6 tempahan'], ['Tempahan baru', '6', '2 menunggu pengesahan'], ['Baru dari WhatsApp', '3', 'Semak sekarang'], ['Kapasiti esok', '9 / 12', '3 slot lagi']],
+      [['Jualan minggu ini', 'RM 3,880', 'Naik 12% dari minggu lepas'], ['Tempahan', '31', '4 reka 3D'], ['Menunggu tindakan', '3', 'Semak sekarang'], ['Kapasiti minggu ini', '61 / 84', '23 slot lagi']],
+      [['Jualan bulan ini', 'RM 14,260', 'Naik 8% dari Oktober'], ['Tempahan', '118', '11 reka 3D'], ['Menunggu tindakan', '3', 'Semak sekarang'], ['Purata tempahan', 'RM 121', 'Setiap tempahan']],
+      [['Jualan tahun ini', 'RM 132,400', 'Sejak Januari'], ['Tempahan', '1,104', '86 reka 3D'], ['Pelanggan', '642', '231 pelanggan berulang'], ['Purata tempahan', 'RM 120', 'Setiap tempahan']],
+    ][s.range];
+    const weeks = [2410, 2880, 2150, 3320, 3010, 3640, 2990, 3480, 4120, 3560, 3460, 3880];
+    const mx = Math.max(...weeks);
+    const status = [['Baru dari WhatsApp', 3, '#C98A6E'], ['Menunggu bayaran', 4, '#F2C28E'], ['Disahkan', 21, '#6E9B6F'], ['Dalam penyediaan', 9, '#6C8FB8'], ['Sedia diambil', 5, '#A07CC0'], ['Dalam penghantaran', 2, '#8C6A33']];
+    const tot = status.reduce((a, x) => a + x[1], 0);
+    const badge = { 'Disahkan': ['#E3F1E4', '#22562B'], 'Dalam penyediaan': ['#E2ECF7', '#1F4A7A'], 'Menunggu semakan': ['#FFF1D6', '#7A4B00'], 'Sedia diambil': ['#EFE5F7', '#5B2E7A'] };
+    const up = [['Rab 4 Nov', 'Italian Cake 8 inci', 'Nurul A.', 'Ambil', 'Dalam penyediaan'], ['Rab 4 Nov', 'Kekbatik Mewah x2', 'Hafiz R.', 'Hantar', 'Dalam penyediaan'], ['Kha 5 Nov', 'Reka 3D YK-D-0427', 'Aisyah M.', 'Ambil', 'Menunggu semakan'], ['Kha 5 Nov', 'Brownies 10 inci', 'Syafiq', 'Hantar', 'Disahkan'], ['Jum 6 Nov', '2 Tier Wedding Cake', 'Farah & Imran', 'Hantar', 'Disahkan'], ['Jum 6 Nov', 'Burnt Cheese Cake 8 inci', 'Lina K.', 'Ambil', 'Disahkan']];
+    return {
+      ranges: ranges.map((r, i) => ({ name: r, on: s.range === i ? 'true' : 'false', pick: () => this.setState({ range: i }) })),
+      kpis: k.map(([label, value, note]) => ({ label, value, note, color: /Naik|lagi/.test(note) ? '#22562B' : note === 'Semak sekarang' ? '#8E2620' : '#6B5B4E' })),
+      bars: weeks.map((v, i) => ({ v: (v / 1000).toFixed(1) + 'k', h: Math.round(v / mx * 170) + 'px', c: i === weeks.length - 1 ? '#4B141B' : '#CDB693', w: 'M' + (i + 1) })),
+      status: status.map(([name, n, c]) => ({ name, n, c, w: (n / tot * 100).toFixed(1) + '%' })),
+      upcoming: up.map(([when, cake, cust, mode, st]) => ({ when, cake, cust, mode, status: st, bg: badge[st][0], fg: badge[st][1] })),
+      best: [['Kekbatik Indulgence Cheese', 26, 1980, '@@IMG:01_01@@'], ['Italian Cake', 14, 2310, '@@IMG:04_02@@'], ['Brownies', 12, 1020, '@@IMG:17_01@@'], ['2 Tier Wedding Cake', 4, 1400, '@@IMG:09_01@@'], ['Burnt Cheese Cake Italian', 9, 1150, '@@IMG:16_01@@']].map(([name, n, rev, img]) => ({ name, n, rev: rev.toLocaleString('ms-MY'), img })),
+    };
+  }
+}
+</script>
+</body>
+</html>

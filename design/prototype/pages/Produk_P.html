@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Yummy Kuantan: Italian Cake telefon</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_B@@
+.p-dot{width:8px;height:8px;border-radius:999px;border:0;padding:0;background:#844450;cursor:pointer}
+.p-dot[aria-pressed="true"]{background:#EBCFC3}
+.p-step{width:44px;height:44px;border:0;background:none;color:#F2E7DE;font-size:20px;cursor:pointer}
+</style>
+</helmet>
+<div class="b" style="width: 390px; min-height: 2500px; position: relative; font-family: 'Manrope', system-ui, sans-serif; color: #F2E7DE; background: #4B141B; font-size: 15.5px; line-height: 1.55">
+@@HDR_P:Katalog_P.dc.html:Italian cake@@
+<section aria-label="Gambar" style="position: relative">
+<div class="yk-tile" style="aspect-ratio: 3 / 4"><img src="{{main}}" alt="Italian Cake, gambar {{imgNo}} daripada 8" style="width: 100%; height: 100%; object-fit: cover"></div>
+<button class="b-ic" onClick="{{prev}}" aria-label="Gambar sebelum" style="position: absolute; left: 8px; top: 45%; background: rgba(60,13,19,.7)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<button class="b-ic" onClick="{{next}}" aria-label="Gambar seterusnya" style="position: absolute; right: 8px; top: 45%; background: rgba(60,13,19,.7)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+<div style="display: flex; gap: 6px; justify-content: center; padding: 12px 0"><sc-for list="{{dots}}" as="d" hint-placeholder-count="8"><button class="p-dot" onClick="{{d.pick}}" aria-pressed="{{d.on}}" aria-label="Gambar {{d.n}}"></button></sc-for></div>
+</section>
+<section style="padding: 4px 20px 0">
+<p style="color: #EBCFC3; font-size: 13.5px; font-weight: 600">Italian cake</p>
+<h1 style="font-size: 42px; line-height: 1; margin-top: 4px">Italian Cake</h1>
+<p style="font-family: 'Libre Caslon Display', serif; font-size: 28px; margin-top: 10px">RM {{price}}</p>
+<p style="margin-top: 10px; color: #E6CFC6">Kek krim gaya vintage dengan piping tepi dan strawberi segar penuh di atas.</p>
+<p class="b-lbl" style="margin-top: 20px">Saiz</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px"><sc-for list="{{sizes}}" as="z" hint-placeholder-count="3"><button class="b-pill" onClick="{{z.pick}}" aria-pressed="{{z.on}}" style="text-align: center">{{z.l}}<span style="display: block; font-size: 12.5px; color: #D3B1AB">RM {{z.p}}</span></button></sc-for></div>
+<label class="b-lbl" for="msg" style="margin-top: 18px">Tulisan atas kek (pilihan)</label>
+<input id="msg" class="b-in" maxlength="30" placeholder="Contoh: Selamat Pengantin Baru" value="{{msg}}" onInput="{{setMsg}}">
+<label class="b-lbl" for="dt" style="margin-top: 14px">Tarikh</label>
+<input id="dt" class="b-in" type="date" value="{{date}}" onChange="{{setDate}}">
+<p style="font-size: 13px; color: #BCD7AE; margin-top: 6px">Tarikh ini masih ada 5 slot.</p>
+<p class="b-lbl" style="margin-top: 14px">Cara terima</p>
+<div role="group" aria-label="Cara terima" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px"><sc-for list="{{modes}}" as="m" hint-placeholder-count="3"><button class="b-pill" onClick="{{m.pick}}" aria-pressed="{{m.on}}" style="text-align: center; padding: 6px 8px">{{m.name}}</button></sc-for></div>
+<p style="font-size: 12.5px; color: #D3B1AB; margin-top: 6px">Penghantaran sekitar Kuantan dan Pekan. Caj dimaklumkan di WhatsApp.</p>
+<button class="b-btn b-line" onClick="{{add}}" style="width: 100%; margin-top: 14px">{{addLabel}}</button>
+<div style="margin-top: 18px; padding: 12px 14px; border: 1px solid #74343C; background: #5A1B23; font-size: 13.5px; color: #E6CFC6">Rekaan dan warna mungkin tidak 100% sama dengan gambar, kerana setiap kek dibuat dengan tangan.</div>
+<div style="margin-top: 18px">
+<details><summary>Butiran</summary><p style="padding-bottom: 16px; color: #E6CFC6; font-size: 14.5px">6 inci RM 100, 8 inci RM 280, 10 inci RM 380. [Kandungan alergen disahkan oleh pemilik.]</p></details>
+<details><summary>Penyimpanan</summary><p style="padding-bottom: 16px; color: #E6CFC6; font-size: 14.5px">Simpan dalam peti sejuk. [Tempoh terbaik disahkan oleh pemilik.]</p></details>
+<details><summary>Ambil dan penghantaran</summary><p style="padding-bottom: 16px; color: #E6CFC6; font-size: 14.5px">Ambil di Kuantan atau penghantaran dalam kawasan servis.</p></details>
+</div>
+</section>
+<section style="padding: 32px 0 0">
+<h2 style="font-size: 26px; padding: 0 20px">Mungkin anda juga suka</h2>
+<div style="display: flex; gap: 12px; overflow-x: auto; padding: 14px 20px 4px"><sc-for list="{{related}}" as="p" hint-placeholder-count="4"><a href="Produk_P.dc.html" style="flex: none; width: 160px; text-decoration: none"><img src="{{p.img}}" alt="{{p.name}}" style="width: 160px; height: 200px; object-fit: cover"><p style="font-size: 14.5px; margin-top: 6px; line-height: 1.25">{{p.name}}</p><p style="font-size: 13px; color: #D3B1AB">dari RM {{p.price}}</p></a></sc-for></div>
+</section>
+@@FTR_P@@
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 16px 16px; background: rgba(60,13,19,.97); border-top: 1px solid #74343C; display: flex; gap: 10px; align-items: center">
+<div style="display: flex; align-items: center; border: 1px solid #8A4A52; height: 52px"><button class="p-step" onClick="{{dec}}" aria-label="Kurangkan kuantiti">&#8722;</button><span style="min-width: 22px; text-align: center">{{qty}}</span><button class="p-step" onClick="{{inc}}" aria-label="Tambah kuantiti">+</button></div>
+<a class="b-btn yk-pulse" href="{{wa}}" style="flex: 1; padding: 0 12px">@@WA@@ Tempah, RM {{price}}</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2500}}'>
+@@PRODUCTS@@
+@@WA_JS@@
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { img: 1, size: 0, qty: 1, msg: '', date: '2026-11-14', mode: 0, cart: 0, added: false }; }
+  renderVals() {
+    const s = this.state;
+    const imgs = ['@@IMG:04_01@@', '@@IMG:04_02@@', '@@IMG:04_03@@', '@@IMG:04_04@@', '@@IMG:04_05@@', '@@IMG:04_06@@', '@@IMG:04_07@@', '@@IMG:04_08@@'];
+    const p = PRODUCTS.find((x) => x.id === '04'); const z = p.sizes[s.size];
+    const modes = ['Ambil sendiri', 'Hantar ke Kuantan', 'Hantar ke Pekan'];
+    const dt = new Date(s.date + 'T00:00:00').toLocaleDateString('ms-MY', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    const text = 'Salam Yummy Kuantan, saya nak tempah:\n\n' + p.name + ', ' + z.l + ' x' + s.qty + ' (RM' + (z.p * s.qty) + ')' + (s.msg ? '\nTulisan atas kek: ' + s.msg : '') + '\n\nTarikh: ' + dt + '\nCara: ' + modes[s.mode] + '\n\nBoleh sahkan slot dan cara bayaran? Terima kasih.';
+    return {
+      modes: modes.map((m, i) => ({ name: ['Ambil', 'Hantar Kuantan', 'Hantar Pekan'][i], on: s.mode === i ? 'true' : 'false', pick: () => this.setState({ mode: i }) })),
+      wa: waLink(text),
+      cart: s.cart, main: imgs[s.img], imgNo: s.img + 1,
+      prev: () => this.setState({ img: (s.img + 7) % 8 }), next: () => this.setState({ img: (s.img + 1) % 8 }),
+      dots: imgs.map((x, i) => ({ n: i + 1, on: s.img === i ? 'true' : 'false', pick: () => this.setState({ img: i }) })),
+      price: z.p * s.qty, sizes: p.sizes.map((x, i) => ({ l: x.l, p: x.p, on: s.size === i ? 'true' : 'false', pick: () => this.setState({ size: i }) })),
+      msg: s.msg, setMsg: (e) => this.setState({ msg: e.target.value.slice(0, 30) }), date: s.date, setDate: (e) => this.setState({ date: e.target.value }),
+      qty: s.qty, inc: () => this.setState({ qty: Math.min(10, s.qty + 1) }), dec: () => this.setState({ qty: Math.max(1, s.qty - 1) }),
+      addLabel: s.added ? 'Dalam senarai tempahan' : 'Tambah ke senarai (untuk lebih dari satu kek)', add: () => this.setState({ cart: s.cart + s.qty, added: true }),
+      related: ['07', '15', '16', '12'].map((id) => PRODUCTS.find((x) => x.id === id)),
+    };
+  }
+}
+</script>
+</body>
+</html>

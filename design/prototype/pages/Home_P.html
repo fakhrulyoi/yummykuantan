@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Yummy Kuantan: Laman utama telefon</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_B@@</style>
+</helmet>
+<div class="b" style="width: 390px; min-height: 5200px; position: relative; font-family: 'Manrope', system-ui, sans-serif; color: #F2E7DE; background: #4B141B; font-size: 15.5px; line-height: 1.55">
+@@HDR_P@@
+<section aria-label="Pengenalan" style="position: relative; height: 700px; overflow: hidden; background: #3A0E14">
+<sc-for list="{{slides}}" as="sl" hint-placeholder-count="5"><div class="yk-slide" style="animation-delay: {{sl.delay}}"><img src="{{sl.img}}" alt="" style="object-position: {{sl.pos}}"></div></sc-for>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(42,9,14,.35) 0%, rgba(42,9,14,0) 30%, rgba(42,9,14,.55) 58%, #4B141B 100%)"></div>
+<div style="position: absolute; left: 20px; right: 20px; bottom: 30px">
+<h1 style="font-size: 50px; line-height: .96"><sc-for list="{{words}}" as="w" hint-placeholder-count="7"><span class="yk-w" style="animation-delay: {{w.d}}">{{w.t}}&#160;</span></sc-for></h1>
+<span class="yk-gl" style="width: 120px; margin-top: 18px"></span>
+<p class="yk-in" style="animation-delay: 1.1s; margin-top: 14px; color: #ECDDD3">Dibakar ikut tempahan untuk Kuantan dan Pekan.</p>
+<div class="yk-in" style="animation-delay: 1.3s; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 18px"><a class="b-btn yk-pulse" href="Katalog_P.dc.html" style="padding: 0 10px">Lihat koleksi</a><a class="b-btn b-line" href="Reka_P.dc.html" style="padding: 0 10px; background: rgba(60,13,19,.5)">Reka kek</a></div>
+</div>
+</section>
+
+<section aria-label="Jenis kek" class="yk-mqwrap" style="border-top: 1px solid #74343C; border-bottom: 1px solid #74343C; padding: 14px 0; background: #3F1017">
+<div class="yk-mq" style="--d: 34s"><sc-for list="{{ticker}}" as="t" hint-placeholder-count="12"><span style="display: inline-flex; align-items: center; gap: 22px; padding-right: 22px; font-family: 'Libre Caslon Display', serif; font-size: 26px; white-space: nowrap; color: {{t.c}}">{{t.name}}<span aria-hidden="true" style="width: 7px; height: 7px; border-radius: 999px; background: #EBCFC3"></span></span></sc-for></div>
+</section>
+
+<section aria-labelledby="ps" style="padding: 28px 0 0">
+<h2 id="ps" style="font-size: 28px; padding: 0 20px">Tarikh yang masih kosong</h2>
+<div style="display: flex; gap: 8px; overflow-x: auto; padding: 14px 20px 4px"><sc-for list="{{days}}" as="d" hint-placeholder-count="7"><button class="b-day" onClick="{{d.pick}}" aria-pressed="{{d.on}}" disabled="{{d.full}}" style="flex: none; width: 86px; min-height: 84px"><span style="color: #D3B1AB; font-size: 12.5px">{{d.dow}}</span><span style="font-family: 'Libre Caslon Display', serif; font-size: 22px; line-height: 1.15">{{d.date}}</span><span style="font-size: 12px; color: {{d.color}}">{{d.status}}</span></button></sc-for></div>
+</section>
+
+<section class="mj-room" aria-labelledby="mj-h" style="padding: 36px 0 32px">
+<header style="padding: 0 20px; position: relative; z-index: 3">
+<p style="font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #D3B1AB">Paling kerap ditempah &nbsp;·&nbsp; 8 kek</p>
+<h2 id="mj-h" style="font-size: 34px; line-height: 1.04; margin-top: 10px">Pilih kek terus dari meja kami.</h2>
+</header>
+<div class="mj-stage" role="group" aria-label="Meja kek. Sapu ke kiri atau kanan." onKeyDown="{{mKey}}" onPointerDown="{{mDown}}" onPointerUp="{{mUp}}" style="height: 540px; margin-top: 14px; overflow: hidden">
+<div class="mj-rail" aria-hidden="true"></div>
+<div aria-hidden="true" class="mj-top" style="top: 398px; height: 92px; background-image: url(@@WOOD@@); background-size: 600px auto"></div>
+<div aria-hidden="true" class="mj-edge" style="top: 490px; height: 20px; background-image: url(@@WOOD@@); background-size: 600px auto"></div>
+<div style="position: absolute; inset: 0; transform: {{mTrack}}; transition: transform .6s cubic-bezier(.2,.75,.2,1)">
+<sc-for list="{{mItems}}" as="c" hint-placeholder-count="8">
+<div class="mj-slot" style="left: {{c.x}}; top: 0; width: 250px; height: 446px; --glow: {{c.glow}}; --tx: {{c.tx}}; --lift: {{c.lift}}">
+<span class="mj-fix" aria-hidden="true"></span>
+<span class="mj-beam" aria-hidden="true" style="width: 290px; height: 436px"></span>
+<span class="mj-pool" aria-hidden="true" style="top: 446px; width: 290px; height: 74px"></span>
+<span class="mj-shadow" aria-hidden="true" style="top: calc(446px - 2px); width: 70%; height: 22px"></span>
+<button class="mj-cake" aria-pressed="{{c.on}}" tabindex="{{c.tab}}" aria-label="{{c.label}}" onMouseEnter="{{c.hover}}" onFocus="{{c.focus}}" onClick="{{c.tap}}" style="width: 250px; height: 375px"><img src="{{c.img}}" alt="" loading="lazy"></button>
+</div>
+</sc-for>
+</div>
+<button onClick="{{mPrev}}" aria-label="Kek sebelum" style="position: absolute; left: 8px; top: 250px; width: 44px; height: 44px; border-radius: 999px; border: 1px solid #8A4A52; background: rgba(42,9,14,.7); color: #F2E7DE; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; z-index: 4"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<button onClick="{{mNext}}" aria-label="Kek seterusnya" style="position: absolute; right: 8px; top: 250px; width: 44px; height: 44px; border-radius: 999px; border: 1px solid #8A4A52; background: rgba(42,9,14,.7); color: #F2E7DE; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; z-index: 4"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+</div>
+<div style="display: flex; justify-content: center; gap: 6px; margin-top: 4px; position: relative; z-index: 3"><sc-for list="{{mDots}}" as="d" hint-placeholder-count="8"><button class="mj-dot" onClick="{{d.pick}}" aria-pressed="{{d.on}}" aria-label="{{d.label}}" style="width: {{d.w}}"></button></sc-for></div>
+<div aria-live="polite" style="padding: 18px 20px 0; position: relative; z-index: 3; min-height: 150px">
+<sc-if value="{{mHasLit}}" hint-placeholder-val="{{ true }}"><p style="font-family: 'Libre Caslon Display', serif; font-size: 26px; line-height: 1.1">{{mName}}</p><p style="margin-top: 6px"><span class="mj-tag">{{mTag}}</span></p><p style="color: #E6CFC6; margin-top: 8px; font-size: 14px">{{mDesc}}</p>
+<button class="b-btn" onClick="{{mOpenLit}}" style="width: 100%; margin-top: 14px">Lihat kek ini</button></sc-if>
+</div>
+</section>
+
+<section aria-labelledby="pk" style="padding: 40px 0 0">
+<h2 id="pk" style="font-size: 28px; padding: 0 20px">Pilih ikut jenis</h2>
+<div style="display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 14px 20px 6px">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="6">
+<a class="yk-tile" href="Katalog_P.dc.html" style="flex: none; width: 220px; height: 300px; scroll-snap-align: start"><img src="{{c.img}}" alt=""><span aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(42,9,14,.05), rgba(42,9,14,.88))"></span><span style="position: absolute; left: 14px; right: 14px; bottom: 12px"><span style="display: block; font-family: 'Libre Caslon Display', serif; font-size: 26px; line-height: 1.05">{{c.name}}</span><span style="font-size: 12.5px; color: #EBCFC3; font-weight: 600">{{c.count}} jenis, dari RM {{c.from}}</span></span></a>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="p3" class="b-light" style="margin-top: 44px; background: #F2E7DE; color: #4B141B; padding: 32px 20px">
+<h2 id="p3" style="font-size: 34px; line-height: 1; color: #4B141B">Nak rekaan sendiri? Tengok dulu dalam 3D.</h2>
+<div style="position: relative; margin-top: 18px; aspect-ratio: 1; overflow: hidden; background: #3A0E14"><div role="img" aria-label="Pratonton 3D kek yang sedang berpusing" style="width: 100%; height: 100%; background-image: url({{turnImg}}); background-repeat: no-repeat; background-size: 800% auto; background-position: {{turnPos}}"></div><button onClick="{{toggleSpin}}" class="b-btn b-dark" style="position: absolute; right: 10px; top: 10px; min-height: 40px; padding: 0 12px; font-size: 12.5px">{{spinLabel}}</button></div>
+<div style="display: flex; gap: 12px; margin-top: 14px"><sc-for list="{{swatches}}" as="s" hint-placeholder-count="4"><button class="b-sw" onClick="{{s.pick}}" aria-pressed="{{s.on}}" aria-label="{{s.name}}" style="background: {{s.hex}}; border-color: rgba(60,13,19,.25)"></button></sc-for></div>
+<p style="font-size: 13px; color: #86464E; margin-top: 8px">Krim segar hanya dalam warna lembut.</p>
+<a class="b-btn b-dark" href="Reka_P.dc.html" style="margin-top: 16px; width: 100%">Buka studio 3D</a>
+</section>
+
+<section aria-labelledby="pc" style="padding: 40px 20px 0">
+<h2 id="pc" style="font-size: 28px">Cara tempah</h2>
+<ol style="list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 14px">
+<li style="display: flex; gap: 14px; border-top: 1px solid #74343C; padding-top: 14px"><span style="font-family: 'Libre Caslon Display', serif; font-size: 40px; line-height: 1; color: #EBCFC3">1</span><span><strong style="display: block">Pilih kek dan tarikh</strong><span style="color: #D3B1AB; font-size: 14px">Saiz, tulisan atas kek, ambil atau hantar.</span></span></li>
+<li style="display: flex; gap: 14px; border-top: 1px solid #74343C; padding-top: 14px"><span style="font-family: 'Libre Caslon Display', serif; font-size: 40px; line-height: 1; color: #EBCFC3">2</span><span><strong style="display: block">Tekan Tempah</strong><span style="color: #D3B1AB; font-size: 14px">WhatsApp terbuka dengan mesej siap ditulis.</span></span></li>
+<li style="display: flex; gap: 14px; border-top: 1px solid #74343C; padding-top: 14px"><span style="font-family: 'Libre Caslon Display', serif; font-size: 40px; line-height: 1; color: #EBCFC3">3</span><span><strong style="display: block">Sahkan dan bayar di WhatsApp</strong><span style="color: #D3B1AB; font-size: 14px">Kami sahkan tarikh dan caj penghantaran.</span></span></li>
+</ol>
+</section>
+
+<section aria-labelledby="pr" style="padding: 40px 0 0">
+<h2 id="pr" style="font-size: 28px; padding: 0 20px">Kata pelanggan</h2>
+<div style="display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 14px 20px 6px">
+<figure style="flex: none; width: 290px; scroll-snap-align: start; margin: 0; border-top: 1px solid #EBCFC3; padding-top: 14px"><blockquote style="margin: 0; font-family: 'Libre Caslon Display', serif; font-size: 21px; line-height: 1.35">Sekali rasa sedap, terus repeat untuk majlis kahwin.</blockquote><figcaption style="margin-top: 10px; color: #D3B1AB; font-size: 13.5px">Pelanggan kek kahwin</figcaption></figure>
+<figure style="flex: none; width: 290px; scroll-snap-align: start; margin: 0; border-top: 1px solid #EBCFC3; padding-top: 14px"><blockquote style="margin: 0; font-family: 'Libre Caslon Display', serif; font-size: 21px; line-height: 1.35">Semua cakap sedap, habis terus dah semalam.</blockquote><figcaption style="margin-top: 10px; color: #D3B1AB; font-size: 13.5px">Pelanggan kek hari jadi</figcaption></figure>
+<figure style="flex: none; width: 290px; scroll-snap-align: start; margin: 0; border-top: 1px solid #EBCFC3; padding-top: 14px"><blockquote style="margin: 0; font-family: 'Libre Caslon Display', serif; font-size: 21px; line-height: 1.35">Repeat sebab sini paling sedap dan murah!</blockquote><figcaption style="margin-top: 10px; color: #D3B1AB; font-size: 13.5px">Pelanggan kek batik</figcaption></figure>
+</div>
+</section>
+
+@@FAQ_P@@
+<section aria-labelledby="pd" class="{{mqClass}}" style="padding: 40px 0 0">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px"><h2 id="pd" style="font-size: 28px">Dari dapur kami</h2><button class="b-btn b-line" onClick="{{toggleMq}}" style="min-height: 40px; padding: 0 12px; font-size: 13px">{{mqLabel}}</button></div>
+<div class="yk-mqwrap" style="margin-top: 14px"><div class="yk-mq" style="--d: 55s; gap: 8px; padding-right: 8px"><sc-for list="{{gal}}" as="g" hint-placeholder-count="12"><img src="{{g}}" alt="" style="width: 180px; height: 230px; object-fit: cover"></sc-for></div></div>
+<p style="padding: 12px 20px 0; font-size: 14px; color: #D3B1AB"><a href="https://instagram.com/yummykuantan">Instagram @yummykuantan</a>, <a href="https://www.tiktok.com/@yummykuantan">TikTok @yummykuantan</a></p>
+</section>
+
+<section aria-labelledby="pw" style="margin-top: 40px; background: #EBCFC3; color: #4B141B; padding: 30px 20px">
+<h2 id="pw" style="font-size: 32px; line-height: 1.02; color: #4B141B">Ada soalan? Terus WhatsApp kami.</h2>
+<p style="margin-top: 8px; color: #74343C">+60 11-2302 3447</p>
+<a class="b-btn b-dark" href="{{waGeneral}}" style="width: 100%; margin-top: 16px">@@WA@@ WhatsApp sekarang</a>
+</section>
+<sc-if value="{{dOpen}}" hint-placeholder-val="{{ false }}">
+<div class="mj-dialog" role="dialog" aria-modal="true" aria-labelledby="mj-dt" onKeyDown="{{dKey}}">
+<div class="mj-backdrop" onClick="{{dClose}}"></div>
+<button onClick="{{dClose}}" style="position: absolute; right: 12px; top: 12px; z-index: 2; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 1px solid #8A4A52; border-radius: 999px; background: rgba(42,9,14,.6); color: #F2E7DE; font: 600 13px 'Manrope', sans-serif; cursor: pointer">Tutup <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"></path></svg></button>
+<div style="position: relative; width: 100%; max-width: 1040px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; padding-top: 48px">
+<div style="position: relative; flex: 0 0 auto; width: 300px; height: 360px">
+<div class="mj-beam" style="--glow: 1; top: -40%; width: 150%; height: 130%"></div>
+<div class="mj-pool" style="--glow: 1; top: 97%; width: 130%; height: 70px"></div>
+<div class="mj-shadow" style="top: 98%; width: 70%; height: 26px"></div>
+<div class="mj-fig" style="position: absolute; inset: 0"><img src="{{d.img}}" alt="{{d.name}}" style="width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform: scale({{d.scale}})"></div>
+</div>
+<div class="mj-info" style="flex: 1 1 300px; max-width: 420px; text-align: left; padding: 0 4px 24px">
+<p style="font-size: 12px; letter-spacing: .2em; color: #D3B1AB; font-variant-numeric: tabular-nums">{{d.no}} &nbsp;·&nbsp; {{d.cat}}</p>
+<h3 id="mj-dt" style="font-family: 'Libre Caslon Display', serif; font-weight: 400; font-size: 34px; line-height: 1.02; margin-top: 10px">{{d.name}}</h3>
+<p style="color: #E6CFC6; margin-top: 10px; font-size: 14.5px">{{d.desc}}</p>
+<p class="b-lbl" style="margin-top: 20px">Saiz<sc-if value="{{dMulti}}" hint-placeholder-val="{{ true }}"><span style="font-weight: 400; color: #D3B1AB">, kek berubah ikut saiz dipilih</span></sc-if></p>
+<div role="group" aria-label="Saiz" style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{dSizes}}" as="z" hint-placeholder-count="3"><button class="b-pill" onClick="{{z.pick}}" aria-pressed="{{z.on}}">{{z.l}}<span style="display: block; font-size: 12.5px; color: #D3B1AB">{{z.price}}</span></button></sc-for></div>
+<ul style="list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px; font-size: 12.5px; color: #E6CFC6"><li style="border: 1px solid #74343C; border-radius: 999px; padding: 4px 12px">Tempah <span class="yk-tbc">{{d.prep}}</span> awal</li><li style="border: 1px solid #74343C; border-radius: 999px; padding: 4px 12px">Ambil sendiri atau hantar ke Kuantan dan Pekan</li></ul>
+<p style="font-family: 'Libre Caslon Display', serif; font-size: 30px; margin-top: 18px">{{d.price}}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px"><a class="b-btn" href="{{d.wa}}" style="flex: 1 1 200px">@@WA@@ Tempah di WhatsApp</a><a class="b-btn b-line" href="{{d.href}}" style="flex: 1 1 100%">Lihat kek</a></div>
+<sc-if value="{{d.reka}}" hint-placeholder-val="{{ true }}"><a href="{{d.rekaHref}}" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; min-height: 44px; font-weight: 600; font-size: 14px">Nak ubah rekaan? Reka sendiri dalam 3D <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></a></sc-if>
+</div>
+</div>
+</div>
+</sc-if>
+@@FTR_P@@
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 16px; background: rgba(60,13,19,.97); border-top: 1px solid #74343C; display: flex; gap: 8px">
+<a class="b-btn b-line" href="{{waGeneral}}" style="flex: 0 0 auto; padding: 0 16px" aria-label="WhatsApp kami">@@WA@@</a>
+<a class="b-btn" href="Katalog_P.dc.html" style="flex: 1">{{bookLabel}}</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":5200}}'>
+@@PRODUCTS@@
+@@CATS@@
+@@COLORS@@
+@@IMGS@@
+@@WA_JS@@
+@@MEJA_JS@@
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { day: 3, cart: 0, color: 'blush', angle: 1, spin: true, mq: true, lit: 0, auto: false, open: null, size: 0 }; }
+  componentDidMount() {
+    const reduce = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) this.setState({ spin: false, mq: false, auto: false });
+    this.timer = setInterval(() => { if (this.state.spin) this.setState({ angle: (this.state.angle + 1) % 8 }); }, 650);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+  renderVals() {
+    const s = this.state;
+    const days = [['Sab', '7', 0], ['Ahd', '8', 0], ['Isn', '9', 2], ['Sel', '10', 5], ['Rab', '11', 7], ['Kha', '12', 3], ['Jum', '13', 9]];
+    const slides = [['@@IMG:03_01@@', '50% 40%'], ['@@IMG:06_01@@', '50% 35%'], ['@@IMG:04_02@@', '50% 50%'], ['@@IMG:09_01@@', '50% 40%'], ['@@IMG:11_01@@', '50% 45%']];
+    const P = (id) => PRODUCTS.find((x) => x.id === id);
+    const featDef = [['04', '@@IMG:04_02@@', 2, 2, '30px', '50% 50%'], ['01', '@@IMG:01_01@@', 1, 1, '18px', '50% 50%'], ['17', '@@IMG:17_01@@', 1, 1, '18px', '50% 50%'], ['09', '@@IMG:09_01@@', 1, 2, '22px', '50% 40%'], ['16', '@@IMG:16_01@@', 1, 1, '18px', '50% 50%'], ['22', '@@IMG:22_01@@', 1, 1, '18px', '50% 50%']];
+    const catImg = { 'Kek batik': '@@IMG:22_01@@', 'Brownies dan bar': '@@IMG:17_01@@', 'Italian cake': '@@IMG:04_01@@', 'Kek kahwin': '@@IMG:09_01@@', 'Hari jadi dan majlis': '@@IMG:10_01@@', 'Kek mentega': '@@IMG:23_01@@' };
+    const gal = ['@@IMG:04_03@@', '@@IMG:07_01@@', '@@IMG:21_01@@', '@@IMG:23_01@@', '@@IMG:30_01@@', '@@IMG:32_01@@', '@@IMG:10_01@@', '@@IMG:20_01@@', '@@IMG:16_01@@', '@@IMG:25_01@@'];
+    const tick = ['Kek batik', 'Brownies', 'Italian cake', 'Kek kahwin', 'Burnt cheesecake', 'Red velvet'];
+    return {
+      cart: s.cart,
+      slides: slides.map(([img, pos], i) => ({ img, pos, delay: (i * 6) + 's' })),
+      words: 'Kek yang diingat lama selepas majlis.'.split(' ').map((t, i) => ({ t, d: (0.15 + i * 0.09).toFixed(2) + 's' })),
+      ticker: [...tick, ...tick].map((name, i) => ({ name, c: i % 2 ? '#EBCFC3' : '#F2E7DE' })),
+      days: days.map(([dow, date, n], i) => ({ dow, date: date + ' Nov', full: n === 0, status: n === 0 ? 'Penuh' : n + ' slot', color: n === 0 ? '#B0827F' : n <= 3 ? '#F2C28E' : '#BCD7AE', on: s.day === i ? 'true' : 'false', pick: () => this.setState({ day: i }) })),
+      bookLabel: 'Tempah untuk ' + days[s.day][1] + ' November',
+      ...meja(s, (x) => this.setState(x), 'P'),
+      feat: featDef.map(([id, img, cs, rs, fs, pos], i) => ({ ...P(id), img, cs, rs, fs, pos, d: (0.05 + i * 0.1).toFixed(2) + 's' })),
+      cats: CATS.map((c) => { const l = PRODUCTS.filter((p) => p.cat === c); return { name: c, count: l.length, from: Math.min(...l.map((p) => p.price)), img: catImg[c] }; }),
+      swatches: COLORS.map(([k, n, h]) => ({ name: n, hex: h, on: s.color === k ? 'true' : 'false', pick: () => this.setState({ color: k }) })),
+      turnImg: IMGS['S_T_' + s.color], turnPos: (s.angle * 100 / 7).toFixed(4) + '% 30%', spinLabel: s.spin ? 'Jeda' : 'Pusing', toggleSpin: () => this.setState({ spin: !s.spin }),
+      gal: [...gal, ...gal], mqClass: s.mq ? '' : 'yk-paused', mqLabel: s.mq ? 'Jeda' : 'Main', toggleMq: () => this.setState({ mq: !s.mq }),
+      waGeneral: waLink('Salam Yummy Kuantan, saya ada soalan tentang tempahan kek.'),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Admin: Produk</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_ADMIN@@</style>
+</helmet>
+<div class="ad" style="display: flex; flex-wrap: wrap; min-height: 100vh; font-family: 'Manrope', system-ui, sans-serif; color: #1E1611; background: #F6F2EC; font-size: 14.5px; line-height: 1.5">
+@@SIDEBAR:produk@@
+<main style="flex: 999 1 760px; min-width: 0; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 18px">
+@@TOP:Produk|33 kek dalam katalog@@
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+<section class="ad-card" aria-label="Senarai produk" style="flex: 1 1 360px; max-width: 440px; overflow: hidden">
+<div style="padding: 12px; display: flex; gap: 8px; border-bottom: 1px solid #EFE7DD"><label for="pq" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Cari produk</label><input id="pq" class="ad-in" placeholder="Cari produk" value="{{q}}" onInput="{{setQ}}"><button class="ad-btn">Tambah kek</button></div>
+<div style="max-height: 860px; overflow-y: auto">
+<sc-for list="{{list}}" as="p" hint-placeholder-count="10"><button class="ad-row" onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="grid-template-columns: 48px 1fr auto"><img src="{{p.img}}" alt="" style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover"><span style="min-width: 0"><span style="display: block; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{p.name}}</span><span style="font-size: 12.5px; color: #6B5B4E">{{p.cat}}, dari RM {{p.price}}</span></span><span class="ad-badge" style="background: {{p.bg}}; color: {{p.fg}}">{{p.state}}</span></button></sc-for>
+</div>
+</section>
+<section class="ad-card" aria-label="Sunting produk" style="flex: 999 1 520px; min-width: 0; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap"><h2 style="font-size: 20px">{{e.name}}</h2><div style="display: flex; gap: 8px"><button class="ad-btn ad-btn2" onClick="{{saveDraft}}">Simpan draf</button><button class="ad-btn" onClick="{{publish}}">Terbitkan</button></div></div>
+<sc-if value="{{msg}}" hint-placeholder-val="{{ false }}"><p role="status" style="font-size: 13.5px; color: #22562B; background: #E3F1E4; padding: 8px 12px; border-radius: 8px">{{msgText}}</p></sc-if>
+<div><p class="ad-lbl">Gambar (seret untuk susun, yang pertama jadi gambar utama)</p>
+<div style="display: flex; gap: 10px; flex-wrap: wrap"><sc-for list="{{e.imgs}}" as="g" hint-placeholder-count="4"><img src="{{g}}" alt="" style="width: 96px; height: 116px; border-radius: 8px; object-fit: cover"></sc-for><button class="ad-btn ad-btn2" style="width: 96px; height: 116px; flex-direction: column; gap: 4px; font-size: 13px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Muat naik</button></div></div>
+<div style="border: 1px solid #E6DDD2; border-radius: 10px; padding: 14px; display: flex; gap: 18px; align-items: stretch; flex-wrap: wrap">
+<div aria-label="Pratonton di meja kek" role="img" style="position: relative; flex: 0 0 200px; height: 230px; border-radius: 8px; overflow: hidden; background: radial-gradient(ellipse 80% 70% at 50% 70%, #5A1C24 0%, #3A0E14 60%, #22060A 100%)">
+<div aria-hidden="true" style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 190px; height: 210px; background: linear-gradient(180deg, rgba(255,232,214,.30), rgba(255,226,205,.08)); clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%)"></div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 46px; background: url(@@WOOD@@) center / 600px auto; filter: brightness(.8)"></div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 46px; background: linear-gradient(180deg, rgba(20,4,7,.55), rgba(20,4,7,.1))"></div>
+<sc-if value="{{hasCut}}" hint-placeholder-val="{{ true }}"><img src="{{cutImg}}" alt="" style="position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); width: 140px; height: 190px; object-fit: contain; object-position: 50% 100%"></sc-if>
+<sc-if value="{{noCut}}" hint-placeholder-val="{{ false }}"><p style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; color: #E6CFC6; font-size: 13px">Belum ada gambar meja</p></sc-if>
+</div>
+<div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 8px">
+<p class="ad-lbl" style="margin: 0">Gambar di meja kek</p>
+<p style="font-size: 13.5px; color: #6B5B4E">Gambar kek tanpa latar belakang, dipaparkan berdiri di atas meja laman utama. Latar dibuang secara automatik selepas muat naik. Semak hasilnya di sebelah sebelum terbitkan.</p>
+<ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #6B5B4E"><li>Ambil dari sisi, paras mata kek</li><li>Latar kosong dan terang, tiada barang lain</li><li>Seluruh kek nampak, termasuk dapan di bawah</li></ul>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto"><label class="ad-btn" for="cutup" style="cursor: pointer">Tukar gambar meja</label><input id="cutup" type="file" accept="image/*" onChange="{{upCut}}" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); opacity: 0">
+<sc-if value="{{cutChanged}}" hint-placeholder-val="{{ false }}"><button class="ad-btn ad-btn2" onClick="{{resetCut}}">Guna gambar sebelum ini</button></sc-if></div>
+<sc-if value="{{cutChanged}}" hint-placeholder-val="{{ false }}"><p role="status" style="font-size: 13px; color: #7A4B00; background: #FFF1D6; padding: 6px 10px; border-radius: 6px">{{cutNote}}</p></sc-if>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px">
+<div><label class="ad-lbl" for="nm">Nama kek</label><input id="nm" class="ad-in" value="{{e.name}}" onInput="{{setName}}"></div>
+<div><label class="ad-lbl" for="ct">Kategori</label><select id="ct" class="ad-in" value="{{e.cat}}" onChange="{{setCat}}"><sc-for list="{{cats}}" as="c" hint-placeholder-count="6"><option value="{{c}}">{{c}}</option></sc-for></select></div>
+</div>
+<div><label class="ad-lbl" for="ds">Penerangan</label><textarea id="ds" class="ad-in" onInput="{{setDesc}}">{{e.desc}}</textarea></div>
+<div><p class="ad-lbl">Saiz dan harga</p>
+<div style="border: 1px solid #E6DDD2; border-radius: 8px; overflow: hidden">
+<div class="ad-th" style="display: grid; grid-template-columns: 1fr 140px 60px; gap: 10px; padding: 8px 12px; background: #FBF8F4"><span>Saiz atau pilihan</span><span>Harga (RM)</span><span></span></div>
+<sc-for list="{{e.sizes}}" as="z" hint-placeholder-count="2"><div style="display: grid; grid-template-columns: 1fr 140px 60px; gap: 10px; padding: 8px 12px; border-top: 1px solid #EFE7DD; align-items: center"><input class="ad-in" value="{{z.l}}" aria-label="Saiz"><input class="ad-in" type="number" value="{{z.p}}" aria-label="Harga"><button class="ad-btn ad-btn2" onClick="{{z.remove}}" aria-label="Buang saiz {{z.l}}" style="padding: 0 10px">Buang</button></div></sc-for>
+</div>
+<button class="ad-btn ad-btn2" onClick="{{addSize}}" style="margin-top: 8px">Tambah saiz</button></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<div><label class="ad-lbl" for="lead">Tempah awal (hari)</label><input id="lead" class="ad-in" type="number" value="3"></div>
+<div><label class="ad-lbl" for="promo">Harga promosi (pilihan)</label><input id="promo" class="ad-in" placeholder="Kosongkan jika tiada"></div>
+</div>
+<div><label class="ad-lbl" for="alg">Alergen</label><input id="alg" class="ad-in" placeholder="Contoh: telur, susu, gandum, kacang"></div>
+<div style="display: grid; gap: 4px">
+<sc-for list="{{flags}}" as="f" hint-placeholder-count="4"><div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-top: 1px solid #EFE7DD"><span><span style="display: block; font-weight: 600">{{f.name}}</span><span style="font-size: 12.5px; color: #6B5B4E">{{f.note}}</span></span><button class="ad-tog" onClick="{{f.toggle}}" aria-pressed="{{f.on}}" aria-label="{{f.name}}"><span></span></button></div></sc-for>
+<sc-if value="{{isFeat}}" hint-placeholder-val="{{ true }}"><div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid #EFE7DD"><label for="fpos"><span style="display: block; font-weight: 600">Kedudukan di meja</span><span style="font-size: 12.5px; color: #6B5B4E">1 paling kiri. Sekarang {{featMax}} kek di atas meja.</span></label><input id="fpos" class="ad-in" type="number" min="1" max="12" value="{{featPos}}" onInput="{{setPos}}" style="width: 80px"></div></sc-if>
+</div>
+<button class="ad-btn ad-danger" style="align-self: flex-start">Padam produk</button>
+</section>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1250}}'>
+@@PRODUCTS@@
+@@MEJA_JS@@
+@@CATS@@
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { q: '', sel: '04', edits: {}, pub: {}, flags: { '04': { active: true, feat: true, custom: true, reka: true } }, order: {}, cutUp: {}, msg: '' }; }
+  renderVals() {
+    const s = this.state; const q = s.q.trim().toLowerCase();
+    const base = PRODUCTS.find((p) => p.id === s.sel); const e = { ...base, ...(s.pub[s.sel] || {}), ...(s.edits[s.sel] || {}) };
+    const edit = (patch) => this.setState({ edits: { ...s.edits, [s.sel]: { ...(s.edits[s.sel] || {}), ...patch } }, msg: '' });
+    const fl = s.flags[s.sel] || { active: true, feat: base.feat > 0, custom: false, reka: base.reka };
+    const setF = (k) => this.setState({ flags: { ...s.flags, [s.sel]: { ...fl, [k]: !fl[k] } } });
+    const imgs = s.sel === '04' ? ['@@IMG:04_02@@', '@@IMG:04_01@@', '@@IMG:04_03@@', '@@IMG:04_06@@'] : [e.img];
+    return {
+      q: s.q, setQ: (ev) => this.setState({ q: ev.target.value }),
+      list: PRODUCTS.filter((p) => !q || p.name.toLowerCase().includes(q)).map((p) => { const f = s.flags[p.id] || { active: true }; const draft = !!s.edits[p.id]; return { ...p, on: p.id === s.sel ? 'true' : 'false', state: draft ? 'Draf' : f.active ? 'Aktif' : 'Tersembunyi', bg: draft ? '#FFF1D6' : f.active ? '#E3F1E4' : '#ECE7E1', fg: draft ? '#7A4B00' : f.active ? '#22562B' : '#7E3F47', pick: () => this.setState({ sel: p.id, msg: '' }) }; }),
+      e: { ...e, imgs, sizes: e.sizes.map((z, i) => ({ ...z, remove: () => edit({ sizes: e.sizes.filter((_, k) => k !== i) }) })) },
+      cats: CATS,
+      setName: (ev) => edit({ name: ev.target.value }), setCat: (ev) => edit({ cat: ev.target.value }), setDesc: (ev) => edit({ desc: ev.target.value }),
+      addSize: () => edit({ sizes: [...e.sizes, { l: 'Saiz baru', p: 0 }] }),
+      flags: [['active', 'Dipaparkan di laman', 'Pelanggan boleh lihat dan tempah'], ['feat', 'Paparkan di meja kek', 'Muncul di meja kek laman utama'], ['reka', 'Tunjuk butang Reka sendiri', 'Untuk kek krim yang boleh direka dalam studio 3D'], ['custom', 'Benarkan tulisan atas kek', 'Pelanggan boleh tulis ucapan']].map(([k, name, note]) => ({ name, note, on: fl[k] ? 'true' : 'false', toggle: () => setF(k) })),
+      isFeat: !!fl.feat, featPos: s.order[s.sel] ?? (base.feat || 1), featMax: PRODUCTS.filter((p) => p.feat > 0).length, setPos: (e) => this.setState({ order: { ...s.order, [s.sel]: Math.max(1, Math.min(12, +e.target.value || 1)) }, msg: '' }),
+      ...(() => { const up = s.cutUp[s.sel]; const img = up ? up.url : CUT[s.sel]; return { cutImg: img || '', hasCut: !!img, noCut: !img, cutChanged: !!up,
+        cutNote: up ? 'Gambar baharu dipilih: ' + up.name + '. Latar belakang akan dibuang automatik bila disimpan, dan meja kek dikemas kini selepas diterbitkan.' : '',
+        upCut: (ev) => { const f = ev.target && ev.target.files && ev.target.files[0]; if (!f) return; this.setState({ cutUp: { ...s.cutUp, [s.sel]: { name: f.name, url: URL.createObjectURL(f) } }, msg: '' }); },
+        resetCut: () => { const c = { ...s.cutUp }; delete c[s.sel]; this.setState({ cutUp: c }); } }; })(),
+      msg: !!s.msg, msgText: s.msg,
+      saveDraft: () => this.setState({ msg: 'Draf disimpan. Belum dipaparkan kepada pelanggan.' }),
+      publish: () => { const ed = { ...s.edits }; const pub = { ...s.pub, [s.sel]: { ...(s.pub[s.sel] || {}), ...(ed[s.sel] || {}) } }; delete ed[s.sel]; this.setState({ edits: ed, pub, msg: 'Diterbitkan. Perubahan kini dipaparkan di laman.' }); },
+    };
+  }
+}
+</script>
+</body>
+</html>

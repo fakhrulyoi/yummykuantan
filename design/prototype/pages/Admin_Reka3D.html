@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Admin: Pilihan reka 3D</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_ADMIN@@</style>
+</helmet>
+<div class="ad" style="display: flex; flex-wrap: wrap; min-height: 100vh; font-family: 'Manrope', system-ui, sans-serif; color: #1E1611; background: #F6F2EC; font-size: 14.5px; line-height: 1.5">
+@@SIDEBAR:reka@@
+<main style="flex: 999 1 760px; min-width: 0; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 18px">
+@@TOP:Pilihan reka 3D|Apa yang pelanggan boleh pilih dalam studio, dan harganya@@
+<div style="display: flex; gap: 4px; flex-wrap: wrap"><sc-for list="{{groups}}" as="g" hint-placeholder-count="7"><button class="ad-tab" onClick="{{g.pick}}" aria-pressed="{{g.on}}">{{g.name}}</button></sc-for></div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+<section class="ad-card" aria-label="Senarai pilihan" style="flex: 999 1 560px; min-width: 0; overflow: hidden">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px"><h2 style="font-size: 17px">{{title}}</h2><button class="ad-btn ad-btn2">Tambah pilihan</button></div>
+<div class="ad-th" style="display: grid; grid-template-columns: 1.4fr 1.4fr 140px 70px; gap: 12px; padding: 8px 16px; background: #FBF8F4"><span>Pilihan</span><span>Keterangan</span><span>Harga tambahan (RM)</span><span>Aktif</span></div>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="6"><div style="display: grid; grid-template-columns: 1.4fr 1.4fr 140px 70px; gap: 12px; padding: 10px 16px; border-top: 1px solid #EFE7DD; align-items: center; opacity: {{r.op}}">
+<span style="display: flex; align-items: center; gap: 10px; font-weight: 600"><sc-if value="{{r.isColor}}" hint-placeholder-val="{{ false }}"><span style="width: 28px; height: 28px; border-radius: 999px; background: {{r.hex}}; border: 1px solid #E2CEC6"></span></sc-if>{{r.name}}</span>
+<span style="font-size: 13px; color: #6B5B4E">{{r.note}}</span>
+<input class="ad-in" type="number" value="{{r.price}}" onInput="{{r.setPrice}}" aria-label="Harga {{r.name}}">
+<button class="ad-tog" onClick="{{r.toggle}}" aria-pressed="{{r.on}}" aria-label="Aktifkan {{r.name}}"><span></span></button>
+</div></sc-for>
+</section>
+<aside style="flex: 1 1 320px; max-width: 400px; display: flex; flex-direction: column; gap: 14px">
+<section class="ad-card" style="padding: 18px">
+<h2 style="font-size: 17px">Peraturan warna krim</h2>
+<p style="font-size: 13.5px; color: #6B5B4E; margin-top: 6px">Warna HEX daripada pelanggan disemak automatik. Warna yang terlalu gelap atau terang ditolak, ikut polisi Tiada Warna Gelap.</p>
+<label class="ad-lbl" for="minl" style="margin-top: 12px">Kecerahan minimum: {{minL}}%</label>
+<input id="minl" type="range" min="50" max="90" value="{{minL}}" onInput="{{setMinL}}" style="width: 100%; accent-color: #4B141B">
+<div style="display: flex; gap: 6px; margin-top: 10px"><sc-for list="{{samples}}" as="c" hint-placeholder-count="8"><span title="{{c.hex}}" style="flex: 1; height: 34px; border-radius: 6px; background: {{c.hex}}; border: 2px solid {{c.ring}}; position: relative"></span></sc-for></div>
+<p style="font-size: 12.5px; color: #6B5B4E; margin-top: 6px">Bergaris hijau: diterima. Bergaris merah: ditolak.</p>
+<label class="ad-lbl" for="cc" style="margin-top: 12px">Caj warna khas (RM)</label><input id="cc" class="ad-in" type="number" value="10">
+</section>
+<section class="ad-card" style="padding: 18px">
+<h2 style="font-size: 17px">Semakan oleh bakeri</h2>
+<p style="font-size: 13.5px; color: #6B5B4E; margin-top: 6px">Reka dengan pilihan di bawah dihantar kepada anda dulu sebelum pelanggan bayar.</p>
+<sc-for list="{{reviewRules}}" as="r" hint-placeholder-count="4"><div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-top: 1px solid #EFE7DD; margin-top: 8px"><span>{{r.name}}</span><button class="ad-tog" onClick="{{r.toggle}}" aria-pressed="{{r.on}}" aria-label="{{r.name}}"><span></span></button></div></sc-for>
+<a class="ad-btn ad-btn2" href="Reka_D.dc.html" style="width: 100%; margin-top: 10px">Lihat studio seperti pelanggan</a>
+</section>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { g: 0, minL: 72, off: {}, price: {}, rr: [true, true, true, true], data: [
+      ['Bentuk', [['Bulat', 'Model 3D asas', 0], ['Segi empat', 'Satu tingkat sahaja', 15], ['Hati', 'Satu tingkat sahaja', 25], ['Segi empat panjang', 'Satu tingkat sahaja', 30]]],
+      ['Saiz', [['4 inci', 'Hidang 2 hingga 4', 45], ['6 inci', 'Hidang 10 hingga 12', 100], ['8 inci', 'Hidang 18 hingga 22', 160], ['10 inci', 'Hidang 30 hingga 35', 230]]],
+      ['Tingkat', [['Satu tingkat', 'Termasuk', 0], ['Dua tingkat', 'Harga ikut saiz tingkat atas', 0], ['Tiga tingkat', 'Perlu 8 inci ke atas, disemak', 0]]],
+      ['Rasa sponge', [['Vanila', '', 0], ['Coklat', '', 0], ['Pandan', '', 0], ['Mentega tulen', 'Setingkat', 10], ['Red velvet', 'Setingkat', 10], ['Matcha', 'Setingkat', 15]]],
+      ['Inti', [['Krim strawberi', '', 0], ['Krim vanila', '', 0], ['Ganache coklat', 'Setingkat', 8], ['Karamel masin', 'Setingkat', 10], ['Biscoff', 'Setingkat', 12], ['Sos gula melaka', 'Setingkat', 8]]],
+      ['Warna krim', [['Krim putih', '#F3EBDD', 0], ['Merah jambu lembut', '#EBC4BA', 0], ['Pistachio', '#C9D3AD', 0], ['Biru lembut', '#D4E0EC', 0]]],
+      ['Hiasan', [['Strawberi segar', 'Penuh di atas', 25], ['Piping krim', 'Termasuk', 0], ['Mutiara gula', 'Setiap tingkat', 15], ['Makaron', '4 biji', 30], ['Reben satin', 'Tingkat bawah', 12], ['Daun emas', '', 25], ['Lilin', 'Set 3', 6], ['Topper nama', 'Disemak', 25], ['Cetakan foto', 'Tiada dalam pratonton 3D', 35]]],
+    ] };
+  }
+  renderVals() {
+    const s = this.state; const [gname, opts] = s.data[s.g];
+    const lum = (h) => { const n = parseInt(h.slice(1), 16); const r = (n >> 16) / 255, g = ((n >> 8) & 255) / 255, b = (n & 255) / 255; return (Math.max(r, g, b) + Math.min(r, g, b)) / 2 * 100; };
+    const samples = ['#F3EBDD', '#EBC4BA', '#D4E0EC', '#C9D3AD', '#E8A0AE', '#9DB7D6', '#C76A7A', '#4A6FA5'];
+    return {
+      groups: s.data.map(([n], i) => ({ name: n, on: s.g === i ? 'true' : 'false', pick: () => this.setState({ g: i }) })),
+      title: gname,
+      rows: opts.map(([name, note, price]) => { const key = gname + '|' + name; const isColor = gname === 'Warna krim'; const on = !s.off[key]; return { name, note: isColor ? note.toUpperCase() : note || 'Termasuk', hex: note, isColor, price: s.price[key] ?? price, on: on ? 'true' : 'false', op: on ? 1 : 0.5, toggle: () => this.setState({ off: { ...s.off, [key]: on } }), setPrice: (e) => this.setState({ price: { ...s.price, [key]: +e.target.value } }) }; }),
+      minL: s.minL, setMinL: (e) => this.setState({ minL: +e.target.value }),
+      samples: samples.map((h) => ({ hex: h, ring: lum(h) >= s.minL ? '#2F6B3A' : '#B5463D' })),
+      reviewRules: ['Tiga tingkat', 'Warna HEX khas', 'Topper nama', 'Cetakan foto'].map((n, i) => ({ name: n, on: s.rr[i] ? 'true' : 'false', toggle: () => this.setState({ rr: s.rr.map((x, k) => (k === i ? !x : x)) }) })),
+    };
+  }
+}
+</script>
+</body>
+</html>

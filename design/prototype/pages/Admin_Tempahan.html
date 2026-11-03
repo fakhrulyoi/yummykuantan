@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Admin: Tempahan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_ADMIN@@</style>
+</helmet>
+<div class="ad" style="display: flex; flex-wrap: wrap; min-height: 100vh; font-family: 'Manrope', system-ui, sans-serif; color: #1E1611; background: #F6F2EC; font-size: 14.5px; line-height: 1.5">
+@@SIDEBAR:tempahan@@
+<main style="flex: 999 1 760px; min-width: 0; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 18px">
+@@TOP:Tempahan|118 tempahan bulan ini@@
+<div style="display: flex; gap: 4px; flex-wrap: wrap"><sc-for list="{{filters}}" as="f" hint-placeholder-count="9"><button class="ad-tab" onClick="{{f.pick}}" aria-pressed="{{f.on}}">{{f.name}} <span style="opacity: .7">{{f.n}}</span></button></sc-for></div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+<section class="ad-card" aria-label="Senarai tempahan" style="flex: 999 1 560px; min-width: 0; overflow: hidden">
+<div style="overflow-x: auto">
+<div style="min-width: 640px">
+<div class="ad-th" style="display: grid; grid-template-columns: 100px 1fr 1.4fr 110px 90px 150px; gap: 12px; padding: 10px 16px; background: #FBF8F4"><span>No.</span><span>Pelanggan</span><span>Kek</span><span>Tarikh</span><span>Jumlah</span><span>Status</span></div>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="9"><button class="ad-row" onClick="{{r.pick}}" aria-pressed="{{r.on}}" style="grid-template-columns: 100px 1fr 1.4fr 110px 90px 150px"><span style="font-weight: 700">{{r.no}}</span><span>{{r.cust}}</span><span>{{r.cake}}</span><span>{{r.date}}</span><span>RM {{r.total}}</span><span><span class="ad-badge" style="background: {{r.bg}}; color: {{r.fg}}">{{r.status}}</span></span></button></sc-for>
+<sc-if value="{{none}}" hint-placeholder-val="{{ false }}"><p style="padding: 32px 16px; text-align: center; color: #6B5B4E">Tiada tempahan dengan status ini.</p></sc-if>
+</div>
+</div>
+</section>
+<aside class="ad-card" aria-label="Butiran tempahan" style="flex: 1 1 380px; max-width: 460px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: flex-start"><div><p style="font-size: 13px; color: #6B5B4E">Tempahan</p><h2 style="font-size: 22px">{{d.no}}</h2></div><span class="ad-badge" style="background: {{d.bg}}; color: {{d.fg}}">{{d.status}}</span></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13.5px">
+<div><p style="color: #6B5B4E">Pelanggan</p><p style="font-weight: 600">{{d.cust}}</p><p>{{d.phone}}</p></div>
+<div><p style="color: #6B5B4E">Tarikh dan masa</p><p style="font-weight: 600">{{d.date}}</p><p>{{d.slot}}</p></div>
+<div><p style="color: #6B5B4E">Cara terima</p><p style="font-weight: 600">{{d.mode}}</p><p>{{d.addr}}</p></div>
+<div><p style="color: #6B5B4E">Bayaran</p><p style="font-weight: 600">RM {{d.total}}, {{d.pay}}</p><p>{{d.ref}}</p></div>
+</div>
+<div style="border-top: 1px solid #EFE7DD; padding-top: 14px">
+<p class="ad-lbl">Kek</p>
+<sc-for list="{{d.items}}" as="i" hint-placeholder-count="1"><div style="display: flex; gap: 12px; align-items: center; margin-top: 8px"><img src="{{i.img}}" alt="" style="width: 64px; height: 72px; border-radius: 8px; object-fit: cover; background: #ECE5DB"><div style="flex: 1; min-width: 0"><p style="font-weight: 600">{{i.name}}</p><p style="font-size: 13px; color: #6B5B4E">{{i.opt}}</p></div></div></sc-for>
+<sc-if value="{{d.custom}}" hint-placeholder-val="{{ false }}"><a href="Reka_D.dc.html" class="ad-btn ad-btn2" style="margin-top: 10px; width: 100%">Buka pratonton 3D reka ini</a></sc-if>
+</div>
+<div><p class="ad-lbl">Nota pelanggan</p><p style="font-size: 13.5px; background: #FBF8F4; border-radius: 8px; padding: 10px 12px">{{d.note}}</p></div>
+<div style="border-top: 1px solid #EFE7DD; padding-top: 14px">
+<label class="ad-lbl" for="st">Tukar status</label>
+<div style="display: flex; gap: 8px"><select id="st" class="ad-in" value="{{d.status}}" onChange="{{setStatus}}"><sc-for list="{{statuses}}" as="o" hint-placeholder-count="9"><option value="{{o}}">{{o}}</option></sc-for></select><button class="ad-btn" onClick="{{saveStatus}}">Kemas kini</button></div>
+<p style="font-size: 12.5px; color: #6B5B4E; margin-top: 6px">Tempahan masuk ke sini bila pelanggan tekan Tempah di laman. Bayaran dicatat sendiri selepas diterima di WhatsApp.</p>
+<sc-if value="{{saved}}" hint-placeholder-val="{{ false }}"><p role="status" style="font-size: 13px; color: #22562B; margin-top: 6px">Status dikemas kini.</p></sc-if>
+</div>
+<sc-if value="{{d.review}}" hint-placeholder-val="{{ false }}"><div style="display: flex; gap: 8px"><button class="ad-btn" onClick="{{approve}}" style="flex: 1">Luluskan reka</button><button class="ad-btn ad-danger" onClick="{{reject}}">Tolak</button></div></sc-if>
+<button class="ad-btn ad-btn2" onClick="{{markPaid}}">Tandakan sudah bayar</button>
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><button class="ad-btn ad-btn2">Cetak slip dapur</button><a class="ad-btn ad-btn2" href="https://wa.me/">Buka chat WhatsApp</a><button class="ad-btn ad-danger">Batal tempahan</button></div>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { filter: 'Semua', sel: 'YK-24121', draft: null, saved: false, orders: [
+      { no: 'YK-24121', cust: 'Aisyah M.', phone: '[012 xxx xxxx]', cake: 'Reka 3D YK-D-0427', date: '5 Nov', slot: '10:00 hingga 12:00 pagi', mode: 'Ambil sendiri', addr: '[Alamat dapur]', total: 286, pay: 'belum dibayar', ref: 'Reka perlu disemak', status: 'Baru dari WhatsApp', review: true, custom: true, note: 'Tema pink lembut untuk hari jadi anak. Gambar rujukan saya hantar melalui WhatsApp.', items: [{ name: 'Reka 3D, bulat 2 tingkat', opt: '8 + 6 inci, merah jambu lembut, vanila, krim strawberi, strawberi segar', img: '@@IMG:t_blush_1@@' }] },
+      { no: 'YK-24120', cust: 'Nurul A.', phone: '[013 xxx xxxx]', cake: 'Italian Cake 8 inci', date: '4 Nov', slot: '2:00 hingga 4:00 petang', mode: 'Ambil sendiri', addr: '[Alamat dapur]', total: 280, pay: 'pindahan bank', ref: 'Dibayar 2 Nov', status: 'Dalam penyediaan', note: 'Tulis: Selamat Pengantin Baru Ain & Hakim', items: [{ name: 'Italian Cake', opt: '8 inci', img: '@@IMG:04_02@@' }] },
+      { no: 'YK-24119', cust: 'Hafiz R.', phone: '[019 xxx xxxx]', cake: 'Kekbatik Mewah x2', date: '4 Nov', slot: '4:00 hingga 6:00 petang', mode: 'Penghantaran', addr: '[Alamat], 25200 Kuantan', total: 250, pay: 'DuitNow', ref: 'Dibayar 1 Nov', status: 'Dalam penyediaan', note: 'Tiada', items: [{ name: 'Kekbatik Mewah', opt: '2 biji', img: '@@IMG:22_01@@' }] },
+      { no: 'YK-24118', cust: 'Syafiq', phone: '[011 xxx xxxx]', cake: 'Brownies 10 inci', date: '5 Nov', slot: '2:00 hingga 4:00 petang', mode: 'Penghantaran', addr: '[Alamat], 26060 Kuantan', total: 140, pay: 'pindahan bank', ref: 'Dibayar 2 Nov', status: 'Disahkan', note: 'Letak topper Happy Birthday', items: [{ name: 'Brownies', opt: '10 inci', img: '@@IMG:17_01@@' }] },
+      { no: 'YK-24117', cust: 'Farah & Imran', phone: '[012 xxx xxxx]', cake: '2 Tier Wedding Cake', date: '6 Nov', slot: '10:00 hingga 12:00 pagi', mode: 'Penghantaran', addr: '[Dewan], 25150 Kuantan', total: 370, pay: 'pindahan bank', ref: 'Deposit 50%', status: 'Disahkan', note: 'Hantar ke dewan sebelum 11 pagi', items: [{ name: '2 Tier Wedding Cake', opt: '2 tingkat', img: '@@IMG:09_01@@' }] },
+      { no: 'YK-24116', cust: 'Lina K.', phone: '[017 xxx xxxx]', cake: 'Burnt Cheese Cake 8 inci', date: '6 Nov', slot: '4:00 hingga 6:00 petang', mode: 'Ambil sendiri', addr: '[Alamat dapur]', total: 190, pay: 'tunai semasa ambil', ref: 'Dipersetujui di WhatsApp', status: 'Disahkan', note: 'Topper nama: Lina', items: [{ name: 'Burnt Cheese Cake Italian', opt: '8 inci', img: '@@IMG:16_01@@' }] },
+      { no: 'YK-24115', cust: 'Zul', phone: '[014 xxx xxxx]', cake: 'Kekbatik Indulgence Cheese', date: '7 Nov', slot: '10:00 hingga 12:00 pagi', mode: 'Ambil sendiri', addr: '[Alamat dapur]', total: 55, pay: 'belum dibayar', ref: 'Maklumat bank dihantar 2 Nov', status: 'Menunggu bayaran', note: 'Tiada', items: [{ name: 'Kekbatik Indulgence Cheese', opt: '7 inci', img: '@@IMG:01_01@@' }] },
+      { no: 'YK-24112', cust: 'Mira', phone: '[012 xxx xxxx]', cake: 'Vintage Love Cake', date: '2 Nov', slot: '2:00 hingga 4:00 petang', mode: 'Ambil sendiri', addr: '[Alamat dapur]', total: 110, pay: 'pindahan bank', ref: 'Dibayar 30 Okt', status: 'Selesai', note: 'Tiada', items: [{ name: 'Vintage Love Cake', opt: '6 inci', img: '@@IMG:11_01@@' }] },
+      { no: 'YK-24109', cust: 'Kamal', phone: '[013 xxx xxxx]', cake: 'Red Velvet', date: '1 Nov', slot: '10:00 hingga 12:00 pagi', mode: 'Ambil sendiri', addr: '[Alamat dapur]', total: 89, pay: 'pindahan bank', ref: 'Dipulangkan 29 Okt', status: 'Dibatalkan', note: 'Pelanggan batal 4 hari awal, wang dipulangkan', items: [{ name: 'Red Velvet', opt: '8 inci', img: '@@IMG:30_01@@' }] },
+    ] };
+  }
+  renderVals() {
+    const s = this.state;
+    const ST = ['Baru dari WhatsApp', 'Menunggu bayaran', 'Disahkan', 'Dalam penyediaan', 'Sedia diambil', 'Dalam penghantaran', 'Selesai', 'Dibatalkan'];
+    const col = { 'Baru dari WhatsApp': ['#FDE8D7', '#86400F'], 'Menunggu bayaran': ['#FFF1D6', '#7A4B00'], 'Disahkan': ['#E3F1E4', '#22562B'], 'Dalam penyediaan': ['#E2ECF7', '#1F4A7A'], 'Sedia diambil': ['#EFE5F7', '#5B2E7A'], 'Dalam penghantaran': ['#F5E7E0', '#7A3A1F'], 'Selesai': ['#ECE7E1', '#7E3F47'], 'Dibatalkan': ['#FBE3E1', '#8E2620'] };
+    const list = s.orders.filter((o) => s.filter === 'Semua' || o.status === s.filter);
+    const d = s.orders.find((o) => o.no === s.sel) || s.orders[0];
+    const setO = (no, patch) => this.setState({ orders: s.orders.map((o) => (o.no === no ? { ...o, ...patch } : o)), saved: true, draft: null });
+    return {
+      filters: ['Semua', ...ST].map((f) => ({ name: f, n: f === 'Semua' ? s.orders.length : s.orders.filter((o) => o.status === f).length, on: s.filter === f ? 'true' : 'false', pick: () => this.setState({ filter: f }) })),
+      rows: list.map((o) => ({ ...o, bg: col[o.status][0], fg: col[o.status][1], on: o.no === d.no ? 'true' : 'false', pick: () => this.setState({ sel: o.no, saved: false, draft: null }) })),
+      none: list.length === 0,
+      d: { ...d, bg: col[d.status][0], fg: col[d.status][1], review: !!d.review, custom: !!d.custom, status: s.draft ?? d.status },
+      statuses: ST, setStatus: (e) => this.setState({ draft: e.target.value, saved: false }),
+      saveStatus: () => setO(d.no, { status: s.draft ?? d.status }),
+      saved: s.saved,
+      approve: () => setO(d.no, { status: 'Menunggu bayaran', review: false, ref: 'Harga RM 286 disahkan di WhatsApp' }),
+      markPaid: () => setO(d.no, { status: 'Disahkan', pay: 'pindahan bank', ref: 'Dibayar 3 Nov, dicatat oleh admin' }),
+      reject: () => setO(d.no, { status: 'Dibatalkan', review: false, ref: 'Reka ditolak' }),
+    };
+  }
+}
+</script>
+</body>
+</html>

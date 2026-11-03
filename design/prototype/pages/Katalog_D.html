@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Yummy Kuantan: Koleksi kek</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_B@@</style>
+</helmet>
+<div class="b" style="font-family: 'Manrope', system-ui, sans-serif; color: #F2E7DE; background: #4B141B; font-size: 16px; line-height: 1.6; min-height: 100vh">
+@@HDR_D:koleksi@@
+<main style="max-width: 1360px; margin: 0 auto; padding: 40px 40px 96px">
+<nav aria-label="Laluan" style="font-size: 14px; color: #D3B1AB"><a href="Main.dc.html" style="color: #D3B1AB">Utama</a><span aria-hidden="true" style="margin: 0 10px">/</span><span>Koleksi</span></nav>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-top: 16px">
+<div><h1 style="font-size: 72px; line-height: 1">{{title}}</h1><p style="margin-top: 10px; color: #D3B1AB">Semua kek dibakar ikut tempahan. Tekan Tempah untuk terus WhatsApp kami.</p></div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center">
+<label for="q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Cari kek</label>
+<input id="q" class="b-in" type="search" placeholder="Cari nama kek atau rasa" value="{{q}}" onInput="{{setQ}}" style="width: 300px">
+<label for="sort" style="font-size: 14px; color: #D3B1AB">Susun</label>
+<select id="sort" class="b-in" value="{{sort}}" onChange="{{setSort}}" style="width: 210px"><option value="pop">Paling kerap ditempah</option><option value="low">Harga rendah ke tinggi</option><option value="high">Harga tinggi ke rendah</option></select>
+</div>
+</div>
+<div style="display: flex; gap: 8px; margin-top: 28px; overflow-x: auto; padding-bottom: 4px">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="7"><button class="b-chip" onClick="{{c.pick}}" aria-pressed="{{c.on}}">{{c.name}} <span style="opacity: .7">{{c.count}}</span></button></sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 32px; align-items: flex-start">
+<aside aria-label="Tapis" style="flex: 0 1 220px">
+<p style="font-weight: 700; font-size: 14px">Harga</p>
+<div style="display: grid; gap: 6px; margin-top: 10px">
+<sc-for list="{{prices}}" as="p" hint-placeholder-count="4"><button class="b-pill" onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="width: 100%">{{p.name}}</button></sc-for>
+</div>
+<div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #74343C">
+<p style="font-family: 'Libre Caslon Display', serif; font-size: 24px; line-height: 1.15">Nak rekaan sendiri?</p>
+<p style="font-size: 14.5px; color: #D3B1AB; margin-top: 8px">Reka dalam 3D dan hantar kepada kami untuk semakan.</p>
+<a href="Reka_D.dc.html" style="display: inline-block; margin-top: 12px; font-weight: 600; text-underline-offset: 5px">Buka studio 3D</a>
+</div>
+</aside>
+<section aria-label="Senarai kek" style="flex: 999 1 640px; min-width: 0">
+<p role="status" style="font-size: 14px; color: #D3B1AB">{{countLabel}}</p>
+<sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+<div style="margin-top: 20px; padding: 64px 24px; border: 1px dashed #8A4A52; text-align: center"><p style="font-family: 'Libre Caslon Display', serif; font-size: 30px">Tiada kek sepadan dengan carian ini.</p><p style="color: #D3B1AB; margin-top: 8px">Cuba kategori atau julat harga lain.</p><button class="b-btn b-line" onClick="{{reset}}" style="margin-top: 20px">Kosongkan tapisan</button></div>
+</sc-if>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-flow: dense; gap: 18px; margin-top: 18px">
+<sc-for list="{{items}}" as="p" hint-placeholder-count="12">
+<article class="yk-tile yk-in" style="grid-column: span {{p.cs}}; grid-row: span {{p.rs}}; aspect-ratio: {{p.ar}}; animation-delay: {{p.d}}">
+<img src="{{p.img}}" alt="{{p.name}}">
+<span aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(42,9,14,.0) 40%, rgba(42,9,14,.9) 100%)"></span>
+<button class="b-fav" onClick="{{p.toggle}}" aria-pressed="{{p.fav}}" aria-label="Simpan {{p.name}} dalam kegemaran"><svg width="20" height="20" viewBox="0 0 24 24" fill="{{p.heart}}" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z"></path></svg></button>
+<div style="position: absolute; left: 18px; right: 18px; bottom: 16px">
+<p style="color: #EBCFC3; font-size: 12.5px; font-weight: 600">{{p.cat}}</p>
+<h2 style="font-size: {{p.fs}}; line-height: 1.05; margin-top: 2px"><a href="Produk_D.dc.html" style="text-decoration: none">{{p.name}}</a></h2>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap"><span style="font-size: 14.5px; color: #ECDDD3">dari RM {{p.price}}<span style="color: #D3B1AB">, {{p.sizeText}}</span></span>
+<span class="yk-act" style="display: flex; gap: 6px"><a class="b-btn" href="{{p.wa}}" style="min-height: 40px; padding: 0 14px; font-size: 13.5px">Tempah</a><button class="b-btn b-line" onClick="{{p.add}}" style="min-height: 40px; padding: 0 14px; font-size: 13.5px; background: rgba(60,13,19,.55)">{{p.addLabel}}</button></span></div>
+</div>
+</article>
+</sc-for>
+</div>
+</section>
+</div>
+</main>
+@@FTR_D@@
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4400}}'>
+@@PRODUCTS@@
+@@CATS@@
+@@WA_JS@@
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { cat: 'Semua', price: 0, q: '', sort: 'pop', favs: {}, cart: 0, added: {} }; }
+  renderVals() {
+    const s = this.state;
+    const prices = [['Semua harga', 0, 1e9], ['Bawah RM 60', 0, 59.99], ['RM 60 hingga RM 150', 60, 150], ['Atas RM 150', 150.01, 1e9]];
+    const pr = prices[s.price]; const q = s.q.trim().toLowerCase();
+    let items = PRODUCTS.filter((p) => (s.cat === 'Semua' || p.cat === s.cat) && p.price >= pr[1] && p.price <= pr[2] && (!q || (p.name + ' ' + p.desc).toLowerCase().includes(q)));
+    items = items.slice().sort((a, b) => s.sort === 'low' ? a.price - b.price : s.sort === 'high' ? b.price - a.price : b.pop - a.pop);
+    return {
+      cart: s.cart, title: s.cat === 'Semua' ? 'Koleksi' : s.cat, q: s.q, sort: s.sort,
+      setQ: (e) => this.setState({ q: e.target.value }), setSort: (e) => this.setState({ sort: e.target.value }),
+      cats: ['Semua', ...CATS].map((c) => ({ name: c, count: c === 'Semua' ? PRODUCTS.length : PRODUCTS.filter((p) => p.cat === c).length, on: s.cat === c ? 'true' : 'false', pick: () => this.setState({ cat: c }) })),
+      prices: prices.map((p, i) => ({ name: p[0], on: s.price === i ? 'true' : 'false', pick: () => this.setState({ price: i }) })),
+      countLabel: items.length + ' kek', empty: items.length === 0, reset: () => this.setState({ cat: 'Semua', price: 0, q: '' }),
+      items: items.map((p, i) => { const big = i % 7 === 0; const wide = i % 7 === 4; return { ...p, cs: big || wide ? 2 : 1, rs: big ? 2 : 1, ar: big ? 'auto' : wide ? '2 / 1.25' : '4 / 5', fs: big ? '40px' : '24px', d: Math.min(1.2, 0.05 + i * 0.06).toFixed(2) + 's', sizeText: p.sizes.map((z) => z.l).join(', '), fav: s.favs[p.id] ? 'true' : 'false', heart: s.favs[p.id] ? 'currentColor' : 'none',
+        toggle: () => this.setState({ favs: { ...s.favs, [p.id]: !s.favs[p.id] } }), addLabel: s.added[p.id] ? 'Dalam senarai' : 'Tambah ke senarai',
+        wa: waLink('Salam Yummy Kuantan, saya nak tempah ' + p.name + ' (' + p.sizes.map((z) => z.l + ' RM' + z.p).join(', ') + '). Boleh saya tahu tarikh yang masih kosong?'),
+        add: () => { if (!s.added[p.id]) this.setState({ cart: s.cart + 1, added: { ...s.added, [p.id]: true } }); } }; }),
+    };
+  }
+}
+</script>
+</body>
+</html>

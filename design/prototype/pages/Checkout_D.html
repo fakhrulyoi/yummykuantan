@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Yummy Kuantan: Senarai tempahan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_B@@
+.c-step{width:36px;height:36px;border:0;background:none;color:#F2E7DE;font-size:18px;cursor:pointer}
+</style>
+</helmet>
+<div class="b" style="font-family: 'Manrope', system-ui, sans-serif; color: #F2E7DE; background: #4B141B; font-size: 16px; line-height: 1.55; min-height: 100vh">
+@@HDR_D:none@@
+<main style="max-width: 1240px; margin: 0 auto; padding: 36px 40px 96px">
+<h1 style="font-size: 56px; line-height: 1">Senarai tempahan</h1>
+<p style="color: #D3B1AB; margin-top: 8px">Isi butiran, kemudian hantar melalui WhatsApp. Bayaran dan caj penghantaran disahkan di WhatsApp.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 28px; align-items: flex-start">
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 36px">
+
+<section aria-labelledby="c1">
+<h2 id="c1" style="font-size: 28px">1. Kek</h2>
+<sc-if value="{{empty}}" hint-placeholder-val="{{ false }}"><div style="margin-top: 14px; padding: 32px; border: 1px dashed #8A4A52; text-align: center"><p>Senarai kosong.</p><a class="b-btn" href="Katalog_D.dc.html" style="margin-top: 14px">Lihat koleksi</a></div></sc-if>
+<div style="margin-top: 14px; border-top: 1px solid #74343C">
+<sc-for list="{{items}}" as="i" hint-placeholder-count="2">
+<div style="display: flex; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid #74343C">
+<img src="{{i.img}}" alt="" style="width: 84px; height: 100px; object-fit: cover; flex: none">
+<div style="flex: 1; min-width: 0"><p style="font-family: 'Libre Caslon Display', serif; font-size: 22px; line-height: 1.15">{{i.name}}</p><p style="font-size: 14px; color: #D3B1AB">{{i.opt}}</p><sc-if value="{{i.hasNote}}" hint-placeholder-val="{{ false }}"><p style="font-size: 13.5px; color: #E6CFC6">{{i.note}}</p></sc-if><button onClick="{{i.remove}}" style="border: 0; background: none; color: #E6CFC6; font: 500 13.5px 'Manrope', sans-serif; text-decoration: underline; cursor: pointer; padding: 6px 0; min-height: 36px">Buang</button></div>
+<div style="display: flex; align-items: center; border: 1px solid #8A4A52"><button class="c-step" onClick="{{i.dec}}" aria-label="Kurangkan {{i.name}}">&#8722;</button><span style="min-width: 26px; text-align: center">{{i.qty}}</span><button class="c-step" onClick="{{i.inc}}" aria-label="Tambah {{i.name}}">+</button></div>
+<span style="width: 90px; text-align: right; font-weight: 600">RM {{i.line}}</span>
+</div>
+</sc-for>
+</div>
+<a href="Katalog_D.dc.html" style="display: inline-block; margin-top: 12px; font-weight: 600; text-underline-offset: 5px">Tambah kek lain</a>
+<div style="margin-top: 28px">
+<h3 style="font-family: 'Libre Caslon Display', serif; font-weight: 400; font-size: 22px">Tambah sekali</h3>
+<p style="font-size: 14px; color: #D3B1AB">Pilihan untuk majlis anda. Dibungkus bersama kek.</p>
+<ul style="list-style: none; margin: 6px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px"><sc-for list="{{addons}}" as="a" hint-placeholder-count="5"><li style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #74343C"><div style="flex: 1; min-width: 0"><p style="font-weight: 600; font-size: 15px">{{a.name}}</p><p style="font-size: 12.5px; color: #D3B1AB">{{a.note}}, {{a.price}}</p></div><div style="display: flex; align-items: center; border: 1px solid #8A4A52"><button class="c-step" onClick="{{a.dec}}" disabled="{{a.decDis}}" aria-label="Kurangkan {{a.name}}">&#8722;</button><span style="min-width: 22px; text-align: center">{{a.qty}}</span><button class="c-step" onClick="{{a.inc}}" aria-label="Tambah {{a.name}}">+</button></div></li></sc-for></ul>
+<sc-if value="{{hasNumber}}" hint-placeholder-val="{{ false }}"><label class="b-lbl" for="numtxt" style="margin-top: 14px">Nombor untuk lilin</label><input id="numtxt" class="b-in" inputmode="numeric" value="{{numText}}" onInput="{{setNum}}" placeholder="Contoh: 25"></sc-if>
+<sc-if value="{{hasCard}}" hint-placeholder-val="{{ false }}"><label class="b-lbl" for="cardtxt" style="margin-top: 14px; display: flex; justify-content: space-between"><span>Ucapan dalam kad</span><span style="font-weight: 400; color: #D3B1AB">{{cardLen}}/120</span></label><textarea id="cardtxt" class="b-in" maxlength="120" onInput="{{setCard}}" placeholder="Contoh: Selamat hari jadi, mak. Sayang mak selalu.">{{cardText}}</textarea></sc-if>
+</div>
+</section>
+
+<section aria-labelledby="c2">
+<h2 id="c2" style="font-size: 28px">2. Bila dan bagaimana</h2>
+<div role="group" aria-label="Cara terima" style="display: flex; gap: 8px; margin-top: 14px"><button class="b-pill" onClick="{{setPickup}}" aria-pressed="{{isPickup}}" style="flex: 1">Ambil sendiri<span style="display: block; font-size: 13px; color: #D3B1AB">[Alamat dapur], Kuantan</span></button><button class="b-pill" onClick="{{setDelivery}}" aria-pressed="{{isDelivery}}" style="flex: 1">Penghantaran<span style="display: block; font-size: 13px; color: #D3B1AB">Kuantan dan Pekan sahaja</span></button></div>
+<sc-if value="{{delivery}}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: 220px 1fr; gap: 12px; margin-top: 14px">
+<div><span class="b-lbl">Kawasan</span><div role="group" aria-label="Kawasan" style="display: flex; gap: 6px"><sc-for list="{{areas}}" as="a" hint-placeholder-count="2"><button class="b-pill" onClick="{{a.pick}}" aria-pressed="{{a.on}}" style="flex: 1; min-height: 50px">{{a.name}}</button></sc-for></div></div>
+<div><label class="b-lbl" for="addr">Alamat penuh</label><input id="addr" class="b-in" placeholder="No. rumah, jalan, taman" value="{{addr}}" onInput="{{setAddr}}"></div>
+</div>
+<p style="font-size: 13.5px; color: #D3B1AB; margin-top: 6px">Caj penghantaran dimaklumkan di WhatsApp.</p>
+</sc-if>
+<p class="b-lbl" style="margin-top: 20px">Tarikh, November 2026</p>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px"><sc-for list="{{days}}" as="d" hint-placeholder-count="14"><button class="b-day" onClick="{{d.pick}}" aria-pressed="{{d.on}}" disabled="{{d.full}}" style="min-height: 76px; padding: 8px 10px"><span style="font-size: 12.5px; color: #D3B1AB">{{d.dow}}</span><span style="font-family: 'Libre Caslon Display', serif; font-size: 22px; line-height: 1.1">{{d.date}}</span><span style="font-size: 12px; color: {{d.color}}">{{d.status}}</span></button></sc-for></div>
+<p class="b-lbl" style="margin-top: 18px">Masa</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px"><sc-for list="{{slots}}" as="t" hint-placeholder-count="3"><button class="b-pill" onClick="{{t.pick}}" aria-pressed="{{t.on}}" disabled="{{t.full}}">{{t.t}}<span style="display: block; font-size: 12.5px; color: #D3B1AB">{{t.note}}</span></button></sc-for></div>
+</section>
+
+<section aria-labelledby="c3">
+<h2 id="c3" style="font-size: 28px">3. Maklumat anda</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px">
+<div><label class="b-lbl" for="nm">Nama</label><input id="nm" class="b-in" value="{{name}}" onInput="{{setName}}" autocomplete="name"></div>
+<div><label class="b-lbl" for="ph">Nombor telefon</label><input id="ph" class="b-in" inputmode="tel" placeholder="Kami balas di WhatsApp anda" value="{{phone}}" onInput="{{setPhone}}" autocomplete="tel"></div>
+</div>
+<label class="b-lbl" for="nt" style="margin-top: 12px">Nota untuk kami (pilihan)</label>
+<textarea id="nt" class="b-in" placeholder="Contoh: tolong letak lilin, tema warna" onInput="{{setNotes}}">{{notes}}</textarea>
+</section>
+</div>
+
+<aside aria-label="Ringkasan" style="flex: 1 1 360px; max-width: 420px; border: 1px solid #74343C; background: #5A1B23; padding: 24px; position: sticky; top: 24px">
+<h2 style="font-size: 26px">Ringkasan</h2>
+<p style="font-size: 14px; color: #E6CFC6; margin-top: 8px">{{whenLabel}}</p>
+<dl style="display: grid; gap: 8px; margin: 16px 0 0; font-size: 15px">
+<div style="display: flex; justify-content: space-between"><dt style="color: #D3B1AB">Kek</dt><dd style="margin: 0">RM {{cakeSub}}</dd></div>
+<sc-if value="{{hasAdd}}" hint-placeholder-val="{{ false }}"><div style="display: flex; justify-content: space-between"><dt style="color: #D3B1AB">Tambahan</dt><dd style="margin: 0">RM {{addSub}}</dd></div></sc-if>
+<div style="display: flex; justify-content: space-between"><dt style="color: #D3B1AB">Anggaran jumlah</dt><dd style="margin: 0; font-family: 'Libre Caslon Display', serif; font-size: 26px; line-height: 1">RM {{sub}}</dd></div>
+<div style="display: flex; justify-content: space-between"><dt style="color: #D3B1AB">Penghantaran</dt><dd style="margin: 0">{{feeLabel}}</dd></div>
+</dl>
+<p class="b-lbl" style="margin-top: 18px">Mesej yang akan dihantar</p>
+<pre style="margin: 0; white-space: pre-wrap; font: 400 13.5px/1.5 'Manrope', sans-serif; background: #4B141B; border: 1px solid #74343C; padding: 12px; max-height: 260px; overflow-y: auto; color: #ECDDD3">{{preview}}</pre>
+<sc-if value="{{showErr}}" hint-placeholder-val="{{ false }}"><p role="alert" style="font-size: 14px; color: #FFB9AE; margin-top: 12px">{{errText}}</p></sc-if>
+<sc-if value="{{ok}}" hint-placeholder-val="{{ true }}"><a class="b-btn yk-pulse" href="{{wa}}" onClick="{{markSent}}" style="width: 100%; margin-top: 16px">@@WA@@ Hantar tempahan di WhatsApp</a></sc-if>
+<sc-if value="{{notOk}}" hint-placeholder-val="{{ false }}"><button class="b-btn" onClick="{{tryIt}}" style="width: 100%; margin-top: 16px">@@WA@@ Hantar tempahan di WhatsApp</button></sc-if>
+<sc-if value="{{sent}}" hint-placeholder-val="{{ false }}"><p role="status" style="font-size: 14px; color: #BCD7AE; margin-top: 10px">WhatsApp dibuka. Tekan hantar di WhatsApp untuk lengkapkan tempahan. Kami akan sahkan slot dan cara bayaran.</p></sc-if>
+<p style="font-size: 12.5px; color: #C0948F; margin-top: 12px">Rekaan dan warna mungkin tidak 100% sama dengan gambar, kerana setiap kek dibuat dengan tangan.</p>
+</aside>
+</div>
+</main>
+@@FTR_D@@
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+@@CHECKOUT_JS@@
+</script>
+</body>
+</html>

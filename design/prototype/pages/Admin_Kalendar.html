@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Admin: Kalendar dan kapasiti</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_ADMIN@@
+.k-day{display:flex;flex-direction:column;align-items:stretch;gap:6px;min-height:104px;padding:8px;border:0;border-top:1px solid #EFE7DD;border-left:1px solid #EFE7DD;background:#fff;font:500 13px 'Manrope',sans-serif;color:#1E1611;cursor:pointer;text-align:left}
+.k-day:hover{background:#FBF8F4}
+.k-day[aria-pressed="true"]{box-shadow:inset 0 0 0 2px #8C6A33}
+.k-day:disabled{background:#FBF8F4;color:#C9A5A0;cursor:default}
+</style>
+</helmet>
+<div class="ad" style="display: flex; flex-wrap: wrap; min-height: 100vh; font-family: 'Manrope', system-ui, sans-serif; color: #1E1611; background: #F6F2EC; font-size: 14.5px; line-height: 1.5">
+@@SIDEBAR:kalendar@@
+<main style="flex: 999 1 760px; min-width: 0; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 18px">
+@@TOP:Kalendar dan kapasiti|November 2026@@
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px">
+<div style="display: flex; gap: 4px"><sc-for list="{{views}}" as="v" hint-placeholder-count="3"><button class="ad-tab" onClick="{{v.pick}}" aria-pressed="{{v.on}}">{{v.name}}</button></sc-for></div>
+<div style="display: flex; gap: 8px; align-items: center; font-size: 13px; color: #6B5B4E"><span style="width: 12px; height: 12px; border-radius: 3px; background: #6E9B6F"></span>Ada slot<span style="width: 12px; height: 12px; border-radius: 3px; background: #D9A04A; margin-left: 10px"></span>Hampir penuh<span style="width: 12px; height: 12px; border-radius: 3px; background: #B5463D; margin-left: 10px"></span>Penuh<span style="width: 12px; height: 12px; border-radius: 3px; background: repeating-linear-gradient(45deg, #E2CEC6 0 3px, #fff 3px 6px); margin-left: 10px"></span>Ditutup</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+<section class="ad-card" aria-label="Kalendar bulan" style="flex: 999 1 600px; min-width: 0; overflow: hidden">
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); background: #FBF8F4" class="ad-th"><span style="padding: 8px">Isn</span><span style="padding: 8px">Sel</span><span style="padding: 8px">Rab</span><span style="padding: 8px">Kha</span><span style="padding: 8px">Jum</span><span style="padding: 8px">Sab</span><span style="padding: 8px">Ahd</span></div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr))">
+<sc-for list="{{cells}}" as="c" hint-placeholder-count="35"><button class="k-day" onClick="{{c.pick}}" aria-pressed="{{c.on}}" disabled="{{c.out}}" aria-label="{{c.aria}}" style="background: {{c.bg}}">
+<span style="display: flex; justify-content: space-between"><strong style="font-size: 14px">{{c.n}}</strong><span style="font-size: 12px; color: {{c.tc}}">{{c.tag}}</span></span>
+<span style="height: 6px; border-radius: 999px; background: #EFE7DD; overflow: hidden"><span style="display: block; height: 100%; width: {{c.w}}; background: {{c.color}}"></span></span>
+<span style="font-size: 12px; color: #6B5B4E">{{c.label}}</span>
+</button></sc-for>
+</div>
+</section>
+<aside style="flex: 1 1 340px; max-width: 420px; display: flex; flex-direction: column; gap: 14px">
+<section class="ad-card" aria-labelledby="h-day" style="padding: 18px">
+<div style="display: flex; justify-content: space-between; align-items: center"><h2 id="h-day" style="font-size: 18px">{{selTitle}}</h2><span style="font-size: 13px; color: #6B5B4E">{{selCount}}</span></div>
+<ul style="list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 8px"><sc-for list="{{selOrders}}" as="o" hint-placeholder-count="4"><li style="display: flex; justify-content: space-between; gap: 10px; padding: 10px 12px; background: #FBF8F4; border-radius: 8px; font-size: 13.5px"><span><strong>{{o.t}}</strong> {{o.cake}}</span><span style="color: #6B5B4E; white-space: nowrap">{{o.mode}}</span></li></sc-for></ul>
+<sc-if value="{{noOrders}}" hint-placeholder-val="{{ false }}"><p style="font-size: 13.5px; color: #6B5B4E; margin-top: 10px">Tiada tempahan pada hari ini.</p></sc-if>
+<button class="ad-btn ad-btn2" onClick="{{toggleBlock}}" style="width: 100%; margin-top: 14px">{{blockLabel}}</button>
+</section>
+<section class="ad-card" aria-labelledby="h-set" style="padding: 18px; display: grid; gap: 12px">
+<h2 id="h-set" style="font-size: 18px">Tetapan tempahan</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
+<div><label class="ad-lbl" for="cap">Kapasiti sehari</label><input id="cap" class="ad-in" type="number" min="1" value="{{cap}}" onInput="{{setCap}}"></div>
+<div><label class="ad-lbl" for="lead">Tempah awal (hari)</label><input id="lead" class="ad-in" type="number" min="0" value="{{lead}}" onInput="{{setLead}}"></div>
+</div>
+<div><p class="ad-lbl">Slot masa ambil dan hantar</p>
+<sc-for list="{{slots}}" as="t" hint-placeholder-count="3"><div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid #EFE7DD"><span>{{t.name}}</span><span style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #6B5B4E">maks {{t.max}}<button class="ad-tog" onClick="{{t.toggle}}" aria-pressed="{{t.on}}" aria-label="Aktifkan slot {{t.name}}"><span></span></button></span></div></sc-for>
+</div>
+<div><label class="ad-lbl" for="hrs">Waktu operasi</label><input id="hrs" class="ad-in" value="Isnin hingga Sabtu, 9:00 pagi hingga 6:00 petang"></div>
+<button class="ad-btn">Simpan tetapan</button>
+</section>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { view: 2, sel: 10, cap: 12, lead: 3, blocked: { 16: true, 29: true }, slots: [true, true, true] }; }
+  renderVals() {
+    const s = this.state;
+    const booked = { 2: 8, 3: 6, 4: 9, 5: 11, 6: 12, 7: 12, 8: 12, 9: 10, 10: 7, 11: 5, 12: 9, 13: 3, 14: 8, 15: 11, 17: 4, 18: 2, 19: 6, 20: 0, 21: 7, 22: 3, 23: 1, 24: 0, 25: 2, 26: 0, 27: 1, 28: 5, 30: 0 };
+    const cells = [];
+    for (let i = 0; i < 35; i++) {
+      const n = i - 6; // Nov 1 2026 is Sunday -> column 7
+      if (n < 1 || n > 30) { cells.push({ n: '', out: true, tag: '', w: '0%', color: '#fff', label: '', bg: '#FBF8F4', tc: '#6B5B4E', on: 'false', aria: 'Kosong', pick: () => {} }); continue; }
+      const b = booked[n] ?? 0; const blk = !!s.blocked[n]; const r = b / s.cap; const past = n < 3;
+      const color = blk ? '#E2CEC6' : r >= 1 ? '#B5463D' : r >= 0.75 ? '#D9A04A' : '#6E9B6F';
+      cells.push({ n, out: false, tag: blk ? 'Ditutup' : past ? 'Lepas' : n === 3 ? 'Hari ini' : '', tc: blk ? '#8E2620' : '#6B5B4E', w: blk ? '100%' : Math.min(100, r * 100).toFixed(0) + '%', color, label: blk ? 'Tidak terima tempahan' : b + ' / ' + s.cap + ' tempahan', bg: blk ? 'repeating-linear-gradient(45deg, #F3EDE5 0 6px, #fff 6px 12px)' : '#fff', on: s.sel === n ? 'true' : 'false', aria: n + ' November, ' + (blk ? 'ditutup' : b + ' daripada ' + s.cap + ' tempahan'), pick: () => this.setState({ sel: n }) });
+    }
+    const sample = [['10:00', 'Italian Cake 6 inci', 'Ambil'], ['10:00', 'Kekbatik Indulgence Cheese x2', 'Ambil'], ['2:00', 'Brownies 10 inci', 'Hantar'], ['2:00', 'Reka 3D YK-D-0427', 'Ambil'], ['4:00', 'Burnt Cheese Cake 8 inci', 'Hantar'], ['4:00', 'Kekbatik Mewah', 'Ambil'], ['4:00', 'Red Velvet', 'Hantar']];
+    const nb = s.blocked[s.sel] ? 0 : (booked[s.sel] ?? 0);
+    return {
+      views: ['Hari', 'Minggu', 'Bulan'].map((v, i) => ({ name: v, on: s.view === i ? 'true' : 'false', pick: () => this.setState({ view: i }) })),
+      cells,
+      selTitle: s.sel + ' November', selCount: s.blocked[s.sel] ? 'Ditutup' : nb + ' / ' + s.cap + ' tempahan',
+      selOrders: sample.slice(0, Math.min(nb, 7)).map(([t, cake, mode]) => ({ t, cake, mode })), noOrders: nb === 0,
+      blockLabel: s.blocked[s.sel] ? 'Buka semula tarikh ini' : 'Tutup tarikh ini (cuti atau penuh)',
+      toggleBlock: () => this.setState({ blocked: { ...s.blocked, [s.sel]: !s.blocked[s.sel] } }),
+      cap: s.cap, setCap: (e) => this.setState({ cap: Math.max(1, +e.target.value || 1) }), lead: s.lead, setLead: (e) => this.setState({ lead: +e.target.value || 0 }),
+      slots: [['10:00 hingga 12:00 pagi', 4], ['2:00 hingga 4:00 petang', 4], ['4:00 hingga 6:00 petang', 4]].map(([name, max], i) => ({ name, max, on: s.slots[i] ? 'true' : 'false', toggle: () => this.setState({ slots: s.slots.map((x, k) => (k === i ? !x : x)) }) })),
+    };
+  }
+}
+</script>
+</body>
+</html>

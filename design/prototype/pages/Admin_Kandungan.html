@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Admin: Kandungan laman</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_ADMIN@@
+.k-sec{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:52px;padding:0 14px;border:0;border-top:1px solid #EFE7DD;background:#fff;font:600 14px 'Manrope',sans-serif;color:#1E1611;cursor:pointer;text-align:left}
+.k-sec:hover{background:#FBF8F4}
+.k-sec[aria-pressed="true"]{background:#F6EFE5;box-shadow:inset 3px 0 0 #8C6A33}
+.k-pick{padding:0;border:2px solid transparent;border-radius:8px;overflow:hidden;cursor:pointer;background:none}
+.k-pick[aria-pressed="true"]{border-color:#4B141B}
+</style>
+</helmet>
+<div class="ad" style="display: flex; flex-wrap: wrap; min-height: 100vh; font-family: 'Manrope', system-ui, sans-serif; color: #1E1611; background: #F6F2EC; font-size: 14.5px; line-height: 1.5">
+@@SIDEBAR:kandungan@@
+<main style="flex: 999 1 760px; min-width: 0; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 18px">
+@@TOP:Kandungan laman|Ubah teks dan gambar tanpa sentuh kod@@
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+<nav class="ad-card" aria-label="Bahagian laman" style="flex: 0 0 240px; overflow: hidden"><p class="ad-th" style="padding: 10px 14px">Laman utama</p><sc-for list="{{secs}}" as="x" hint-placeholder-count="9"><button class="k-sec" onClick="{{x.pick}}" aria-pressed="{{x.on}}">{{x.name}}<span class="ad-badge" style="background: {{x.bg}}; color: {{x.fg}}; height: 22px; font-size: 11.5px">{{x.state}}</span></button></sc-for></nav>
+<section class="ad-card" aria-label="Penyunting" style="flex: 1 1 380px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<sc-if value="{{isHero}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; justify-content: space-between; align-items: center"><h2 style="font-size: 18px">Bahagian utama (hero)</h2><span class="ad-badge" style="background: {{badgeBg}}; color: {{badgeFg}}">{{badge}}</span></div>
+<div><label class="ad-lbl" for="t">Tajuk</label><textarea id="t" class="ad-in" style="min-height: 64px" onInput="{{setTitle}}">{{title}}</textarea></div>
+<div><label class="ad-lbl" for="st">Penerangan</label><textarea id="st" class="ad-in" onInput="{{setSub}}">{{sub}}</textarea></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px"><div><label class="ad-lbl" for="b1">Butang utama</label><input id="b1" class="ad-in" value="Lihat koleksi"></div><div><label class="ad-lbl" for="b2">Butang kedua</label><input id="b2" class="ad-in" value="Reka kek anda"></div></div>
+<div><p class="ad-lbl">Gambar utama</p><div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px"><sc-for list="{{imgs}}" as="g" hint-placeholder-count="8"><button class="k-pick" onClick="{{g.pick}}" aria-pressed="{{g.on}}" aria-label="Pilih gambar {{g.n}}"><img src="{{g.src}}" alt="" style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover"></button></sc-for></div></div>
+</sc-if>
+<sc-if value="{{isFaq}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; justify-content: space-between; align-items: center"><h2 style="font-size: 18px">Soalan lazim</h2><span class="ad-badge" style="background: {{badgeBg}}; color: {{badgeFg}}">{{badge}}</span></div>
+<p style="font-size: 13.5px; color: #6B5A4C">Teks dalam [kurungan] belum disahkan dan ditanda kuning di laman. Ganti dengan maklumat sebenar sebelum terbitkan.</p>
+<ol style="list-style: none; margin: 0; padding: 0; border-top: 1px solid #EFE7DD"><sc-for list="{{faqs}}" as="f" hint-placeholder-count="10"><li style="border-bottom: 1px solid #EFE7DD; padding: 10px 0">
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 22px; color: #B0827F; font-size: 13px">{{f.n}}</span><button onClick="{{f.open}}" aria-expanded="{{f.isOpen}}" style="flex: 1; text-align: left; border: 0; background: none; font: 600 14px 'Manrope', sans-serif; color: #1E1611; cursor: pointer; padding: 6px 0; min-height: 36px">{{f.q}}</button>
+<sc-if value="{{f.pending}}" hint-placeholder-val="{{ false }}"><span class="ad-badge" style="background: #FFF1D6; color: #7A4B00; height: 22px; font-size: 11.5px">Perlu diisi</span></sc-if>
+<sc-if value="{{f.hidden}}" hint-placeholder-val="{{ false }}"><span class="ad-badge" style="background: #EFE7DD; color: #6B5A4C; height: 22px; font-size: 11.5px">Disembunyi</span></sc-if>
+<button class="ad-btn ad-btn2" onClick="{{f.up}}" disabled="{{f.first}}" aria-label="Naikkan soalan {{f.n}}" style="min-height: 32px; padding: 0 8px">&#8593;</button><button class="ad-btn ad-btn2" onClick="{{f.down}}" disabled="{{f.last}}" aria-label="Turunkan soalan {{f.n}}" style="min-height: 32px; padding: 0 8px">&#8595;</button></div>
+<sc-if value="{{f.editing}}" hint-placeholder-val="{{ false }}"><div style="padding: 6px 0 4px 30px; display: grid; gap: 8px"><div><label class="ad-lbl" for="fq">Soalan</label><input id="fq" class="ad-in" value="{{f.q}}" onInput="{{f.setQ}}"></div><div><label class="ad-lbl" for="fa">Jawapan</label><textarea id="fa" class="ad-in" style="min-height: 84px" onInput="{{f.setA}}">{{f.a}}</textarea></div><div style="display: flex; gap: 8px"><button class="ad-btn ad-btn2" onClick="{{f.toggleHide}}">{{f.hideLabel}}</button><button class="ad-btn ad-btn2" onClick="{{f.del}}">Padam</button></div></div></sc-if>
+</li></sc-for></ol>
+<button class="ad-btn ad-btn2" onClick="{{addFaq}}" style="align-self: flex-start">Tambah soalan</button>
+</sc-if>
+<sc-if value="{{isOther}}" hint-placeholder-val="{{ false }}">
+<h2 style="font-size: 18px">{{secName}}</h2>
+<p style="font-size: 14px; color: #6B5A4C">Penyunting bahagian ini guna corak yang sama: ubah teks dan gambar, simpan draf, kemudian terbitkan. Dua contoh dilukis dalam design ini: Bahagian utama dan Soalan lazim.</p>
+</sc-if>
+<div style="display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid #EFE7DD; padding-top: 14px"><button class="ad-btn ad-btn2" onClick="{{discard}}">Buang perubahan</button><button class="ad-btn ad-btn2" onClick="{{saveDraft}}">Simpan draf</button><button class="ad-btn" onClick="{{publish}}">Terbitkan</button></div>
+<sc-if value="{{note}}" hint-placeholder-val="{{ false }}"><p role="status" style="font-size: 13.5px; color: #22562B">{{noteText}}</p></sc-if>
+</section>
+<section aria-label="Pratonton" style="flex: 1 1 360px; max-width: 460px">
+<p class="ad-lbl">Pratonton di telefon</p>
+<div style="width: 320px; border-radius: 28px; padding: 10px; background: #1E1611">
+<div style="border-radius: 20px; overflow: hidden; background: #4B141B; color: #F2E7DE; font-family: 'Manrope', sans-serif">
+<p style="text-align: center; padding: 6px; border-bottom: 1px solid #74343C; line-height: 0"><img src="@@LOGO_C@@" alt="Yummy Kuantan" style="height: 40px; width: auto"></p>
+<sc-if value="{{showHeroPrev}}" hint-placeholder-val="{{ true }}"><div style="padding: 16px">
+<p style="font-family: 'Libre Caslon Display', serif; font-size: 30px; line-height: 1; white-space: pre-line">{{title}}</p>
+<p style="font-size: 12.5px; color: #E6CFC6; margin-top: 8px">{{sub}}</p>
+<img src="{{heroImg}}" alt="" style="width: 100%; aspect-ratio: 4 / 5; object-fit: cover; margin-top: 12px">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px"><span style="background: #EBCFC3; color: #4B141B; text-align: center; padding: 10px; font-size: 12px; font-weight: 700">Lihat koleksi</span><span style="border: 1px solid #B07F80; text-align: center; padding: 10px; font-size: 12px; font-weight: 700">Reka kek anda</span></div>
+</sc-if>
+<sc-if value="{{isFaq}}" hint-placeholder-val="{{ false }}"><div style="padding: 16px"><p style="font-family: 'Libre Caslon Display', serif; font-size: 24px">Soalan lazim</p><div style="margin-top: 6px; border-top: 1px solid #74343C"><sc-for list="{{faqShown}}" as="f" hint-placeholder-count="6"><div style="border-bottom: 1px solid #74343C; padding: 10px 0"><p style="font-family: 'Libre Caslon Display', serif; font-size: 15px; display: flex; justify-content: space-between; gap: 8px">{{f.q}}<span style="color: #EBCFC3; font-family: Manrope, sans-serif">{{f.sign}}</span></p><sc-if value="{{f.editing}}" hint-placeholder-val="{{ false }}"><p style="font-size: 12px; color: #E6CFC6; margin-top: 4px">{{f.a}}</p></sc-if></div></sc-for></div></div></sc-if>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+@@FAQ_JSON@@
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { sec: 0, img: 0, title: 'Kek yang diingat lama selepas majlis.', sub: 'Kek batik, brownies, Italian cake dan kek kahwin. Dibakar ikut tempahan di dapur kami di Kuantan.', dirty: false, note: '', faq: FAQ.map(([q, a]) => ({ q, a, hidden: false })), fopen: 1 }; }
+  renderVals() {
+    const s = this.state;
+    const imgs = ['@@IMG:03_01@@', '@@IMG:04_02@@', '@@IMG:09_01@@', '@@IMG:01_01@@', '@@IMG:11_01@@', '@@IMG:12_01@@', '@@IMG:07_01@@', '@@IMG:06_01@@'];
+    const secs = [['Bahagian utama', s.dirty ? 'Draf' : 'Diterbitkan'], ['Tarikh kosong', 'Automatik'], ['Paling kerap ditempah', 'Diterbitkan'], ['Kategori', 'Diterbitkan'], ['Ulasan pelanggan', 'Diterbitkan'], ['Dari dapur kami', 'Draf'], ['Langgan menu', 'Diterbitkan'], ['Soalan lazim', 'Diterbitkan'], ['Terma dan polisi', 'Diterbitkan']];
+    const c = { 'Draf': ['#FFF1D6', '#7A4B00'], 'Diterbitkan': ['#E3F1E4', '#22562B'], 'Automatik': ['#E2ECF7', '#1F4A7A'] };
+    const ch = (patch) => this.setState({ ...patch, dirty: true, note: '' });
+    return {
+      secs: secs.map(([name, st], i) => ({ name, state: st, bg: c[st][0], fg: c[st][1], on: s.sec === i ? 'true' : 'false', pick: () => this.setState({ sec: i }) })),
+      title: s.title, sub: s.sub, setTitle: (e) => ch({ title: e.target.value }), setSub: (e) => ch({ sub: e.target.value }),
+      imgs: imgs.map((src, i) => ({ src, n: i + 1, on: s.img === i ? 'true' : 'false', pick: () => ch({ img: i }) })), heroImg: imgs[s.img],
+      badge: s.dirty ? 'Ada perubahan belum diterbitkan' : 'Sama seperti di laman', badgeBg: s.dirty ? '#FFF1D6' : '#E3F1E4', badgeFg: s.dirty ? '#7A4B00' : '#22562B',
+      saveDraft: () => this.setState({ note: 'Draf disimpan. Pelanggan masih nampak versi lama.' }),
+      publish: () => this.setState({ dirty: false, note: 'Diterbitkan. Laman utama sudah dikemas kini.' }),
+      discard: () => this.setState({ title: 'Kek yang diingat lama selepas majlis.', sub: 'Kek batik, brownies, Italian cake dan kek kahwin. Dibakar ikut tempahan di dapur kami di Kuantan.', img: 0, dirty: false, note: '' }),
+      note: !!s.note, noteText: s.note,
+      isHero: s.sec === 0, isFaq: s.sec === 7, isOther: s.sec !== 0 && s.sec !== 7, secName: secs[s.sec][0], showHeroPrev: s.sec !== 7,
+      faqs: s.faq.map((f, i) => { const setF = (patch) => ch({ faq: s.faq.map((x, j) => (j === i ? { ...x, ...patch } : x)) }); const move = (d) => { const a = s.faq.slice(); const t = a[i]; a[i] = a[i + d]; a[i + d] = t; ch({ faq: a, fopen: i + d }); };
+        return { n: i + 1, q: f.q, a: f.a, pending: /\[[^\]]+\]/.test(f.q + f.a), hidden: f.hidden, editing: s.fopen === i, isOpen: s.fopen === i ? 'true' : 'false', open: () => this.setState({ fopen: s.fopen === i ? -1 : i }), first: i === 0, last: i === s.faq.length - 1, up: () => move(-1), down: () => move(1), setQ: (e) => setF({ q: e.target.value }), setA: (e) => setF({ a: e.target.value }), hideLabel: f.hidden ? 'Papar di laman' : 'Sembunyikan', toggleHide: () => setF({ hidden: !f.hidden }), del: () => ch({ faq: s.faq.filter((_, j) => j !== i), fopen: -1 }) }; }),
+      faqShown: s.faq.map((f, i) => ({ ...f, i })).filter((f) => !f.hidden).slice(0, 6).map((f) => ({ q: f.q, a: f.a, editing: s.fopen === f.i, sign: s.fopen === f.i ? '\u2212' : '+' })),
+      addFaq: () => ch({ faq: s.faq.concat([{ q: 'Soalan baharu', a: '', hidden: true }]), fopen: s.faq.length }),
+    };
+  }
+}
+</script>
+</body>
+</html>

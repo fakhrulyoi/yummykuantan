@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Yummy Kuantan: Italian Cake</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_B@@
+.b-thumb{width:78px;height:96px;padding:0;border:1px solid transparent;overflow:hidden;background:#561920;cursor:pointer;flex:none}
+.b-thumb[aria-pressed="true"]{border-color:#EBCFC3;box-shadow:0 0 0 1px #EBCFC3}
+.b-step{width:44px;height:44px;border:0;background:none;color:#F2E7DE;font-size:20px;cursor:pointer}
+</style>
+</helmet>
+<div class="b" style="font-family: 'Manrope', system-ui, sans-serif; color: #F2E7DE; background: #4B141B; font-size: 16px; line-height: 1.6">
+@@HDR_D:koleksi@@
+<main style="max-width: 1360px; margin: 0 auto; padding: 32px 40px 96px">
+<nav aria-label="Laluan" style="font-size: 14px; color: #D3B1AB"><a href="Main.dc.html" style="color: #D3B1AB">Utama</a><span aria-hidden="true" style="margin: 0 10px">/</span><a href="Katalog_D.dc.html" style="color: #D3B1AB">Italian cake</a><span aria-hidden="true" style="margin: 0 10px">/</span><span>Italian Cake</span></nav>
+<div style="display: flex; flex-wrap: wrap; gap: 56px; margin-top: 24px; align-items: flex-start">
+<section aria-label="Gambar" style="flex: 1.15 1 540px; display: flex; gap: 14px; flex-wrap: wrap-reverse">
+<div style="display: flex; flex-direction: column; gap: 8px; max-height: 760px; overflow-y: auto">
+<sc-for list="{{thumbs}}" as="t" hint-placeholder-count="8"><button class="b-thumb" onClick="{{t.pick}}" aria-pressed="{{t.on}}" aria-label="Gambar {{t.n}}"><img src="{{t.img}}" alt="" style="width: 100%; height: 100%; object-fit: cover"></button></sc-for>
+</div>
+<div class="yk-tile" style="flex: 1 1 400px; aspect-ratio: 3 / 4; max-height: 760px"><img src="{{main}}" alt="Italian Cake berkrim putih dengan strawberi segar, gambar {{imgNo}} daripada 8" style="width: 100%; height: 100%; object-fit: cover"></div>
+</section>
+<section aria-labelledby="pname" style="flex: 1 1 400px; max-width: 520px">
+<p style="color: #EBCFC3; font-size: 14px; font-weight: 600">Italian cake</p>
+<h1 id="pname" style="font-size: 64px; line-height: 1; margin-top: 8px">Italian Cake</h1>
+<p style="font-family: 'Libre Caslon Display', serif; font-size: 34px; margin-top: 16px">RM {{total}}</p>
+<p style="font-size: 13.5px; color: #D3B1AB">{{priceNote}}</p>
+<p style="margin-top: 18px; color: #E6CFC6; font-size: 16.5px">Kek krim gaya vintage dengan piping tepi dan strawberi segar penuh di atas. Dihantar dalam kotak lutsinar berreben.</p>
+
+<p style="font-size: 13.5px; font-weight: 700; margin-top: 28px">Saiz</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px">
+<sc-for list="{{sizes}}" as="z" hint-placeholder-count="3"><button class="b-pill" onClick="{{z.pick}}" aria-pressed="{{z.on}}">{{z.l}}<span style="display: block; font-size: 13px; color: #D3B1AB">RM {{z.p}}</span></button></sc-for>
+</div>
+
+<div style="margin-top: 22px"><label class="b-lbl" for="msg">Tulisan atas kek (pilihan)</label><input id="msg" class="b-in" maxlength="30" placeholder="Contoh: Selamat Pengantin Baru" value="{{msg}}" onInput="{{setMsg}}"><p style="font-size: 12.5px; color: #C0948F; margin-top: 4px">{{msgLen}}/30 aksara</p></div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px">
+<div><label class="b-lbl" for="tarikh">Tarikh</label><input id="tarikh" class="b-in" type="date" value="{{date}}" min="2026-11-07" onChange="{{setDate}}"></div>
+<div><span class="b-lbl">Cara terima</span><div role="group" aria-label="Cara terima" style="display: flex; gap: 6px"><button class="b-pill" onClick="{{pickup}}" aria-pressed="{{isPickup}}" style="flex: 1; min-height: 50px">Ambil</button><button class="b-pill" onClick="{{delivery}}" aria-pressed="{{isDelivery}}" style="flex: 1; min-height: 50px">Hantar</button></div></div>
+</div>
+<sc-if value="{{isDel}}" hint-placeholder-val="{{ false }}"><div style="margin-top: 12px"><span class="b-lbl">Kawasan penghantaran</span><div role="group" aria-label="Kawasan" style="display: flex; gap: 6px"><sc-for list="{{areas}}" as="a" hint-placeholder-count="2"><button class="b-pill" onClick="{{a.pick}}" aria-pressed="{{a.on}}" style="flex: 1">{{a.name}}</button></sc-for></div><p style="font-size: 13px; color: #D3B1AB; margin-top: 6px">Kami hantar sekitar Kuantan dan Pekan sahaja. Caj penghantaran dimaklumkan di WhatsApp.</p></div></sc-if>
+<p style="font-size: 13.5px; color: #BCD7AE; margin-top: 8px">{{dateNote}}</p>
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; align-items: center">
+<div style="display: flex; align-items: center; border: 1px solid #8A4A52; height: 52px"><button class="b-step" onClick="{{dec}}" aria-label="Kurangkan kuantiti">&#8722;</button><span aria-live="polite" style="min-width: 30px; text-align: center">{{qty}}</span><button class="b-step" onClick="{{inc}}" aria-label="Tambah kuantiti">+</button></div>
+<a class="b-btn yk-pulse" href="{{wa}}" style="flex: 1 1 220px">@@WA@@ Tempah melalui WhatsApp</a>
+</div>
+<button class="b-btn b-line" onClick="{{add}}" style="width: 100%; margin-top: 10px">{{addLabel}}</button>
+<p style="font-size: 13px; color: #D3B1AB; margin-top: 8px">Nak tempah lebih dari satu kek? Tambah ke senarai, kemudian hantar semua sekali.</p>
+
+<div style="margin-top: 22px; padding: 14px 16px; border: 1px solid #74343C; background: #5A1B23; font-size: 14px; color: #E6CFC6">Rekaan dan warna mungkin tidak 100% sama dengan gambar, kerana setiap kek dibuat dengan tangan.</div>
+
+<div style="margin-top: 26px">
+<details open="{{true}}"><summary>Butiran</summary><p style="padding-bottom: 18px; color: #E6CFC6; font-size: 15px">6 inci RM 100, 8 inci RM 280, 10 inci RM 380. Krim segar, strawberi segar. [Kandungan alergen disahkan oleh pemilik.]</p></details>
+<details><summary>Penyimpanan</summary><p style="padding-bottom: 18px; color: #E6CFC6; font-size: 15px">Kek krim segar perlu disimpan dalam peti sejuk. [Tempoh terbaik dimakan disahkan oleh pemilik.]</p></details>
+<details><summary>Ambil dan penghantaran</summary><p style="padding-bottom: 18px; color: #E6CFC6; font-size: 15px">Ambil di dapur kami di Kuantan, atau penghantaran sekitar Kuantan dan Pekan. Caj penghantaran dan cara bayar dimaklumkan di WhatsApp.</p></details>
+</div>
+</section>
+</div>
+
+<section aria-labelledby="h-lain" style="margin-top: 96px">
+<h2 id="h-lain" style="font-size: 40px">Mungkin anda juga suka</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-top: 24px">
+<sc-for list="{{related}}" as="p" hint-placeholder-count="4">
+<a class="b-card" href="Produk_D.dc.html" style="text-decoration: none; display: block"><div style="aspect-ratio: 4 / 5; overflow: hidden; background: #561920"><img src="{{p.img}}" alt="{{p.name}}" style="width: 100%; height: 100%; object-fit: cover"></div><p style="font-family: 'Libre Caslon Display', serif; font-size: 22px; margin-top: 12px">{{p.name}}</p><p style="color: #D3B1AB; font-size: 14.5px">dari RM {{p.price}}</p></a>
+</sc-for>
+</div>
+</section>
+</main>
+@@FTR_D@@
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2300}}'>
+@@PRODUCTS@@
+@@WA_JS@@
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { img: 1, size: 0, qty: 1, msg: '', date: '2026-11-14', mode: 'pickup', area: 'Kuantan', cart: 0, added: false }; }
+  renderVals() {
+    const s = this.state;
+    const imgs = ['@@IMG:04_01@@', '@@IMG:04_02@@', '@@IMG:04_03@@', '@@IMG:04_04@@', '@@IMG:04_05@@', '@@IMG:04_06@@', '@@IMG:04_07@@', '@@IMG:04_08@@'];
+    const p = PRODUCTS.find((x) => x.id === '04'); const z = p.sizes[s.size];
+    const fee = s.mode === 'delivery' ? ', caj penghantaran berasingan' : '';
+    const dt = new Date(s.date + 'T00:00:00').toLocaleDateString('ms-MY', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    const text = 'Salam Yummy Kuantan, saya nak tempah:\n\n' + p.name + ', ' + z.l + ' x' + s.qty + ' (RM' + (z.p * s.qty) + ')' + (s.msg ? '\nTulisan atas kek: ' + s.msg : '') + '\n\nTarikh: ' + dt + '\nCara: ' + (s.mode === 'delivery' ? 'Penghantaran ke ' + s.area : 'Ambil sendiri') + '\n\nBoleh sahkan slot dan cara bayaran? Terima kasih.';
+    return {
+      cart: s.cart, main: imgs[s.img], imgNo: s.img + 1,
+      thumbs: imgs.map((im, i) => ({ img: im, n: i + 1, on: s.img === i ? 'true' : 'false', pick: () => this.setState({ img: i }) })),
+      total: z.p * s.qty, priceNote: (s.qty > 1 ? 'RM ' + z.p + ' x ' + s.qty + ' kek' : z.l) + fee,
+      sizes: p.sizes.map((x, i) => ({ l: x.l, p: x.p, on: s.size === i ? 'true' : 'false', pick: () => this.setState({ size: i }) })),
+      msg: s.msg, msgLen: s.msg.length, setMsg: (e) => this.setState({ msg: e.target.value.slice(0, 30) }),
+      date: s.date, setDate: (e) => this.setState({ date: e.target.value }),
+      dateNote: 'Tarikh ini masih ada 5 slot. Tempahan paling awal: 7 November.',
+      isPickup: s.mode === 'pickup' ? 'true' : 'false', isDelivery: s.mode === 'delivery' ? 'true' : 'false',
+      pickup: () => this.setState({ mode: 'pickup' }), delivery: () => this.setState({ mode: 'delivery' }), isDel: s.mode === 'delivery',
+      areas: ['Kuantan', 'Pekan'].map((a) => ({ name: a, on: s.area === a ? 'true' : 'false', pick: () => this.setState({ area: a }) })),
+      wa: waLink(text),
+      qty: s.qty, inc: () => this.setState({ qty: Math.min(10, s.qty + 1) }), dec: () => this.setState({ qty: Math.max(1, s.qty - 1) }),
+      addLabel: s.added ? 'Dalam senarai tempahan' : 'Tambah ke senarai', add: () => this.setState({ cart: s.cart + s.qty, added: true }),
+      related: ['07', '15', '16', '12'].map((id) => PRODUCTS.find((x) => x.id === id)),
+    };
+  }
+}
+</script>
+</body>
+</html>

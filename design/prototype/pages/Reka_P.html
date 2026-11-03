@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Yummy Kuantan: Reka kek 3D telefon</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_B@@
+.r-opt{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:58px;padding:8px 12px;border:1px solid #8A4A52;border-radius:2px;background:#5A1B23;color:#F2E7DE;font:500 14.5px 'Manrope',sans-serif;cursor:pointer;text-align:left}
+.r-opt[aria-pressed="true"]{border-color:#EBCFC3;box-shadow:inset 0 0 0 1px #EBCFC3;background:#5F2129}
+.r-opt:disabled{opacity:.4;cursor:not-allowed}
+</style>
+</helmet>
+<div class="b" style="width: 390px; height: 844px; display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Manrope', system-ui, sans-serif; color: #F2E7DE; background: #4B141B; font-size: 15px; line-height: 1.45">
+<header style="height: 56px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 6px; border-bottom: 1px solid #74343C">
+<a class="b-ic" href="Home_P.dc.html" aria-label="Kembali">@@BACK@@</a>
+<h1 style="font-size: 21px">Reka kek anda</h1>
+<button onClick="{{save}}" style="min-height: 44px; padding: 0 10px; border: 0; background: none; color: #EBCFC3; font: 600 14.5px 'Manrope', sans-serif; cursor: pointer">{{saveLabel}}</button>
+</header>
+<section aria-label="Pratonton 3D" style="position: relative; height: 360px; flex: none; background: radial-gradient(ellipse 60% 70% at 50% 62%, #5E1F27 0%, #3B0E14 55%, #2A0A0F 100%); overflow: hidden">
+<div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); height: 100%; aspect-ratio: 8 / 9; -webkit-mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent); mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent)"><div role="img" aria-label="{{alt}}" style="position: absolute; inset: 0; background-image: url({{img}}); background-repeat: no-repeat; background-size: 1300% 100%; background-position: {{pos}}"></div><sc-for list="{{layers}}" as="l" hint-placeholder-count="2"><div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; background-image: url({{l.src}}); background-repeat: no-repeat; background-size: 1300% 100%; background-position: {{pos}}"></div></sc-for></div>
+<p style="position: absolute; left: 10px; top: 10px; background: rgba(60,13,19,.88); padding: 6px 10px; font-size: 12.5px; font-weight: 600">{{summary}}</p>
+<div style="position: absolute; left: 10px; right: 10px; bottom: 10px; display: flex; align-items: center; gap: 4px; background: rgba(60,13,19,.88); border-radius: 999px; padding: 2px">
+<button class="b-ic" onClick="{{rotL}}" disabled="{{noRotate}}" aria-label="Pusing ke kiri"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<label for="rot" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Sudut</label>
+<input id="rot" type="range" min="0" max="7" value="{{angle}}" onInput="{{setAngle}}" disabled="{{noRotate}}" style="flex: 1; accent-color: #EBCFC3">
+<button class="b-ic" onClick="{{rotR}}" disabled="{{noRotate}}" aria-label="Pusing ke kanan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+</div>
+</section>
+<nav aria-label="Langkah" style="flex: none; display: flex; overflow-x: auto; padding: 0 8px; border-bottom: 1px solid #74343C">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="6"><button class="b-tab" onClick="{{t.pick}}" aria-pressed="{{t.on}}">{{t.label}}</button></sc-for>
+</nav>
+<div style="flex: 1 1 auto; overflow-y: auto; padding: 14px 16px">
+<sc-if value="{{tShape}}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><sc-for list="{{shapes}}" as="o" hint-placeholder-count="4"><button class="r-opt" onClick="{{o.pick}}" aria-pressed="{{o.on}}"><span>{{o.name}}</span><span style="font-size: 12.5px; color: #D3B1AB">{{o.note}}</span></button></sc-for></div>
+<p class="b-lbl" style="margin-top: 14px">Tingkat</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px"><sc-for list="{{tierOpts}}" as="o" hint-placeholder-count="3"><button class="r-opt" onClick="{{o.pick}}" aria-pressed="{{o.on}}" disabled="{{o.dis}}"><span>{{o.name}}</span><span style="font-size: 12px; color: #D3B1AB">{{o.note}}</span></button></sc-for></div>
+</sc-if>
+<sc-if value="{{tSize}}" hint-placeholder-val="{{ false }}"><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><sc-for list="{{sizeOpts}}" as="o" hint-placeholder-count="4"><button class="r-opt" onClick="{{o.pick}}" aria-pressed="{{o.on}}" disabled="{{o.dis}}"><span>{{o.name}}</span><span style="font-size: 12.5px; color: #D3B1AB">{{o.note}}</span></button></sc-for></div></sc-if>
+<sc-if value="{{tFlavour}}" hint-placeholder-val="{{ false }}">
+<p class="b-lbl">Sponge</p><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><sc-for list="{{flavours}}" as="o" hint-placeholder-count="6"><button class="r-opt" onClick="{{o.pick}}" aria-pressed="{{o.on}}"><span>{{o.name}}</span><span style="font-size: 12.5px; color: #D3B1AB">{{o.note}}</span></button></sc-for></div>
+<p class="b-lbl" style="margin-top: 14px">Inti</p><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><sc-for list="{{fillings}}" as="o" hint-placeholder-count="6"><button class="r-opt" onClick="{{o.pick}}" aria-pressed="{{o.on}}"><span>{{o.name}}</span><span style="font-size: 12.5px; color: #D3B1AB">{{o.note}}</span></button></sc-for></div>
+</sc-if>
+<sc-if value="{{tColour}}" hint-placeholder-val="{{ false }}">
+<p style="font-size: 13.5px; color: #D3B1AB">Krim segar hanya dalam warna lembut.</p>
+<div style="display: flex; gap: 10px; margin-top: 12px"><sc-for list="{{swatches}}" as="s" hint-placeholder-count="4"><span style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 76px"><button class="b-sw" onClick="{{s.pick}}" aria-pressed="{{s.on}}" aria-label="{{s.name}}" style="background: {{s.hex}}"></button><span style="font-size: 12px; text-align: center; color: #E6CFC6">{{s.name}}</span></span></sc-for></div>
+<label class="b-lbl" for="hex" style="margin-top: 14px">Warna lain (HEX)</label>
+<div style="display: flex; gap: 8px"><input type="color" value="{{hexVal}}" onInput="{{setPicker}}" aria-label="Pilih warna" style="width: 50px; height: 50px; border: 1px solid #8A4A52; background: #5A1B23; padding: 2px"><input id="hex" class="b-in" value="{{hex}}" onInput="{{setHex}}" placeholder="#EBC4BA" style="font-family: ui-monospace, Menlo, monospace"></div>
+<p style="font-size: 13px; margin-top: 6px; color: {{hexColor}}">{{hexNote}}</p>
+</sc-if>
+<sc-if value="{{tDecor}}" hint-placeholder-val="{{ false }}"><sc-for list="{{decor}}" as="o" hint-placeholder-count="9"><label class="b-chk"><span style="display: flex; gap: 10px; align-items: center"><input type="checkbox" checked="{{o.on}}" onChange="{{o.toggle}}" style="width: 18px; height: 18px; accent-color: #EBCFC3"><span>{{o.name}}<span style="display: block; font-size: 12px; color: #D3B1AB">{{o.note}}</span></span></span><span style="color: #E6CFC6; white-space: nowrap; font-size: 14px">{{o.price}}</span></label></sc-for><p style="font-size: 12.5px; color: #D3B1AB; margin-top: 10px">Pratonton menunjukkan anggaran rupa hiasan. Kedudukan sebenar disusun oleh baker.</p></sc-if>
+<sc-if value="{{tMsg}}" hint-placeholder-val="{{ false }}">
+<label class="b-lbl" for="msg" style="display: flex; justify-content: space-between"><span>Ucapan</span><span style="font-weight: 400">{{msgLen}}/{{msgMax}}</span></label>
+<input id="msg" class="b-in" maxlength="{{msgMax}}" value="{{msg}}" onInput="{{setMsg}}">
+<p class="b-lbl" style="margin-top: 12px">Gaya tulisan</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px"><sc-for list="{{fonts}}" as="o" hint-placeholder-count="3"><button class="r-opt" onClick="{{o.pick}}" aria-pressed="{{o.on}}" style="align-items: center; font-family: {{o.css}}; font-size: {{o.size}}">{{o.name}}</button></sc-for></div>
+<p class="b-lbl" style="margin-top: 12px">Warna tulisan</p>
+<div style="display: flex; gap: 10px"><sc-for list="{{inks}}" as="s" hint-placeholder-count="4"><button class="b-sw" onClick="{{s.pick}}" aria-pressed="{{s.on}}" aria-label="{{s.name}}" style="background: {{s.hex}}"></button></sc-for></div>
+<p class="b-lbl" style="margin-top: 18px; display: flex; justify-content: space-between"><span>Gambar rujukan (pilihan)</span><span style="font-weight: 400; color: #D3B1AB">{{refCount}}</span></p>
+<sc-if value="{{canAddRef}}" hint-placeholder-val="{{ true }}"><label for="refimg" style="display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 12px 14px; border: 1px dashed #9A5C62; background: #5A1B23; cursor: pointer; color: #F2E7DE"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"></rect><circle cx="9" cy="10" r="2"></circle><path d="M21 16l-5-5-9 9"></path></svg><span style="font-size: 14px; font-weight: 600">Tambah gambar<span style="display: block; font-weight: 400; font-size: 12.5px; color: #D3B1AB">JPG, PNG atau HEIC, maksimum 10 MB setiap satu</span></span></label>
+<input id="refimg" type="file" accept="image/*" multiple onChange="{{addRefs}}" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); opacity: 0"></sc-if>
+<sc-if value="{{hasRefs}}" hint-placeholder-val="{{ false }}"><ul style="list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px"><sc-for list="{{refs}}" as="r" hint-placeholder-count="2"><li style="position: relative; aspect-ratio: 1; background: #5A1B23; border: 1px solid #74343C"><img src="{{r.url}}" alt="{{r.name}}" style="width: 100%; height: 100%; object-fit: cover"><button onClick="{{r.remove}}" aria-label="{{r.label}}" style="position: absolute; top: 2px; right: 2px; width: 32px; height: 32px; border: 0; border-radius: 999px; background: rgba(60,13,19,.88); color: #F2E7DE; font-size: 18px; line-height: 1; cursor: pointer">&times;</button></li></sc-for></ul></sc-if>
+<sc-if value="{{refErr}}" hint-placeholder-val="{{ false }}"><p role="alert" style="font-size: 13px; color: #FFB9AE; margin-top: 6px">{{refErr}}</p></sc-if>
+<p style="font-size: 12.5px; color: #D3B1AB; margin-top: 6px">{{refNote}}</p>
+<label class="b-lbl" for="nota" style="margin-top: 14px">Nota untuk kami (pilihan)</label>
+<textarea id="nota" class="b-in" placeholder="Contoh: tema majlis, nama pada topper" onInput="{{setNotes}}">{{notes}}</textarea>
+</sc-if>
+<p style="font-size: 12.5px; color: #C0948F; margin-top: 16px">Rekaan dan warna mungkin tidak 100% sama dengan pratonton.</p>
+</div>
+<footer style="flex: none; border-top: 1px solid #74343C; padding: 10px 16px 14px; display: flex; align-items: center; gap: 12px; background: #4B141B">
+<button onClick="{{openSheet}}" style="flex: none; border: 0; background: none; text-align: left; padding: 0; min-height: 44px; cursor: pointer; color: #F2E7DE"><span style="display: block; font-size: 12px; color: #D3B1AB; text-decoration: underline">Pecahan harga</span><span style="display: block; font-family: 'Libre Caslon Display', serif; font-size: 26px; line-height: 1.1">RM {{total}}</span></button>
+<a class="b-btn yk-pulse" href="{{wa}}" onClick="{{primary}}" style="flex: 1; padding: 0 10px">@@WA@@ Hantar di WhatsApp</a>
+</footer>
+<sc-if value="{{sheet}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; background: rgba(30,6,10,.6); display: flex; align-items: flex-end">
+<div role="dialog" aria-label="Pecahan harga" style="width: 100%; background: #5A1B23; padding: 18px 18px 22px; border-top: 1px solid #8A4A52">
+<div style="display: flex; justify-content: space-between; align-items: center"><h2 style="font-size: 24px">Pecahan harga</h2><button class="b-ic" onClick="{{closeSheet}}" aria-label="Tutup"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+<dl style="margin: 8px 0 0; display: grid; gap: 8px; font-size: 14.5px"><sc-for list="{{lines}}" as="l" hint-placeholder-count="4"><div style="display: flex; justify-content: space-between"><dt style="color: #D3B1AB">{{l.label}}</dt><dd style="margin: 0">{{l.amount}}</dd></div></sc-for>
+<div style="display: flex; justify-content: space-between; border-top: 1px solid #74343C; padding-top: 10px; font-weight: 700"><dt>Jumlah anggaran</dt><dd style="margin: 0">RM {{total}}</dd></div></dl>
+<p style="font-size: 12.5px; color: #D3B1AB; margin-top: 10px">{{needsNote}}</p>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+@@COLORS@@
+@@IMGS@@
+@@STUDIO_JS@@
+</script>
+</body>
+</html>

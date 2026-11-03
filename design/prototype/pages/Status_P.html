@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Yummy Kuantan: Status tempahan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_B@@</style>
+</helmet>
+<div class="b" style="width: 390px; min-height: 1600px; position: relative; font-family: 'Manrope', system-ui, sans-serif; color: #F2E7DE; background: #4B141B; font-size: 15px; line-height: 1.5">
+@@HDR_P:Akaun_P.dc.html:Tempahan@@
+<section style="padding: 20px 20px 0">
+<p style="color: #D3B1AB; font-size: 13.5px">Tempahan YK-24117</p>
+<h1 style="font-size: 36px; line-height: 1.04; margin-top: 4px">{{headline}}</h1>
+<p style="margin-top: 8px; color: #E6CFC6">Ambil sendiri, Selasa 10 November, 2:00 hingga 4:00 petang</p>
+</section>
+<section aria-label="Status" style="padding: 22px 20px 0">
+<ol style="list-style: none; padding: 0; margin: 0">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="6">
+<li style="display: flex; gap: 14px">
+<div style="display: flex; flex-direction: column; align-items: center"><span style="width: 24px; height: 24px; border-radius: 999px; border: 2px solid {{s.ring}}; background: {{s.fill}}; display: flex; align-items: center; justify-content: center; flex: none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4B141B" stroke-width="3.5" aria-hidden="true"><path d="{{s.tick}}"></path></svg></span><span style="width: 2px; flex: 1; min-height: 26px; background: {{s.line}}"></span></div>
+<div style="padding-bottom: 16px"><p style="font-weight: {{s.weight}}; color: {{s.color}}">{{s.name}}</p><p style="font-size: 13px; color: #C0948F">{{s.time}}</p></div>
+</li>
+</sc-for>
+</ol>
+</section>
+<section style="margin: 22px 20px 0; border: 1px solid #74343C; background: #5A1B23">
+<div style="display: flex; gap: 12px; padding: 14px; border-bottom: 1px solid #74343C"><img src="@@IMG:04_02@@" alt="" style="width: 64px; height: 78px; object-fit: cover"><div><p style="font-family: 'Libre Caslon Display', serif; font-size: 19px">Italian Cake</p><p style="font-size: 13px; color: #D3B1AB">6 inci, tulisan: Selamat Pengantin Baru</p><p style="font-size: 14px; margin-top: 2px">RM 100</p></div></div>
+<div style="display: flex; gap: 12px; padding: 14px; border-bottom: 1px solid #74343C"><img src="@@IMG:01_01@@" alt="" style="width: 64px; height: 78px; object-fit: cover"><div><p style="font-family: 'Libre Caslon Display', serif; font-size: 19px">Kekbatik Indulgence Cheese</p><p style="font-size: 13px; color: #D3B1AB">7 inci, 2 biji</p><p style="font-size: 14px; margin-top: 2px">RM 110</p></div></div>
+<dl style="display: grid; gap: 6px; margin: 0; padding: 14px; font-size: 14px">
+<div style="display: flex; justify-content: space-between"><dt style="color: #D3B1AB">Jumlah, dibayar di WhatsApp</dt><dd style="margin: 0; font-weight: 700">RM 210</dd></div>
+<div style="display: flex; justify-content: space-between"><dt style="color: #D3B1AB">Lokasi ambil</dt><dd style="margin: 0; text-align: right">[Alamat dapur], Kuantan</dd></div>
+</dl>
+</section>
+<section style="padding: 18px 20px 0; display: grid; gap: 8px">
+<a class="b-btn" href="https://wa.me/601123023447?text=Salam%2C%20saya%20nak%20tanya%20tentang%20tempahan%20YK-24117">@@WA@@ WhatsApp kami tentang tempahan ini</a>
+<a class="b-btn b-line" href="#tambah">Tambah ke kalendar</a>
+</section>
+<section style="padding: 22px 20px 0">
+<h2 style="font-size: 22px">Polisi pembatalan</h2>
+<p style="font-size: 14px; color: #E6CFC6; margin-top: 6px">[Contoh: pembatalan lebih 72 jam sebelum tarikh ambil dipulangkan penuh. Kurang 72 jam tidak dipulangkan kerana bahan sudah disediakan.] Ditetapkan oleh pemilik.</p>
+</section>
+@@FTR_P@@
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"step":{"editor":"enum","options":["0","1","2","3","4"],"default":"2"},"$preview":{"width":390,"height":1600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = { at: +(this.props.step ?? 2) };
+    const steps = [['Dihantar di WhatsApp', '3 Nov, 9:41 pagi'], ['Disahkan dan dibayar', '3 Nov, 10:05 pagi'], ['Dalam penyediaan', 'Bermula 9 Nov'], ['Sedia untuk diambil', '10 Nov'], ['Selesai', '']];
+    const heads = ['Kami terima tempahan anda di WhatsApp.', 'Tempahan disahkan.', 'Kek anda sedang disediakan.', 'Kek anda sedia untuk diambil.', 'Selesai. Terima kasih!'];
+    return {
+      cart: 0, headline: heads[s.at],
+      steps: steps.map(([n, t], i) => ({ name: n, time: i <= s.at ? t : '', ring: i <= s.at ? '#EBCFC3' : '#8A4A52', fill: i < s.at ? '#EBCFC3' : 'transparent', tick: i < s.at ? 'M5 12l4 4 10-10' : '', line: i < s.at ? '#EBCFC3' : (i === steps.length - 1 ? 'transparent' : '#74343C'), weight: i === s.at ? 700 : 500, color: i <= s.at ? '#F2E7DE' : '#B0827F' })),
+    };
+  }
+}
+</script>
+</body>
+</html>

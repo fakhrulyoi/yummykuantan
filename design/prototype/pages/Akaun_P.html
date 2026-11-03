@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Yummy Kuantan: Akaun saya</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+@@FONTS@@
+<style>@@CSS_B@@</style>
+</helmet>
+<div class="b" style="width: 390px; min-height: 1500px; position: relative; font-family: 'Manrope', system-ui, sans-serif; color: #F2E7DE; background: #4B141B; font-size: 15px; line-height: 1.5">
+@@HDR_P:Home_P.dc.html:Akaun saya@@
+<section style="padding: 20px 20px 0; display: flex; align-items: center; gap: 14px">
+<span aria-hidden="true" style="width: 56px; height: 56px; border-radius: 999px; background: #74343C; display: flex; align-items: center; justify-content: center; font-family: 'Libre Caslon Display', serif; font-size: 24px">N</span>
+<div><h1 style="font-size: 28px; line-height: 1.1">[Nama pelanggan]</h1><p style="font-size: 13.5px; color: #D3B1AB">[012 345 6789]</p></div>
+</section>
+<nav aria-label="Bahagian akaun" style="display: flex; overflow-x: auto; padding: 14px 12px 0; border-bottom: 1px solid #74343C">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="4"><button class="b-tab" onClick="{{t.pick}}" aria-pressed="{{t.on}}">{{t.label}}</button></sc-for>
+</nav>
+<sc-if value="{{tOrders}}" hint-placeholder-val="{{ true }}">
+<section style="padding: 8px 20px 0">
+<sc-for list="{{orders}}" as="o" hint-placeholder-count="3">
+<article style="display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid #74343C">
+<img src="{{o.img}}" alt="" style="width: 64px; height: 78px; object-fit: cover; flex: none">
+<div style="flex: 1; min-width: 0">
+<div style="display: flex; justify-content: space-between; gap: 8px"><p style="font-weight: 700">{{o.no}}</p><span style="font-size: 12.5px; padding: 2px 10px; border-radius: 999px; background: {{o.bg}}; color: {{o.fg}}; white-space: nowrap">{{o.status}}</span></div>
+<p style="font-size: 13.5px; color: #E6CFC6">{{o.items}}</p>
+<p style="font-size: 13px; color: #D3B1AB">{{o.when}}, RM {{o.total}}</p>
+<div style="display: flex; gap: 14px; margin-top: 4px"><a href="Status_P.dc.html" style="font-size: 13.5px; font-weight: 600; min-height: 32px; display: inline-flex; align-items: center">Lihat status</a><a href="Troli_P.dc.html" style="font-size: 13.5px; font-weight: 600; min-height: 32px; display: inline-flex; align-items: center">Tempah semula di WhatsApp</a></div>
+</div>
+</article>
+</sc-for>
+</section>
+</sc-if>
+<sc-if value="{{tDesigns}}" hint-placeholder-val="{{ false }}">
+<section style="padding: 14px 20px 0; display: grid; gap: 12px">
+<article style="display: flex; gap: 12px; padding: 12px; border: 1px solid #74343C"><img src="@@IMG:t_blush_1@@" alt="Reka kek dua tingkat merah jambu lembut" style="width: 88px; height: 100px; object-fit: cover; background: #3A0E14"><div style="flex: 1"><p style="font-weight: 700">YK-D-261103-0427</p><p style="font-size: 13.5px; color: #E6CFC6">Bulat, 2 tingkat, 8 + 6 inci, merah jambu lembut</p><p style="font-size: 13px; color: #F2C28E; margin-top: 2px">Menunggu semakan bakeri</p><div style="display: flex; gap: 14px; margin-top: 4px"><a href="Reka_P.dc.html" style="font-size: 13.5px; font-weight: 600">Sunting</a><a href="Troli_P.dc.html" style="font-size: 13.5px; font-weight: 600">Hantar di WhatsApp</a></div></div></article>
+<article style="display: flex; gap: 12px; padding: 12px; border: 1px solid #74343C"><img src="@@IMG:c_sq_matcha@@" alt="Reka kek segi empat pistachio" style="width: 88px; height: 100px; object-fit: cover; background: #3A0E14"><div style="flex: 1"><p style="font-weight: 700">YK-D-261028-0311</p><p style="font-size: 13.5px; color: #E6CFC6">Segi empat, 8 inci, pistachio</p><p style="font-size: 13px; color: #BCD7AE; margin-top: 2px">Diluluskan, RM 215</p><div style="display: flex; gap: 14px; margin-top: 4px"><a href="Reka_P.dc.html" style="font-size: 13.5px; font-weight: 600">Sunting</a><a href="Troli_P.dc.html" style="font-size: 13.5px; font-weight: 600">Hantar di WhatsApp</a></div></div></article>
+</section>
+</sc-if>
+<sc-if value="{{tFav}}" hint-placeholder-val="{{ false }}">
+<section style="padding: 14px 20px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<a href="Produk_P.dc.html" style="text-decoration: none"><img src="@@IMG:01_01@@" alt="" style="width: 100%; aspect-ratio: 4 / 5; object-fit: cover"><p style="margin-top: 6px; font-size: 14.5px">Kekbatik Indulgence Cheese</p><p style="font-size: 13px; color: #D3B1AB">dari RM 55</p></a>
+<a href="Produk_P.dc.html" style="text-decoration: none"><img src="@@IMG:16_01@@" alt="" style="width: 100%; aspect-ratio: 4 / 5; object-fit: cover"><p style="margin-top: 6px; font-size: 14.5px">Burnt Cheese Cake Italian</p><p style="font-size: 13px; color: #D3B1AB">dari RM 80</p></a>
+</section>
+</sc-if>
+<sc-if value="{{tProfile}}" hint-placeholder-val="{{ false }}">
+<section style="padding: 14px 20px 0">
+<label class="b-lbl" for="n">Nama</label><input id="n" class="b-in" value="[Nama pelanggan]">
+<label class="b-lbl" for="t" style="margin-top: 10px">Nombor WhatsApp</label><input id="t" class="b-in" value="[012 345 6789]">
+<p class="b-lbl" style="margin-top: 16px">Alamat disimpan</p>
+<div style="padding: 12px; border: 1px solid #74343C; font-size: 14px"><p style="font-weight: 700">Rumah</p><p style="color: #E6CFC6">[No. rumah, jalan, taman], 25200 Kuantan</p></div>
+<button class="b-btn" style="width: 100%; margin-top: 16px">Simpan perubahan</button>
+<button class="b-btn b-line" style="width: 100%; margin-top: 8px">Log keluar</button>
+</section>
+</sc-if>
+@@FTR_P@@
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { tab: 0 }; }
+  renderVals() {
+    const s = this.state;
+    const st = { aktif: ['#2E3B2A', '#BCD7AE'], siap: ['#2E2620', '#E6CFC6'], tunggu: ['#3B2E1C', '#F2C28E'] };
+    const orders = [
+      { no: 'YK-24117', items: 'Italian Cake, Kekbatik Indulgence Cheese x2', when: 'Ambil 10 Nov', total: 210, status: 'Dalam penyediaan', k: 'aktif', img: '@@IMG:04_02@@' },
+      { no: 'YK-23988', items: 'Brownies 10 inci', when: 'Diambil 18 Okt', total: 120, status: 'Selesai', k: 'siap', img: '@@IMG:17_01@@' },
+      { no: 'YK-23810', items: '2 Tier Wedding Cake', when: 'Dihantar 27 Sep', total: 370, status: 'Selesai', k: 'siap', img: '@@IMG:09_01@@' },
+    ];
+    const tabs = ['Tempahan', 'Reka disimpan', 'Kegemaran', 'Profil'];
+    return {
+      cart: 0,
+      tabs: tabs.map((t, i) => ({ label: t, on: s.tab === i ? 'true' : 'false', pick: () => this.setState({ tab: i }) })),
+      tOrders: s.tab === 0, tDesigns: s.tab === 1, tFav: s.tab === 2, tProfile: s.tab === 3,
+      orders: orders.map((o) => ({ ...o, bg: st[o.k][0], fg: st[o.k][1] })),
+    };
+  }
+}
+</script>
+</body>
+</html>
