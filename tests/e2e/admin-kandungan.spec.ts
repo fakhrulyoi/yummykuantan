@@ -27,12 +27,12 @@ test('hero: draf dipapar dalam pratonton phone, laman berubah selepas terbit', a
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Kek hari jadi paling sedap di Kuantan.');
 });
 
-test('hubungi: nombor WhatsApp tidak sah ditolak', async ({ page }) => {
+test('hubungi: Instagram tidak sah ditolak', async ({ page }) => {
   await masukAdmin(page);
   await page.goto('/admin/kandungan?b=hubungi');
-  await page.getByLabel('Nombor WhatsApp (untuk pautan)').fill('0123');
+  await page.getByLabel('Instagram').fill('@yummy kuantan');
   await page.getByRole('button', { name: 'Terbitkan' }).click();
-  await expect(page.getByRole('alert').filter({ hasText: 'format 601' })).toBeVisible();
+  await expect(page.getByRole('alert').filter({ hasText: 'Nama Instagram tanpa @' })).toBeVisible();
 });
 
 test('soalan lazim: [kurungan] ditolak, selepas diisi terbit dan muncul di laman', async ({ page }) => {

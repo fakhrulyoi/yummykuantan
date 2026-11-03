@@ -73,7 +73,11 @@ export function BorangKandungan<K extends KunciKandungan>({ kunci, awal, terbit,
     );
     isi = (
       <div className="grid gap-3.5 sm:grid-cols-2">
-        {f('whatsapp', 'Nombor WhatsApp (untuk pautan)', 15, 'Format 601XXXXXXXX, tanpa + atau ruang')}
+        <div>
+          <p className="ad-lbl">Nombor WhatsApp (untuk pautan)</p>
+          <p className="ad-in flex items-center bg-[#FBF8F4]">{h.whatsapp}</p>
+          <p className="text-[12.5px] text-[#6B5B4E] mt-1">Ditukar di Tetapan (satu nombor untuk semua butang dan mesej tempahan).</p>
+        </div>
         {f('whatsappPapar', 'Nombor WhatsApp (dipapar)', 30, 'Contoh: +60 11-2302 3447')}
         {f('instagram', 'Instagram', 30, 'Tanpa @')}
         {f('tiktok', 'TikTok', 30, 'Tanpa @')}
