@@ -1,4 +1,4 @@
-import { db, tutupDb } from '@/lib/data/db';
+import { db, tutupDb } from '../lib/data/db';
 import { seedDb } from './seed';
 
 seedDb(db)

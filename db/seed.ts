@@ -1,19 +1,23 @@
 import katalog from './seed-data/katalog.json';
-import type { Db } from '@/lib/data/db';
-import * as s from '@/lib/data/skema';
+import type { Db } from '../lib/data/db';
+import * as s from '../lib/data/skema';
 import { urlGambarMula } from './gambar-mula';
+import type { NilaiKandungan } from '../lib/kandungan/jenis';
 
 const sen = (rm: number) => Math.round(rm * 100);
 const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-export const KANDUNGAN_MULA = {
+export const KANDUNGAN_MULA: NilaiKandungan = {
   hero: {
     tajuk: 'Kek yang diingat lama selepas majlis.',
     ayat: 'Kek batik, brownies, Italian cake dan kek kahwin. Dibakar ikut tempahan di dapur kami, untuk Kuantan dan Pekan.',
+    ayatPendek: 'Dibakar ikut tempahan untuk Kuantan dan Pekan.',
     gambar: [
-      { url: '/seed/04_02.jpg', nama: 'Italian Cake' },
-      { url: '/seed/09_01.jpg', nama: '2 Tier Wedding Cake' },
-      { url: '/seed/01_01.jpg', nama: 'Kekbatik Indulgence Cheese' },
+      { url: '/seed/03_01.jpg', nama: 'Victoria Sandwich Cake', posisi: '50% 40%' },
+      { url: '/seed/06_01.jpg', nama: 'Italian Wedding Cake 2 Tingkat', posisi: '50% 35%' },
+      { url: '/seed/04_02.jpg', nama: 'Italian Cake', posisi: '50% 50%' },
+      { url: '/seed/12_01.jpg', nama: 'Italian Cake Wedding 12 inci', posisi: '50% 50%' },
+      { url: '/seed/11_01.jpg', nama: 'Vintage Love Cake', posisi: '50% 45%' },
     ],
   },
   hubungi: {
@@ -39,7 +43,7 @@ export const KANDUNGAN_MULA = {
     DIBATALKAN: 'Salam, tempahan {ref} telah dibatalkan.',
     caraBayar: '[Cara bayar: pindahan bank atau DuitNow QR]',
   },
-} as const;
+};
 
 export async function seedDb(db: Db): Promise<void> {
   await db.transaction(async (tx) => {

@@ -1,6 +1,6 @@
 import { sql } from 'drizzle-orm';
-import { db } from '@/lib/data/db';
-import { seedDb as seed } from '@/db/seed';
+import { db } from '../lib/data/db';
+import { seedDb as seed } from '../db/seed';
 
 const JADUAL = [
   'audit_log', 'rate_limit', 'order_addon', 'order_item', 'orders', 'product_image', 'product_size', 'product',
