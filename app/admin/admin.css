@@ -41,3 +41,6 @@ textarea.ad-in{padding:10px 12px;min-height:90px;resize:vertical}
 .ad a.ad-tab[aria-current="page"]{color:#fff}
 .ad a.ad-tab{color:#6B5B4E}
 .ad-tog[aria-checked="true"]{background:#2F6B3A}
+.k-sec{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:52px;padding:0 14px;border:0;border-top:1px solid #EFE7DD;background:#fff;font:600 14px var(--font-sans),sans-serif;color:#1E1611;cursor:pointer;text-align:left}
+.k-sec:hover{background:#FBF8F4}
+.k-sec[aria-current="page"]{background:#F6EFE5;box-shadow:inset 3px 0 0 #8C6A33}

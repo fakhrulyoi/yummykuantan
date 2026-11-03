@@ -36,7 +36,7 @@ test('ubah harga: draf tidak mengubah laman, terbit mengubah', async ({ page }) 
 test('muat naik: PDF ditolak, gambar diterima', async ({ page }) => {
   await masukAdmin(page);
   await page.goto(`/admin/produk/${idItalian}`);
-  const input = page.locator('#tambah-gambar');
+  const input = page.locator('#tambah-produk');
   await input.setInputFiles({ name: 'menu.pdf', mimeType: 'application/pdf', buffer: Buffer.from('%PDF-1.4') });
   await expect(page.getByRole('alert').filter({ hasText: 'Hanya gambar' })).toBeVisible();
   const sebelum = await page.getByRole('list', { name: /Gambar \(seret/ }).getByRole('listitem').count();

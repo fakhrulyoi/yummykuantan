@@ -7,7 +7,7 @@ import { muatNaikGambar } from '@/lib/muatNaik';
 type Gambar = { url: string; alt: string };
 
 /** Gambar produk: seret untuk susun (atau butang anak panah), yang pertama jadi gambar utama. */
-export function SusunGambar({ gambar, onUbah, nama }: { gambar: Gambar[]; onUbah: (g: Gambar[]) => void; nama: string }) {
+export function SusunGambar({ gambar, onUbah, nama, bucket = 'produk', label = 'Gambar (seret untuk susun, yang pertama jadi gambar utama)', maks = 12 }: { gambar: Gambar[]; onUbah: (g: Gambar[]) => void; nama: string; bucket?: 'produk' | 'hero'; label?: string; maks?: number }) {
   const [seret, setSeret] = useState<number | null>(null);
   const [ralat, setRalat] = useState<string | null>(null);
   const [sibuk, setSibuk] = useState(false);
@@ -26,8 +26,8 @@ export function SusunGambar({ gambar, onUbah, nama }: { gambar: Gambar[]; onUbah
     setRalat(null);
     setSibuk(true);
     const baru: Gambar[] = [];
-    for (const f of Array.from(fail).slice(0, 12 - gambar.length)) {
-      const r = await muatNaikGambar(f, 'produk');
+    for (const f of Array.from(fail).slice(0, maks - gambar.length)) {
+      const r = await muatNaikGambar(f, bucket);
       if (!r.ok) {
         setRalat(r.ralat);
         break;
@@ -41,8 +41,8 @@ export function SusunGambar({ gambar, onUbah, nama }: { gambar: Gambar[]; onUbah
 
   return (
     <div>
-      <p className="ad-lbl" id="lbl-gambar">Gambar (seret untuk susun, yang pertama jadi gambar utama)</p>
-      <ul aria-labelledby="lbl-gambar" className="list-none p-0 m-0 flex gap-2.5 flex-wrap">
+      <p className="ad-lbl" id={`lbl-${bucket}`}>{label}</p>
+      <ul aria-labelledby={`lbl-${bucket}`} className="list-none p-0 m-0 flex gap-2.5 flex-wrap">
         {gambar.map((g, i) => (
           <li
             key={g.url}
@@ -66,12 +66,12 @@ export function SusunGambar({ gambar, onUbah, nama }: { gambar: Gambar[]; onUbah
             </div>
           </li>
         ))}
-        {gambar.length < 12 && (
+        {gambar.length < maks && (
           <li>
-            <label className="ad-btn ad-btn2 !w-24 !h-[148px] flex-col !whitespace-normal text-center cursor-pointer" htmlFor="tambah-gambar">
+            <label className="ad-btn ad-btn2 !w-24 !h-[148px] flex-col !whitespace-normal text-center cursor-pointer" htmlFor={`tambah-${bucket}`}>
               {sibuk ? 'Memuat naik…' : <>+<span className="text-[12.5px]">Tambah gambar</span></>}
             </label>
-            <input id="tambah-gambar" ref={input} type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple className="sr-only" onChange={(e) => pilih(e.target.files)} disabled={sibuk} />
+            <input id={`tambah-${bucket}`} ref={input} type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple className="sr-only" onChange={(e) => pilih(e.target.files)} disabled={sibuk} />
           </li>
         )}
       </ul>

@@ -1,0 +1,42 @@
+import Link from 'next/link';
+import { BorangKandungan } from '@/components/admin/BorangKandungan';
+import { TajukAdmin } from '@/components/admin/TajukAdmin';
+import { requireAdmin } from '@/lib/auth/admin';
+import { bacaUntukSunting, kunciSah } from '@/lib/data/kandunganAdmin';
+import type { KunciKandungan } from '@/lib/kandungan/jenis';
+
+export const metadata = { title: 'Kandungan laman' };
+
+const BAHAGIAN: { k: KunciKandungan; nama: string }[] = [
+  { k: 'hero', nama: 'Bahagian utama (hero)' },
+  { k: 'hubungi', nama: 'Hubungi, alamat dan waktu' },
+  { k: 'ulasan', nama: 'Kata pelanggan' },
+  { k: 'galeri', nama: 'Galeri dari dapur' },
+  { k: 'footer', nama: 'Footer' },
+  { k: 'waTemplates', nama: 'Templat balasan WhatsApp' },
+];
+
+export default async function HalamanKandungan({ searchParams }: { searchParams: Promise<{ b?: string }> }) {
+  await requireAdmin();
+  const { b } = await searchParams;
+  const k: KunciKandungan = typeof b === 'string' && kunciSah(b) ? b : 'hero';
+  const d = await bacaUntukSunting(k);
+  const nama = BAHAGIAN.find((x) => x.k === k)!.nama;
+  return (
+    <>
+      <TajukAdmin tajuk="Kandungan laman" sub="Ubah teks dan gambar laman. Simpan draf dahulu, kemudian Terbitkan." />
+      <div className="flex gap-4 flex-wrap items-start">
+        <nav className="ad-card overflow-hidden flex-[1_1_240px] lg:flex-[0_0_240px]" aria-label="Bahagian laman">
+          <p className="ad-th px-3.5 py-2.5">Bahagian</p>
+          {BAHAGIAN.map((x) => (
+            <Link key={x.k} href={`/admin/kandungan?b=${x.k}`} aria-current={x.k === k ? 'page' : undefined} className="k-sec !no-underline">
+              {x.nama}
+            </Link>
+          ))}
+          <Link href="/admin/soalan" className="k-sec !no-underline">Soalan lazim &rarr;</Link>
+        </nav>
+        <BorangKandungan key={k} kunci={k} awal={d.nilai} terbit={d.terbit} adaDraf={d.adaDraf} tajuk={nama} />
+      </div>
+    </>
+  );
+}
