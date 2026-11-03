@@ -30,7 +30,7 @@ function Baris({ f, n, pertama, akhir, onAlih, pemilik }: { f: Soalan; n: number
   return (
     <li className="border-b border-[#EFE7DD] py-2.5">
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="w-[22px] text-[#B0827F] text-[13px]">{n}</span>
+        <span className="w-[22px] text-[#7E5550] text-[13px]">{n}</span>
         <button type="button" className="flex-1 min-w-[180px] text-left border-0 bg-transparent font-semibold text-[14.5px] cursor-pointer py-1" aria-expanded={buka} onClick={() => setBuka(!buka)}>
           {f.draftQuestion ?? f.question}
         </button>

@@ -103,7 +103,7 @@ export function PenyuntingGambarMeja({ productId, url, draf, asal }: Props) {
         className="relative flex-[0_0_200px] h-[230px] rounded-lg overflow-hidden bg-[radial-gradient(ellipse_80%_70%_at_50%_70%,#5A1C24_0%,#3A0E14_60%,#22060A_100%)]"
       >
         <div aria-hidden="true" className="absolute left-1/2 top-0 -translate-x-1/2 w-[190px] h-[210px] bg-[linear-gradient(180deg,rgba(255,232,214,.30),rgba(255,226,205,.08))] [clip-path:polygon(46%_0,54%_0,100%_100%,0_100%)]" />
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[46px] bg-[url(/meja/kayu.jpg)] bg-center bg-[length:600px_auto] brightness-[.8]" />
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[46px] bg-[url(/meja/kayu.webp)] bg-center bg-[length:600px_auto] brightness-[.8]" />
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[46px] bg-[linear-gradient(180deg,rgba(20,4,7,.55),rgba(20,4,7,.1))]" />
         {tunjuk ? (
           <img src={tunjuk} alt="" data-testid="gambar-meja" className="absolute left-1/2 bottom-[22px] -translate-x-1/2 w-[140px] h-[190px] object-contain object-bottom" />

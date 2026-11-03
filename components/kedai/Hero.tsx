@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { NilaiKandungan } from '@/lib/kandungan/jenis';
+import { SlaidLewat } from './SlaidLewat';
 
 export function Hero({ hero }: { hero: NilaiKandungan['hero'] }) {
   const gambar = hero.gambar.slice(0, 5);
@@ -10,15 +11,13 @@ export function Hero({ hero }: { hero: NilaiKandungan['hero'] }) {
     <section aria-label="Pengenalan" className="relative h-[700px] lg:h-[820px] overflow-hidden bg-yk-bg-deep">
       {gambar.map((g, i) => (
         <div key={g.url} className="yk-slide" style={{ animationDelay: `${i * 6}s`, animationDuration: `${tempoh}s` }}>
-          <Image
-            src={g.url}
-            alt=""
-            fill
-            priority={i === 0}
-            loading={i === 0 ? undefined : 'lazy'}
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: g.posisi ?? '50% 50%', animationDuration: `${tempoh}s` }}
-          />
+          {i === 0 ? (
+            <Image src={g.url} alt="" fill priority sizes="100vw" quality={70} style={{ objectFit: 'cover', objectPosition: g.posisi ?? '50% 50%', animationDuration: `${tempoh}s` }} />
+          ) : (
+            <SlaidLewat>
+              <Image src={g.url} alt="" fill sizes="100vw" quality={70} style={{ objectFit: 'cover', objectPosition: g.posisi ?? '50% 50%', animationDuration: `${tempoh}s` }} />
+            </SlaidLewat>
+          )}
         </div>
       ))}
       <div aria-hidden="true" className="absolute inset-0 lg:hidden" style={{ background: 'linear-gradient(180deg, rgba(42,9,14,.35) 0%, rgba(42,9,14,0) 30%, rgba(42,9,14,.55) 58%, #4B141B 100%)' }} />
@@ -28,7 +27,7 @@ export function Hero({ hero }: { hero: NilaiKandungan['hero'] }) {
       <div className="absolute inset-x-5 bottom-[30px] lg:relative lg:inset-auto lg:max-w-[1360px] lg:mx-auto lg:px-10 lg:pt-[120px] lg:h-full">
         <h1 className="text-[50px] leading-[.96] lg:text-[clamp(60px,7.4vw,112px)] lg:max-w-[760px] lg:tracking-[-0.01em]">
           {perkataan.map((w, i) => (
-            <span key={i} className="yk-w" style={{ animationDelay: `${(0.15 + i * 0.09).toFixed(2)}s` }}>
+            <span key={i} className="yk-w" style={{ animationDelay: `${(0.05 + i * 0.06).toFixed(2)}s` }}>
               {w}&#160;
             </span>
           ))}

@@ -30,9 +30,12 @@ test.describe('meja kek', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
     const meja = page.getByRole('group', { name: /Meja kek/ });
-    await meja.getByRole('button', { name: /^Italian Cake,/ }).focus();
-    await page.keyboard.press('End');
-    await expect(meja.getByRole('button', { name: /Brownies Tower/ })).toHaveAttribute('aria-pressed', 'true');
+    // Tunggu hidrasi: ulang sehingga kekunci diproses oleh React.
+    await expect(async () => {
+      await meja.getByRole('button', { name: /^Italian Cake,/ }).focus();
+      await page.keyboard.press('End');
+      await expect(meja.getByRole('button', { name: /Brownies Tower/ })).toHaveAttribute('aria-pressed', 'true', { timeout: 500 });
+    }).toPass({ timeout: 8000 });
     await expect(meja.getByRole('button', { name: /Brownies Tower/ })).toBeFocused();
     await page.keyboard.press('Home');
     await expect(meja.getByRole('button', { name: /^Italian Cake,/ })).toBeFocused();

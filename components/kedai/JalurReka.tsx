@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useNampak } from '@/lib/useNampak';
 
 const WARNA = [
   { k: 'ivory', nama: 'Krim putih', hex: '#F3EBDD' },
@@ -14,6 +15,7 @@ export function JalurReka() {
   const [warna, setWarna] = useState('blush');
   const [sudut, setSudut] = useState(1);
   const [pusing, setPusing] = useState(true);
+  const [ref, nampak] = useNampak<HTMLElement>();
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) setPusing(false);
   }, []);
@@ -29,7 +31,7 @@ export function JalurReka() {
         role="img"
         aria-label="Pratonton 3D kek dua tingkat yang sedang berpusing"
         className="w-full h-full bg-no-repeat"
-        style={{ backgroundImage: `url(/reka/pusing-${warna}.webp)`, backgroundSize: '800% auto', backgroundPosition: `${((sudut * 100) / 7).toFixed(4)}% 30%` }}
+        style={{ backgroundImage: nampak ? `url(/reka/pusing-${warna}.webp)` : undefined, backgroundSize: '800% auto', backgroundPosition: `${((sudut * 100) / 7).toFixed(4)}% 30%` }}
       />
       <button onClick={() => setPusing((p) => !p)} className="b-btn b-dark absolute right-2.5 top-2.5 lg:right-3.5 lg:top-3.5 !min-h-10 !px-3 lg:!px-3.5 !text-[12.5px] lg:!text-[13px]">
         {pusing ? 'Jeda' : 'Pusing'}
@@ -54,7 +56,7 @@ export function JalurReka() {
   );
 
   return (
-    <section aria-labelledby="h-3d" className="b-light mt-11 lg:mt-0 bg-yk-cream text-yk-bg">
+    <section ref={ref} aria-labelledby="h-3d" className="b-light mt-11 lg:mt-0 bg-yk-cream text-yk-bg">
       <div className="px-5 py-8 lg:max-w-[1360px] lg:mx-auto lg:px-10 lg:py-24 lg:flex lg:flex-wrap lg:gap-16 lg:items-center">
         <div className="lg:flex-[1_1_380px] lg:max-w-[460px]">
           <h2 id="h-3d" className="text-[34px] leading-none lg:text-[60px] lg:leading-[.98] text-yk-bg">Nak rekaan sendiri? Tengok dulu dalam 3D.</h2>

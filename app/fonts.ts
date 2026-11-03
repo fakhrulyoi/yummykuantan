@@ -19,4 +19,6 @@ export const script = localFont({
   weight: '400',
   variable: '--font-script',
   display: 'swap',
+  // Tidak digunakan di halaman semasa; dimuat hanya bila diperlukan.
+  preload: false,
 });

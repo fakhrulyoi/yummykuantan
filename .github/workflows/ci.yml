@@ -1,7 +1,7 @@
 name: CI
 on:
   push:
-    branches: [main]
+    branches: [main, bahagian-1]
   pull_request:
 
 jobs:
@@ -21,6 +21,7 @@ jobs:
       DATABASE_URL: postgresql://yk:yk@localhost:5432/yk_test
       DIRECT_URL: postgresql://yk:yk@localhost:5432/yk_test
       TEST_DATABASE_URL: postgresql://yk:yk@localhost:5432/yk_test
+      E2E_DATABASE_URL: postgresql://yk:yk@localhost:5432/yk_test
       IP_HASH_SALT: ci-garam
     steps:
       - uses: actions/checkout@v4
@@ -30,6 +31,16 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      - run: npx tsc --noEmit
       - run: npm run test
       - run: npx playwright install --with-deps chromium
       - run: npm run e2e
+      # Lighthouse phone pada binaan yang sama (data mula dari ujian e2e).
+      - name: Lighthouse
+        env:
+          E2E: '1'
+          NEXT_PUBLIC_SUPABASE_URL: http://localhost:54399
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: kunci-anon-ujian
+        run: |
+          npx tsx -e "import('./tests/db').then(async (m) => { await m.resetDb(); await m.seedDb(); process.exit(0) })"
+          npx --yes @lhci/cli@0.15.x autorun

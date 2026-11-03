@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState } from 'react';
 import { buatTempahanCepat } from '@/app/(kedai)/actions';
 import { sediaTetingkap } from '@/lib/tempahan/bukaWhatsApp';
+import { useNampak } from '@/lib/useNampak';
 import { formatRM } from '@/lib/tempahan/wang';
 import { IkonKanan, IkonKembali } from '../Ikon';
 import { DialogKek } from './DialogKek';
@@ -31,6 +32,8 @@ export function MejaKek({ items, autoplay = true }: MejaKekProps) {
   const n = items.length;
   const [s, hantar] = useReducer((st: KeadaanMeja, a: AksiMeja) => mejaReducer(st, a, n), AWAL);
   const desktop = useMedia('(min-width: 1024px)');
+  const [refMeja, nampak] = useNampak<HTMLDivElement>();
+  const kayu = nampak ? 'url(/meja/kayu.webp)' : undefined;
   const kurangGerak = useMedia('(prefers-reduced-motion: reduce)');
   const router = useRouter();
   const kekRef = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -105,11 +108,11 @@ export function MejaKek({ items, autoplay = true }: MejaKekProps) {
   );
 
   return (
-    <>
+    <div ref={refMeja}>
       {desktop ? (
-        <PentasDesktop items={items} s={s} kekunci={kekunci} tekan={tekan} hantar={hantar} label={label} kekRef={kekRef} maklumat={maklumat} />
+        <PentasDesktop items={items} s={s} kekunci={kekunci} tekan={tekan} hantar={hantar} label={label} kekRef={kekRef} maklumat={maklumat} kayu={kayu} />
       ) : (
-        <PentasPhone items={items} s={s} kekunci={kekunci} tekan={tekan} hantar={hantar} label={label} kekRef={kekRef} maklumat={maklumat} />
+        <PentasPhone items={items} s={s} kekunci={kekunci} tekan={tekan} hantar={hantar} label={label} kekRef={kekRef} maklumat={maklumat} kayu={kayu} />
       )}
       {buka && (
         <DialogKek
@@ -123,7 +126,7 @@ export function MejaKek({ items, autoplay = true }: MejaKekProps) {
           pencetus={() => kekRef.current[`${desktop ? 'd' : 'p'}${s.open}`] ?? null}
         />
       )}
-    </>
+    </div>
   );
 }
 
@@ -136,9 +139,10 @@ type PentasProps = {
   label: (k: KekMeja) => string;
   kekRef: React.RefObject<Record<string, HTMLButtonElement | null>>;
   maklumat: React.ReactNode;
+  kayu?: string;
 };
 
-function Kek({ k, i, s, tekan, hantar, label, kekRef, kunci, w, h, sizes, phone }: Omit<PentasProps, 'items' | 'kekunci' | 'maklumat'> & {
+function Kek({ k, i, s, tekan, hantar, label, kekRef, kunci, w, h, sizes, phone }: Omit<PentasProps, 'items' | 'kekunci' | 'maklumat' | 'kayu'> & {
   k: KekMeja; i: number; kunci: string; w: number; h: number; sizes: string; phone: boolean;
 }) {
   const on = s.lit === i;
@@ -156,12 +160,12 @@ function Kek({ k, i, s, tekan, hantar, label, kekRef, kunci, w, h, sizes, phone 
       onClick={() => tekan(i)}
       style={{ width: w, height: h }}
     >
-      <Image src={k.tableImage} alt="" width={600} height={900} sizes={sizes} loading={i < 3 ? 'eager' : 'lazy'} />
+      <Image src={k.tableImage} alt="" width={600} height={900} sizes={sizes} loading="lazy" />
     </button>
   );
 }
 
-function PentasDesktop({ items, s, kekunci, tekan, hantar, label, kekRef, maklumat }: PentasProps) {
+function PentasDesktop({ items, s, kekunci, tekan, hantar, label, kekRef, maklumat, kayu }: PentasProps) {
   const bekas = useRef<HTMLDivElement>(null);
   const [k, setK] = useState(1);
   useLayoutEffect(() => {
@@ -183,8 +187,8 @@ function PentasDesktop({ items, s, kekunci, tekan, hantar, label, kekRef, maklum
           style={{ width: LEBAR_D, height: 640, transform: `scale(${k})`, transformOrigin: '0 0' }}
         >
           <div className="mj-rail" aria-hidden="true" style={{ left: -60, right: -60 }} />
-          <div aria-hidden="true" className="mj-top" style={{ top: 470, height: 110, backgroundImage: 'url(/meja/kayu.jpg)' }} />
-          <div aria-hidden="true" className="mj-edge" style={{ top: 580, height: 26, backgroundImage: 'url(/meja/kayu.jpg)' }} />
+          <div aria-hidden="true" className="mj-top" style={{ top: 470, height: 110, backgroundImage: kayu }} />
+          <div aria-hidden="true" className="mj-edge" style={{ top: 580, height: 26, backgroundImage: kayu }} />
           {items.map((c, i) => {
             const on = s.lit === i;
             const anjak = s.lit === null || on ? 0 : (i < s.lit ? -1 : 1) * 16;
@@ -222,7 +226,7 @@ function PentasDesktop({ items, s, kekunci, tekan, hantar, label, kekRef, maklum
   );
 }
 
-function PentasPhone({ items, s, kekunci, tekan, hantar, label, kekRef, maklumat }: PentasProps) {
+function PentasPhone({ items, s, kekunci, tekan, hantar, label, kekRef, maklumat, kayu }: PentasProps) {
   const mula = useRef<number | null>(null);
   const lit = s.lit ?? 0;
   const butang = 'absolute top-[250px] z-[4] w-11 h-11 rounded-full border border-yk-line-strong bg-[rgba(42,9,14,.7)] text-yk-cream inline-flex items-center justify-center';
@@ -248,8 +252,8 @@ function PentasPhone({ items, s, kekunci, tekan, hantar, label, kekRef, maklumat
         style={{ height: 540 }}
       >
         <div className="mj-rail" aria-hidden="true" />
-        <div aria-hidden="true" className="mj-top" style={{ top: 398, height: 92, backgroundImage: 'url(/meja/kayu.jpg)', backgroundSize: '600px auto' }} />
-        <div aria-hidden="true" className="mj-edge" style={{ top: 490, height: 20, backgroundImage: 'url(/meja/kayu.jpg)', backgroundSize: '600px auto' }} />
+        <div aria-hidden="true" className="mj-top" style={{ top: 398, height: 92, backgroundImage: kayu, backgroundSize: '600px auto' }} />
+        <div aria-hidden="true" className="mj-edge" style={{ top: 490, height: 20, backgroundImage: kayu, backgroundSize: '600px auto' }} />
         <div className="absolute inset-0 transition-transform duration-[600ms] ease-[cubic-bezier(.2,.75,.2,1)]" style={{ transform: `translateX(${-lit * 62}%)` }}>
           {items.map((c, i) => {
             const on = s.lit === i;

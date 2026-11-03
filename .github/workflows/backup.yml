@@ -1,0 +1,28 @@
+name: Backup pangkalan data
+on:
+  schedule:
+    # Setiap Ahad 03:00 MYT (Sabtu 19:00 UTC).
+    - cron: '0 19 * * 6'
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pasang pg_dump 16
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client-16 || sudo apt-get install -y -qq postgresql-client
+      - name: pg_dump
+        env:
+          # Guna sambungan terus (port 5432), bukan pooler.
+          DATABASE_URL: ${{ secrets.BACKUP_DATABASE_URL }}
+        run: |
+          test -n "$DATABASE_URL" || { echo "Tetapkan rahsia BACKUP_DATABASE_URL"; exit 1; }
+          pg_dump "$DATABASE_URL" --no-owner --no-privileges | gzip -9 > yummykuantan-$(date -u +%Y%m%d).sql.gz
+          ls -lh yummykuantan-*.sql.gz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backup-${{ github.run_id }}
+          path: yummykuantan-*.sql.gz
+          retention-days: 30
