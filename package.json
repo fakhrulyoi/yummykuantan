@@ -11,15 +11,19 @@
     "e2e": "playwright test",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx --env-file-if-exists=.env db/migrasi.ts",
-    "db:seed": "tsx --env-file-if-exists=.env db/jalan-seed.ts"
+    "db:seed": "tsx --env-file-if-exists=.env db/jalan-seed.ts",
+    "cipta-pemilik": "tsx --env-file-if-exists=.env scripts/cipta-pemilik.ts"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
     "drizzle-orm": "^0.45.4",
     "motion": "^14.9.0",
     "next": "15.5.28",
     "pg": "^8.23.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "server-only": "^0.0.1",
     "zod": "^4.6.7"
   },
   "devDependencies": {

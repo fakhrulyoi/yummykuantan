@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // forbidden() dan unauthorized() untuk admin (403 dan 401).
+  experimental: { authInterrupts: true },
 };
 
 export default nextConfig;
