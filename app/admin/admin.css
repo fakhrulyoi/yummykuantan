@@ -34,3 +34,9 @@ textarea.ad-in{padding:10px 12px;min-height:90px;resize:vertical}
 .ad-nav a{color:#E2CEC6}
 .ad-nav a:hover{color:#fff}
 .ad-nav a[aria-current="page"]{color:#fff}
+.ad-tab[aria-current="page"]{background:#4B141B;color:#fff}
+.ad a.ad-btn,.ad a.ad-btn:hover{color:#fff}
+.ad a.ad-btn2,.ad a.ad-btn2:hover,.ad a.ad-danger{color:#1E1611}
+.ad a.ad-danger{color:#8E2620}
+.ad a.ad-tab[aria-current="page"]{color:#fff}
+.ad a.ad-tab{color:#6B5B4E}
