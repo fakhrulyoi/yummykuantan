@@ -61,7 +61,7 @@ Kata laluan sementara dipapar sekali. Tukar selepas log masuk pertama.
 
 | Nama | Untuk |
 |---|---|
-| `DATABASE_URL` | Sambungan aplikasi (pooler Supabase) |
+| `DATABASE_URL` | Sambungan aplikasi (pooler Supabase, port 6543). Produksi guna peranan `yk_app` (LOGIN, BYPASSRLS, hak baca/tulis jadual `public`), format `postgresql://yk_app.<ref>:<katalaluan>@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres`. Tukar kata laluan: `alter role yk_app with password '...'` di SQL Editor, kemudian kemaskini Vercel dan deploy semula. |
 | `DIRECT_URL` | Migrasi (sambungan terus) |
 | `NEXT_PUBLIC_SUPABASE_URL` | URL projek Supabase |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Kunci awam (log masuk, muat naik bertanda tangan) |
