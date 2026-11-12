@@ -132,7 +132,7 @@ export function PilihSaiz({ productId, sizes, allowMessage, leadDays, penerangan
 
       <div className="fixed inset-x-0 bottom-0 z-40 flex gap-2.5 items-center px-4 pt-2.5 pb-4 bg-[rgba(60,13,19,.97)] border-t border-yk-line lg:static lg:z-auto lg:p-0 lg:mt-6 lg:bg-transparent lg:border-0 lg:flex-wrap">
         {stepper}
-        <button type="button" className="b-btn yk-pulse relative flex-1 !px-3 lg:flex-[1_1_220px]" disabled={sibuk} onClick={tempah}>
+        <button type="button" className="b-btn relative flex-1 !px-3 lg:flex-[1_1_220px]" disabled={sibuk} onClick={tempah}>
           <IkonWhatsApp />
           {sibuk ? (
             <span>Membuka WhatsApp…</span>

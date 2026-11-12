@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
 import { formatRM } from '@/lib/tempahan/wang';
-import { IkonKanan, IkonTutup } from '../Ikon';
+import { IkonTutup } from '../Ikon';
 import { useKurungFokus } from '../useKurungFokus';
 import type { KekMeja } from './jenis';
 import { skalaSaiz } from './useMejaKek';
@@ -24,7 +24,6 @@ export function DialogKek({ kek, no, jumlah, saiz, pilihSaiz, tutup, pencetus }:
   useKurungFokus(ref, true, tutup, pencetus);
   const zi = Math.min(saiz, kek.sizes.length - 1);
   const z = kek.sizes[zi];
-  const pad = (n: number) => String(n).padStart(2, '0');
 
   return (
     <div ref={ref} className="mj-dialog" role="dialog" aria-modal="true" aria-labelledby="mj-dt">
@@ -52,10 +51,9 @@ export function DialogKek({ kek, no, jumlah, saiz, pilihSaiz, tutup, pencetus }:
           </div>
         </div>
         <div className="mj-info flex-[1_1_300px] lg:flex-[1_1_340px] max-w-[420px] text-left px-1 pb-6 lg:p-0">
-          <p className="text-[13px] tracking-[.2em] text-yk-muted tabular-nums">
-            {pad(no)} / {pad(jumlah)} &nbsp;·&nbsp; {kek.category}
-          </p>
-          <h3 id="mj-dt" className="text-[34px] lg:text-[48px] leading-[1.02] mt-2.5">{kek.name}</h3>
+          {kek.category.trim().toLowerCase() !== kek.name.trim().toLowerCase() && <p className="text-[15px] text-yk-muted">{kek.category}</p>}
+          <p className="sr-only">Kek {no} daripada {jumlah}</p>
+          <h3 id="mj-dt" className="text-[34px] lg:text-[48px] leading-[1.02] mt-1.5">{kek.name}</h3>
           <p className="text-yk-cream-2 mt-2.5 text-[15.5px] lg:text-base">{kek.description}</p>
           <p className="b-lbl mt-5">
             Saiz{kek.sizes.length > 1 && <span className="font-normal text-yk-muted">, kek berubah ikut saiz dipilih</span>}
@@ -75,13 +73,13 @@ export function DialogKek({ kek, no, jumlah, saiz, pilihSaiz, tutup, pencetus }:
           <p className="font-serif text-[30px] lg:text-[38px] mt-[18px]" aria-live="polite">{formatRM(z.priceSen)}</p>
           <div className="flex flex-wrap gap-2 mt-3">
             <Link className="b-btn flex-[1_1_100%]" href={`${kek.href}?saiz=${z.id}#tempah`}>
-              Pilih tarikh dan tempah <IkonKanan size={18} />
+              Pilih tarikh dan tempah
             </Link>
           </div>
           <p className="mt-2.5 text-[15px] text-yk-cream-2">Anda akan pilih tarikh, kemudian hantar tempahan di WhatsApp.</p>
           {kek.allowDesign && (
-            <Link href="/reka" className="inline-flex items-center gap-1.5 mt-2 min-h-11 font-semibold text-[15px]">
-              Nak warna atau hiasan lain? Tempahan rekaan khas <IkonKanan size={18} />
+            <Link href="/reka" className="inline-flex items-center mt-2 min-h-11 font-semibold text-[15px] underline underline-offset-4">
+              Nak warna atau hiasan lain? Tempahan rekaan khas
             </Link>
           )}
         </div>

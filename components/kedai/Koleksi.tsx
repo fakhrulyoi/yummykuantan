@@ -111,7 +111,6 @@ export function Koleksi({ produk, kategori, kategoriAwal }: { produk: ProdukPapa
                 key={p.id}
                 p={p}
                 bentuk={{ phone: i % 5 === 0 ? 'lebar' : 'biasa', desktop: i % 7 === 0 ? 'besar' : i % 7 === 4 ? 'lebar' : 'biasa' }}
-                kelewatan={Math.min(1.2, 0.05 + i * 0.05)}
                 awal={i === 0}
               />
             ))}

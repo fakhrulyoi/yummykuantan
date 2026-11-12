@@ -11,7 +11,6 @@ export const SKEMA_KANDUNGAN: Record<KunciKandungan, z.ZodType> = {
     ayat: teks(3, 240),
     ayatPendek: teks(3, 120),
     gambar: z.array(z.object({ url, nama: z.string().trim().max(80), posisi: z.string().max(20).optional() })).min(1, { error: 'Sekurang-kurangnya satu gambar' }).max(8),
-    ticker: z.array(z.string().trim().min(1).max(40)).max(16),
   }),
   hubungi: z.object({
     whatsapp: z.string().regex(/^601\d{8,9}$/, { error: 'Nombor WhatsApp: format 601XXXXXXXX' }),

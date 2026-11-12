@@ -32,11 +32,10 @@ export function Hero({ hero }: { hero: NilaiKandungan['hero'] }) {
             </span>
           ))}
         </h1>
-        <span className="yk-gl w-[120px] mt-[18px] lg:w-[180px] lg:mt-7" />
-        <p className="yk-in mt-3.5 text-[#ECDDD3] lg:hidden" style={{ animationDelay: '1.1s' }}>{hero.ayatPendek}</p>
-        <p className="yk-in hidden lg:block mt-[26px] text-[19px] text-[#ECDDD3] max-w-[470px]" style={{ animationDelay: '1.2s' }}>{hero.ayat}</p>
-        <div className="yk-in grid grid-cols-2 gap-2 mt-[18px] lg:flex lg:flex-wrap lg:gap-3 lg:mt-[34px]" style={{ animationDelay: '1.3s' }}>
-          <Link className="b-btn yk-pulse !px-2.5 lg:!px-[26px]" href="/koleksi">Lihat koleksi</Link>
+        <p className="mt-4 text-[#ECDDD3] lg:hidden">{hero.ayatPendek}</p>
+        <p className="hidden lg:block mt-7 text-[19px] text-[#ECDDD3] max-w-[470px]">{hero.ayat}</p>
+        <div className="grid grid-cols-2 gap-2 mt-[18px] lg:flex lg:flex-wrap lg:gap-3 lg:mt-[34px]">
+          <Link className="b-btn !px-2.5 lg:!px-[26px]" href="/koleksi">Lihat koleksi</Link>
           <Link className="b-btn b-line !px-2.5 lg:!px-[26px] bg-[rgba(60,13,19,.5)] lg:bg-transparent" href="/reka">
             <span>Rekaan khas</span>
           </Link>
@@ -49,10 +48,6 @@ export function Hero({ hero }: { hero: NilaiKandungan['hero'] }) {
                 <span className="font-serif text-[22px]">{g.nama}</span>
               </p>
             ))}
-          </div>
-          <div className="flex items-center gap-3.5 text-[14.5px] text-yk-muted">
-            <span>Tatal</span>
-            <span className="yk-cue" aria-hidden="true" />
           </div>
         </div>
       </div>

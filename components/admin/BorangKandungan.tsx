@@ -61,7 +61,6 @@ export function BorangKandungan<K extends KunciKandungan>({ kunci, awal, terbit,
           {h.gambar.map((g, i) => (
             <Medan key={g.url} id={`h-nama-${i}`} label={`Nama kek dalam gambar ${i + 1}`} nilai={g.nama} panjang={80} onUbah={(x) => set({ gambar: h.gambar.map((y, k) => (k === i ? { ...y, nama: x } : y)) })} />
           ))}
-          <Medan id="h-ticker" label="Jalur nama kek (satu setiap baris)" nilai={h.ticker.join('\n')} panjang={700} baris={4} onUbah={(x) => set({ ticker: x.split('\n').map((y) => y.trim()).filter(Boolean) })} />
         </div>
         <PratontonPhone hero={h} />
       </div>

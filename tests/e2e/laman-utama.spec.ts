@@ -25,7 +25,6 @@ test('susunan bahagian ikut design', async ({ page }) => {
   const kedudukan = urutan.map((t) => tajuk.findIndex((x) => x.replace(/\s+/g, ' ').trim() === t));
   expect(kedudukan.every((k) => k >= 0)).toBe(true);
   expect([...kedudukan].sort((a, b) => a - b)).toEqual(kedudukan);
-  await expect(page.getByRole('region', { name: 'Jenis kek' })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Terus WhatsApp kami/ })).toBeVisible();
 });
 

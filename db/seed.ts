@@ -26,7 +26,6 @@ export const KANDUNGAN_MULA: NilaiKandungan = {
       { url: '/seed/12_01.jpg', nama: 'Italian Cake Wedding 12 inci', posisi: '50% 50%' },
       { url: '/seed/11_01.jpg', nama: 'Vintage Love Cake', posisi: '50% 45%' },
     ],
-    ticker: ['Kek batik', 'Brownies', 'Italian cake', 'Kek kahwin', 'Burnt cheesecake', 'Vintage love cake', 'Red velvet', 'Pandan gula melaka'],
   },
   hubungi: {
     whatsapp: '601123023447',

@@ -51,11 +51,7 @@ textarea.b-in{padding:12px 14px;min-height:96px;resize:vertical}
 @keyframes yk-fade5{0%{opacity:0}4%{opacity:1}20%{opacity:1}24%{opacity:0}100%{opacity:0}}
 @keyframes yk-kb{0%{transform:scale(1.16) translate(1.5%,1%)}24%{transform:scale(1.02) translate(0,0)}100%{transform:scale(1.02)}}
 @keyframes yk-rise{from{opacity:0;transform:translateY(.55em)}to{opacity:1;transform:none}}
-@keyframes yk-up{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
-@keyframes yk-line{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes yk-mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes yk-cue{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
-@keyframes yk-glow{0%,100%{box-shadow:0 0 0 0 rgba(235,207,195,.45)}50%{box-shadow:0 0 0 10px rgba(235,207,195,0)}}
 .yk-slide{position:absolute;inset:0;opacity:0;animation:yk-fade5 30s infinite}
 /* Gambar pertama kelihatan serta-merta (LCP), kemudian ikut kitaran yang sama. */
 .yk-slide:first-child{opacity:1;animation-name:yk-fade5a}
@@ -63,27 +59,21 @@ textarea.b-in{padding:12px 14px;min-height:96px;resize:vertical}
 .yk-slide img{width:100%;height:100%;object-fit:cover;animation:yk-kb 30s infinite;animation-delay:inherit}
 .yk-cap{opacity:0;animation:yk-fade5 30s infinite}
 .yk-w{display:inline-block;opacity:0;animation:yk-rise 1s cubic-bezier(.2,.7,.2,1) forwards}
-.yk-in{opacity:0;animation:yk-up .9s cubic-bezier(.2,.7,.2,1) forwards}
-.yk-gl{display:block;height:2px;background:#EBCFC3;transform-origin:left;transform:scaleX(0);animation:yk-line 1.2s 1.1s cubic-bezier(.2,.7,.2,1) forwards}
 .yk-mqwrap{overflow:hidden}
 .yk-mq{display:flex;width:max-content;animation:yk-mq var(--d,48s) linear infinite}
 .yk-mq.rev{animation-direction:reverse}
 .yk-mqwrap:hover .yk-mq,.yk-paused .yk-mq{animation-play-state:paused}
 .yk-tile{position:relative;display:block;overflow:hidden;background:#561920;text-decoration:none}
-.yk-tile img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1),filter .6s}
-.yk-tile:hover img,.yk-tile:focus-within img{transform:scale(1.07)}
+.yk-tile img{width:100%;height:100%;object-fit:cover}
 .yk-tile .yk-act{opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s}
 .yk-tile:hover .yk-act,.yk-tile:focus-within .yk-act{opacity:1;transform:none}
-.yk-cue{position:relative;width:1px;height:56px;background:rgba(242,231,222,.25);overflow:hidden}
-.yk-cue::after{content:'';position:absolute;inset:0;background:#EBCFC3;animation:yk-cue 1.8s ease-in-out infinite}
-.yk-pulse{animation:yk-glow 2.4s ease-in-out infinite}
 .yk-panel{position:relative;overflow:hidden;min-width:0;text-decoration:none;transition:flex-grow .8s cubic-bezier(.2,.7,.2,1)}
 .yk-panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
 .yk-panel .yk-pi{opacity:0;transform:translateY(16px);transition:opacity .5s .2s,transform .5s .2s}
 .yk-panel[data-open="true"] .yk-pi{opacity:1;transform:none}
 .yk-panel[data-open="true"] .yk-pv{opacity:0}
 .yk-pv{transition:opacity .3s}
-@media (prefers-reduced-motion:reduce){.yk-slide,.yk-slide img,.yk-cap{animation:none}.yk-slide:first-child,.yk-cap:first-child{opacity:1}.yk-w,.yk-in{animation:none;opacity:1}.yk-gl{animation:none;transform:none}.yk-mq{animation:none}.yk-cue::after{animation:none}.yk-pulse{animation:none}.yk-panel,.yk-panel img,.yk-tile img{transition:none}}
+@media (prefers-reduced-motion:reduce){.yk-slide,.yk-slide img,.yk-cap{animation:none}.yk-slide:first-child,.yk-cap:first-child{opacity:1}.yk-w{animation:none;opacity:1}.yk-mq{animation:none}.yk-panel,.yk-panel img{transition:none}}
 .yk-stage{position:relative;overflow:hidden;background:#3A0E14}
 .yk-sh-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.05);transition:opacity .7s ease,transform 1.4s cubic-bezier(.2,.7,.2,1)}
 .yk-sh-img[data-on="true"]{opacity:1;transform:scale(1)}
@@ -119,7 +109,7 @@ textarea.b-in{padding:12px 14px;min-height:96px;resize:vertical}
 .mj-dot{height:7px;border-radius:999px;border:0;padding:0;background:#8A4A52;cursor:pointer;transition:width .3s ease,background .3s ease}
 .mj-dot[aria-pressed="true"]{background:#EBCFC3}
 .mj-dialog{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:24px;overflow-y:auto}
-.mj-backdrop{position:fixed;inset:0;background:rgba(30,5,9,.97);backdrop-filter:blur(14px);animation:mj-fade .3s ease both}
+.mj-backdrop{position:fixed;inset:0;background:#1E0509;animation:mj-fade .3s ease both}
 .mj-fig{animation:mj-lift .75s cubic-bezier(.22,.85,.3,1) both;transform-origin:50% 100%}
 .mj-fig img{transition:transform .5s cubic-bezier(.2,.75,.2,1);transform-origin:50% 100%}
 .mj-info{animation:mj-rise .55s .15s ease both}

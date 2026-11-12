@@ -7,7 +7,6 @@ import { MejaKek } from '@/components/kedai/meja/MejaKek';
 import { PilihJenis } from '@/components/kedai/PilihJenis';
 import { SoalanLazim } from '@/components/kedai/SoalanLazim';
 import { TarikhKosong, type HariPapar } from '@/components/kedai/TarikhKosong';
-import { Ticker } from '@/components/kedai/Ticker';
 import { Ulasan } from '@/components/kedai/Ulasan';
 import { bakiTarikh } from '@/lib/data/kapasiti';
 import { bacaKandungan, senaraiKategori } from '@/lib/data/kandungan';
@@ -52,15 +51,12 @@ export default async function LamanUtama() {
   return (
     <>
       <Hero hero={hero} />
-      <Ticker nama={hero.ticker} />
       <TarikhKosong hari={hariPapar} />
       {meja.length > 0 && (
         <section className="mj-room pt-9 pb-8 lg:pt-16 lg:pb-14" aria-labelledby="mj-h">
           <header className="px-5 lg:px-10 lg:text-center relative z-[3]">
-            <p className="text-[13px] lg:text-[13px] tracking-[.24em] lg:tracking-[.28em] uppercase text-yk-muted">
-              Paling kerap ditempah &nbsp;·&nbsp; {meja.length} kek<span className="hidden lg:inline"> di atas meja</span>
-            </p>
-            <h2 id="mj-h" className="text-[34px] lg:text-[56px] leading-[1.04] lg:leading-[1.02] mt-2.5 lg:mt-3.5">Pilih kek terus dari meja kami.</h2>
+            <h2 id="mj-h" className="text-[34px] lg:text-[56px] leading-[1.04] lg:leading-[1.02]">Pilih kek terus dari meja kami.</h2>
+            <p className="mt-2.5 text-yk-cream-2 lg:text-[17px]">{meja.length} kek yang paling kerap ditempah. Ketik kek untuk lihat saiz dan harga.</p>
           </header>
           <MejaKek
             items={meja.map((p) => ({

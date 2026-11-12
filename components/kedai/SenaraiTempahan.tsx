@@ -370,7 +370,7 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
                 <span className="block text-[13px] text-yk-muted">Anggaran</span>
                 <span className="font-serif text-[26px] leading-none" data-testid="jumlah">{formatRM(jumlahPenuh)}</span>
               </div>
-              <button type="submit" className="b-btn yk-pulse relative flex-1 !px-2.5 lg:w-full" disabled={sibuk}>
+              <button type="submit" className="b-btn relative flex-1 !px-2.5 lg:w-full" disabled={sibuk}>
                 <IkonWhatsApp />
                 <span>{sibuk ? 'Menyimpan…' : <>Hantar<span className="sr-only lg:not-sr-only"> tempahan</span> di WhatsApp</>}</span>
               </button>

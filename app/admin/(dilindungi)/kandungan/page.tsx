@@ -37,7 +37,7 @@ export default async function HalamanKandungan({ searchParams }: { searchParams:
               {perlu.has(x.k) && <span className="ad-badge !h-[22px] !text-[11.5px] bg-[#FFF1D6] text-[#7A4B00]">Perlu diisi</span>}
             </Link>
           ))}
-          <Link href="/admin/soalan" className="k-sec !no-underline">Soalan lazim &rarr;</Link>
+          <Link href="/admin/soalan" className="k-sec !no-underline">Urus soalan lazim</Link>
         </nav>
         <BorangKandungan key={k} kunci={k} awal={d.nilai} terbit={d.terbit} adaDraf={d.adaDraf} tajuk={nama} />
       </div>

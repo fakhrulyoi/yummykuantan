@@ -29,8 +29,7 @@ export default async function HalamanReka() {
       <section className="b-light bg-yk-cream text-yk-bg">
         <div className="px-5 py-9 lg:max-w-[1360px] lg:mx-auto lg:px-10 lg:py-20 lg:grid lg:grid-cols-[1fr_440px] lg:gap-16 lg:items-center">
           <div>
-            <p className="text-[14.5px] tracking-[.2em] uppercase text-[#7C3C44]">Rekaan khas</p>
-            <h1 className="text-[40px] lg:text-[64px] leading-none mt-2 text-yk-bg">Tempahan rekaan khas</h1>
+            <h1 className="text-[40px] lg:text-[64px] leading-none text-yk-bg">Tempahan rekaan khas</h1>
             <p className="mt-4 text-[#6A2E36] text-[17px] lg:text-[18px] max-w-[540px]">
               Ada gambar kek idaman, tema majlis atau warna tertentu? Hantar kepada kami di WhatsApp. Kami bantu rekakan kek yang sesuai dengan majlis dan bajet anda.
             </p>
