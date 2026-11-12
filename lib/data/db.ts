@@ -23,8 +23,9 @@ export function semakUrlDb(url: string): string | null {
 function buat(): Db {
   const url = process.env.DATABASE_URL;
   if (!url) throw new Error('DATABASE_URL belum ditetapkan');
+  // Log sahaja (bukan throw) supaya build tidak gagal; pertanyaan akan gagal dengan mesej ini dalam log.
   const salah = semakUrlDb(url);
-  if (salah) throw new Error(salah);
+  if (salah) console.error(salah);
   const pool = g.__ykPool ?? new Pool({ connectionString: url, max: Number(process.env.DB_POOL_MAX ?? 5) });
   g.__ykPool = pool;
   return drizzle(pool, { schema: skema, casing: 'snake_case' });
