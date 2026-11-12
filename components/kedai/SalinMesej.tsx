@@ -15,7 +15,7 @@ export function SalinMesej({ mesej }: { mesej: string }) {
   return (
     <>
       <button type="button" className="b-btn b-line w-full" onClick={salin}>Salin mesej</button>
-      <p aria-live="polite" className="text-[13px] text-yk-muted min-h-5 mt-1">
+      <p aria-live="polite" className="text-[14.5px] text-yk-muted min-h-5 mt-1">
         {keadaan === 'disalin' ? 'Mesej disalin. Tampal di WhatsApp kami.' : keadaan === 'gagal' ? 'Tak dapat salin. Pilih teks di bawah dan salin sendiri.' : ''}
       </p>
     </>

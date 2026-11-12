@@ -105,3 +105,15 @@ test('tempahan cepat: isi tarikh ke hari penuh ditolak', async ({ page }) => {
   expect(o2.date).toBe(hari(8));
   expect(o2.customerName).toBe('Pelanggan Cepat');
 });
+
+test('papan pemuka: hari ini dan esok, status sekali tekan', async ({ page }) => {
+  await db.update(s.order).set({ date: hari(0) }).where(eq(s.order.ref, 'YK-24200'));
+  await masukAdmin(page);
+  const senarai = page.getByRole('list', { name: 'Tempahan hari ini dan esok' });
+  await expect(senarai).toContainText('YK-24200');
+  await expect(senarai).toContainText('Hari ini');
+  await senarai.getByRole('button', { name: 'Mula sediakan, YK-24200' }).click();
+  await expect(senarai.getByRole('button', { name: 'Sedia diambil, YK-24200' })).toBeVisible();
+  const [o] = await db.select().from(s.order).where(eq(s.order.ref, 'YK-24200'));
+  expect(o.status).toBe('DALAM_PENYEDIAAN');
+});

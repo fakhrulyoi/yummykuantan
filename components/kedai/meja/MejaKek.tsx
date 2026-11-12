@@ -2,10 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState } from 'react';
-import { buatTempahanCepat } from '@/app/(kedai)/actions';
-import { sediaTetingkap } from '@/lib/tempahan/bukaWhatsApp';
+import { useEffect, useLayoutEffect, useReducer, useRef, useState } from 'react';
 import { useNampak } from '@/lib/useNampak';
 import { formatRM } from '@/lib/tempahan/wang';
 import { IkonKanan, IkonKembali } from '../Ikon';
@@ -35,7 +32,6 @@ export function MejaKek({ items, autoplay = true }: MejaKekProps) {
   const [refMeja, nampak] = useNampak<HTMLDivElement>();
   const kayu = nampak ? 'url(/meja/kayu.webp)' : undefined;
   const kurangGerak = useMedia('(prefers-reduced-motion: reduce)');
-  const router = useRouter();
   const kekRef = useRef<Record<string, HTMLButtonElement | null>>({});
   const fokusSelepas = useRef(false);
 
@@ -65,23 +61,6 @@ export function MejaKek({ items, autoplay = true }: MejaKekProps) {
 
   const tekan = (i: number) => (s.lit === i ? hantar({ t: 'buka', i }) : hantar({ t: 'nyala', i }));
 
-  const tempah = useCallback(
-    async (kek: KekMeja, sizeId: string) => {
-      const tetingkap = sediaTetingkap();
-      const r = await buatTempahanCepat({ productId: kek.id, sizeId, qty: 1, lamanWeb: '' }).catch((e) => {
-        tetingkap.batal();
-        throw e;
-      });
-      if (!r.ok) {
-        tetingkap.batal();
-        throw new Error(r.ralat);
-      }
-      tetingkap.pergi(r.waUrl);
-      router.push(`/tempahan/${r.ref}?t=${r.token}`);
-    },
-    [router],
-  );
-
   if (!n) return null;
   const lit = s.lit === null ? null : items[s.lit];
   const buka = s.open === null ? null : items[s.open];
@@ -96,13 +75,13 @@ export function MejaKek({ items, autoplay = true }: MejaKekProps) {
             <span className="hidden lg:inline ml-3 align-middle"><span className="mj-tag font-sans">dari {formatRM(Math.min(...lit.sizes.map((z) => z.priceSen)))}</span></span>
           </p>
           <p className="mt-1.5 lg:hidden"><span className="mj-tag">dari {formatRM(Math.min(...lit.sizes.map((z) => z.priceSen)))}</span></p>
-          <p className="text-yk-cream-2 mt-2 text-sm lg:text-[15.5px] lg:mt-1.5">{lit.description}</p>
+          <p className="text-yk-cream-2 mt-2 text-[15px] lg:text-[15.5px] lg:mt-1.5">{lit.description}</p>
           <button className="b-btn w-full mt-3.5 lg:w-auto lg:mt-4 lg:min-h-12" onClick={() => hantar({ t: 'buka', i: s.lit! })}>
             Lihat kek ini
           </button>
         </>
       ) : (
-        <p className="text-yk-cream-2">Halakan tetikus pada kek untuk nyalakan lampu. Tekan untuk lihat saiz dan harga.</p>
+        <p className="text-yk-cream-2">Halakan tetikus pada kek untuk nyalakan lampu. Tekan kek untuk lihat saiz, harga dan tempah.</p>
       )}
     </div>
   );
@@ -122,7 +101,6 @@ export function MejaKek({ items, autoplay = true }: MejaKekProps) {
           saiz={s.saiz}
           pilihSaiz={(k) => hantar({ t: 'saiz', k })}
           tutup={() => hantar({ t: 'tutup' })}
-          tempah={(sizeId) => tempah(buka, sizeId)}
           pencetus={() => kekRef.current[`${desktop ? 'd' : 'p'}${s.open}`] ?? null}
         />
       )}
@@ -212,14 +190,14 @@ function PentasDesktop({ items, s, kekunci, tekan, hantar, label, kekRef, maklum
         <div>
           <button
             onClick={() => hantar({ t: 'auto', on: !s.auto })}
-            className="min-h-11 px-3.5 border border-yk-line rounded-full bg-transparent text-yk-muted text-[13px] font-semibold"
+            className="min-h-11 px-3.5 border border-yk-line rounded-full bg-transparent text-yk-muted text-[14.5px] font-semibold"
           >
             {s.auto ? 'Jeda' : 'Main'} lampu automatik
           </button>
         </div>
         {maklumat}
         <div className="justify-self-end">
-          <Link className="b-btn b-line !min-h-11 !px-[18px] !text-sm" href="/koleksi">Semua koleksi</Link>
+          <Link className="b-btn b-line !min-h-11 !px-[18px] !text-[15px]" href="/koleksi">Semua koleksi</Link>
         </div>
       </div>
     </>
@@ -228,6 +206,12 @@ function PentasDesktop({ items, s, kekunci, tekan, hantar, label, kekRef, maklum
 
 function PentasPhone({ items, s, kekunci, tekan, hantar, label, kekRef, maklumat, kayu }: PentasProps) {
   const mula = useRef<number | null>(null);
+  // Petunjuk pertama: hilang selepas sentuhan pertama atau 7 saat.
+  const [petunjuk, setPetunjuk] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setPetunjuk(false), 7000);
+    return () => clearTimeout(t);
+  }, []);
   const lit = s.lit ?? 0;
   const butang = 'absolute top-[250px] z-[4] w-11 h-11 rounded-full border border-yk-line-strong bg-[rgba(42,9,14,.7)] text-yk-cream inline-flex items-center justify-center';
   return (
@@ -239,6 +223,7 @@ function PentasPhone({ items, s, kekunci, tekan, hantar, label, kekRef, maklumat
         onKeyDown={kekunci}
         onPointerDown={(e) => {
           mula.current = e.clientX;
+          setPetunjuk(false);
         }}
         onPointerUp={(e) => {
           if (mula.current === null) return;
@@ -252,6 +237,12 @@ function PentasPhone({ items, s, kekunci, tekan, hantar, label, kekRef, maklumat
         style={{ height: 540 }}
       >
         <div className="mj-rail" aria-hidden="true" />
+        <p
+          aria-hidden="true"
+          className={`absolute left-1/2 top-3 z-[5] -translate-x-1/2 whitespace-nowrap rounded-full border border-yk-line-strong bg-[rgba(42,9,14,.82)] px-4 py-2 text-[14px] font-semibold text-yk-cream transition-opacity duration-500 ${petunjuk ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        >
+          <span className="mj-leret inline-block">&larr;</span> Leret untuk lihat {items.length} kek <span className="mj-leret inline-block">&rarr;</span>
+        </p>
         <div aria-hidden="true" className="mj-top" style={{ top: 398, height: 92, backgroundImage: kayu, backgroundSize: '600px auto' }} />
         <div aria-hidden="true" className="mj-edge" style={{ top: 490, height: 20, backgroundImage: kayu, backgroundSize: '600px auto' }} />
         <div className="absolute inset-0 transition-transform duration-[600ms] ease-[cubic-bezier(.2,.75,.2,1)]" style={{ transform: `translateX(${-lit * 62}%)` }}>
@@ -272,10 +263,10 @@ function PentasPhone({ items, s, kekunci, tekan, hantar, label, kekRef, maklumat
             );
           })}
         </div>
-        <button onClick={() => hantar({ t: 'sebelum' })} aria-label="Kek sebelum" className={`${butang} left-2`}>
+        <button onClick={() => { setPetunjuk(false); hantar({ t: 'sebelum' }); }} aria-label="Kek sebelum" className={`${butang} left-2`}>
           <IkonKembali size={18} />
         </button>
-        <button onClick={() => hantar({ t: 'seterusnya' })} aria-label="Kek seterusnya" className={`${butang} right-2`}>
+        <button onClick={() => { setPetunjuk(false); hantar({ t: 'seterusnya' }); }} aria-label="Kek seterusnya" className={`${butang} right-2`}>
           <IkonKanan size={18} />
         </button>
       </div>
@@ -292,6 +283,9 @@ function PentasPhone({ items, s, kekunci, tekan, hantar, label, kekRef, maklumat
         ))}
       </div>
       {maklumat}
+      <div className="relative z-[3] px-5 mt-3">
+        <Link className="b-btn b-line w-full" href="/koleksi">Lihat semua kek</Link>
+      </div>
     </>
   );
 }

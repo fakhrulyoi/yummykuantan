@@ -73,10 +73,10 @@ export function SemakStatus({ refAwal }: { refAwal: string }) {
         <button type="submit" className="b-btn" disabled={sibuk}>{sibuk ? 'Menyemak…' : 'Semak'}</button>
       </form>
       <div aria-live="polite">
-        {ralat && <p role="alert" className="mt-3 text-sm text-yk-error">{ralat}</p>}
+        {ralat && <p role="alert" className="mt-3 text-[15px] text-yk-error">{ralat}</p>}
         {hasil && (
           <section aria-labelledby="h-status" className="mt-8">
-            <p className="text-yk-muted text-[13.5px]">Tempahan {ref.trim().toUpperCase()}</p>
+            <p className="text-yk-muted text-[15px]">Tempahan {ref.trim().toUpperCase()}</p>
             <h2 id="h-status" className="text-[30px] lg:text-[40px] leading-[1.05] mt-1">{tajuk(hasil)}</h2>
             <p className="mt-2 text-yk-cream-2">
               {hasil.date

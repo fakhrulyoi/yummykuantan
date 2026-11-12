@@ -82,6 +82,8 @@ export const settings = pgTable('settings', {
   minLeadDays: integer().notNull().default(3),
   dailyCapacity: integer().notNull().default(12),
   deliveryAreas: text().array().notNull().default(sql`ARRAY['Kuantan','Pekan']::text[]`),
+  /** Caj hantar ikut kawasan, dalam sen. Kawasan tanpa nilai = dimaklumkan di WhatsApp. */
+  deliveryFees: jsonb('delivery_fees').$type<Record<string, number>>().notNull().default({}),
   holdHours: integer().notNull().default(48),
   whatsappNumber: text().notNull().default('601123023447'),
 });

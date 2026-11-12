@@ -20,6 +20,7 @@ const skemaUmum = z.object({
   dailyCapacity: z.number().int().min(1, { error: 'Kapasiti sehari 1 hingga 200' }).max(200, { error: 'Kapasiti sehari 1 hingga 200' }),
   holdHours: z.number().int().min(1, { error: 'Tempoh pegangan 1 hingga 168 jam' }).max(168, { error: 'Tempoh pegangan 1 hingga 168 jam' }),
   whatsappNumber: z.string().trim().regex(/^601\d{8,9}$/, { error: 'Nombor WhatsApp tidak sah. Format: 601XXXXXXXX' }),
+  deliveryFees: z.record(z.string().max(40), z.number().int().min(0, { error: 'Caj hantar tidak sah' }).max(100_000, { error: 'Caj hantar tidak sah' })),
 });
 
 export async function simpanTetapan(v: z.input<typeof skemaUmum>): Promise<HasilTetapan> {

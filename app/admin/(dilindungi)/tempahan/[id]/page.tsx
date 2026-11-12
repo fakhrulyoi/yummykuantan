@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ButiranTempahan } from '@/components/admin/ButiranTempahan';
 import { LencanaStatus } from '@/components/admin/JadualTempahan';
+import { LangkahStatus } from '@/components/admin/LangkahStatus';
 import { requireAdmin } from '@/lib/auth/admin';
 import { binaPautanBalas, butiranTempahan, LABEL_STATUS } from '@/lib/data/adminTempahan';
 import { senaraiSlot } from '@/lib/data/tetapan';
@@ -110,7 +111,8 @@ export default async function HalamanButiran({ params }: { params: Promise<{ id:
           </details>
         </section>
 
-        <aside className="ad-card flex-[1_1_360px] lg:max-w-[460px] p-5 grid gap-3" aria-label="Tindakan">
+        <aside className="ad-card flex-[1_1_360px] lg:max-w-[460px] p-5 grid gap-3 order-first lg:order-none" aria-label="Tindakan">
+          <LangkahStatus id={o.id} status={o.status} mode={o.mode} besar />
           {balas ? (
             <a className="ad-btn" href={balas} target="_blank" rel="noopener noreferrer">Balas di WhatsApp</a>
           ) : (

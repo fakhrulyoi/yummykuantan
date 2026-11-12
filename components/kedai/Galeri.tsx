@@ -23,7 +23,7 @@ export function Galeri({ gambar, instagram, tiktok }: { gambar: string[]; instag
             Ikuti <a href={`https://instagram.com/${instagram}`}>Instagram @{instagram}</a> dan <a href={`https://www.tiktok.com/@${tiktok}`}>TikTok @{tiktok}</a>
           </p>
         </div>
-        <button className="b-btn b-line !min-h-10 !px-3 !text-[13px] lg:!min-h-11 lg:!px-[26px] lg:!text-[15px]" onClick={() => setMain((m) => !m)}>
+        <button className="b-btn b-line !min-h-10 !px-3 !text-[14.5px] lg:!min-h-11 lg:!px-[26px] lg:!text-[15px]" onClick={() => setMain((m) => !m)}>
           {main ? 'Jeda' : 'Main'}
         </button>
       </div>
@@ -38,7 +38,7 @@ export function Galeri({ gambar, instagram, tiktok }: { gambar: string[]; instag
           <div className="yk-mq rev gap-3.5 pr-3.5" style={{ ['--d' as string]: '80s' }}>{baris([...gambar].reverse(), 240, 240, '240px')}</div>
         </div>
       </div>
-      <p className="lg:hidden px-5 pt-3 text-sm text-yk-muted">
+      <p className="lg:hidden px-5 pt-3 text-[15px] text-yk-muted">
         <a href={`https://instagram.com/${instagram}`}>Instagram @{instagram}</a>, <a href={`https://www.tiktok.com/@${tiktok}`}>TikTok @{tiktok}</a>
       </p>
     </section>

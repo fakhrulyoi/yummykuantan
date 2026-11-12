@@ -40,6 +40,8 @@ export function ButiranTempahan(p: Props) {
   const [hCaj, setHCaj] = useState<HasilAdmin | null>(null);
   const [hBayar, setHBayar] = useState<HasilAdmin | null>(null);
   const [b, setB] = useState({ date: p.date ?? '', timeSlotId: p.timeSlotId ?? '', customerName: p.customerName ?? '', phone: p.phone ?? '', address: p.address ?? '' });
+  // Terbuka hanya pada muatan pertama untuk tempahan cepat yang belum lengkap (tidak tertutup sendiri selepas simpan).
+  const [bukaAwal] = useState(p.kind === 'QUICK' && !p.customerName);
   const [caj, setCaj] = useState(p.deliveryFeeSen === null ? '' : (p.deliveryFeeSen / 100).toFixed(2));
 
   const jalan = (f: () => Promise<HasilAdmin>, set: (h: HasilAdmin) => void) =>
@@ -74,8 +76,11 @@ export function ButiranTempahan(p: Props) {
         <Mesej h={hStatus} />
       </section>
 
-      <section aria-labelledby="h-but" className="border-t border-[#EFE7DD] pt-3.5">
-        <h2 id="h-but" className="text-[15px] font-bold">Butiran pelanggan</h2>
+      <details className="border-t border-[#EFE7DD] pt-3.5 group" open={bukaAwal}>
+        <summary className="cursor-pointer list-none flex justify-between items-center min-h-10">
+          <h2 id="h-but" className="text-[15px] font-bold">Butiran pelanggan</h2>
+          <span className="text-[13px] text-[#6B5B4E] group-open:hidden">Ubah</span>
+        </summary>
         {p.kind === 'QUICK' && <p className="text-[12.5px] text-[#6B5B4E] mt-0.5">Lengkapkan tarikh, slot dan nama selepas berbincang di WhatsApp. Tempahan ini dikira dalam kapasiti selepas tarikh diisi.</p>}
         <form
           className="grid gap-3 mt-2.5 sm:grid-cols-2"
@@ -100,7 +105,7 @@ export function ButiranTempahan(p: Props) {
             <Mesej h={hButiran} />
           </div>
         </form>
-      </section>
+      </details>
 
       <section aria-labelledby="h-caj" className="border-t border-[#EFE7DD] pt-3.5">
         <h2 id="h-caj" className="sr-only">Caj dan bayaran</h2>

@@ -38,19 +38,19 @@ export function Hero({ hero }: { hero: NilaiKandungan['hero'] }) {
         <div className="yk-in grid grid-cols-2 gap-2 mt-[18px] lg:flex lg:flex-wrap lg:gap-3 lg:mt-[34px]" style={{ animationDelay: '1.3s' }}>
           <Link className="b-btn yk-pulse !px-2.5 lg:!px-[26px]" href="/koleksi">Lihat koleksi</Link>
           <Link className="b-btn b-line !px-2.5 lg:!px-[26px] bg-[rgba(60,13,19,.5)] lg:bg-transparent" href="/reka">
-            <span>Reka kek<span className="hidden lg:inline"> anda</span></span>
+            <span>Rekaan khas</span>
           </Link>
         </div>
         <div className="hidden lg:flex absolute left-10 right-10 bottom-11 justify-between items-end gap-5">
           <div className="relative h-[52px] min-w-[320px]">
             {gambar.map((g, i) => (
               <p key={g.url} className="yk-cap absolute left-0 bottom-0 whitespace-nowrap" style={{ animationDelay: `${i * 6}s`, animationDuration: `${tempoh}s` }}>
-                <span className="block text-[13px] text-yk-accent font-semibold">Dalam gambar</span>
+                <span className="block text-[14.5px] text-yk-accent font-semibold">Dalam gambar</span>
                 <span className="font-serif text-[22px]">{g.nama}</span>
               </p>
             ))}
           </div>
-          <div className="flex items-center gap-3.5 text-[13px] text-yk-muted">
+          <div className="flex items-center gap-3.5 text-[14.5px] text-yk-muted">
             <span>Tatal</span>
             <span className="yk-cue" aria-hidden="true" />
           </div>

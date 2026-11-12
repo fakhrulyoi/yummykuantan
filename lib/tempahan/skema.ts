@@ -59,6 +59,7 @@ export const skemaTempahanCepat = z.object({
   sizeId: z.string().min(1).max(64),
   qty: z.number().int().min(HAD.qtyMin).max(HAD.qtyMaks),
   cakeMessage: teks(HAD.ucapanKek).optional(),
+  date: z.iso.date({ error: 'Pilih tarikh' }),
   lamanWeb: perangkap,
 });
 

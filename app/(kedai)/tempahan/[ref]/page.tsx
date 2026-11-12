@@ -28,7 +28,7 @@ export default async function HalamanSelepasTempah({ params, searchParams }: Pro
   return (
     <div className="px-5 pt-6 pb-16 lg:max-w-[1040px] lg:mx-auto lg:px-10 lg:pt-14 lg:pb-24 lg:grid lg:grid-cols-[1fr_400px] lg:gap-14 lg:items-start">
       <section aria-labelledby="h-selesai">
-        <p className="text-yk-muted text-[13.5px]">Tempahan {o.ref}</p>
+        <p className="text-yk-muted text-[15px]">Tempahan {o.ref}</p>
         <h1 id="h-selesai" className="text-[36px] lg:text-[56px] leading-[1.04] mt-1">Tekan hantar di WhatsApp untuk lengkapkan tempahan.</h1>
         <p className="mt-3 text-yk-cream-2 lg:text-[17px]">
           WhatsApp sudah dibuka dengan mesej siap ditulis. Tempahan hanya diterima selepas mesej itu dihantar. Kami akan sahkan slot, caj penghantaran dan cara bayar.
@@ -39,7 +39,7 @@ export default async function HalamanSelepasTempah({ params, searchParams }: Pro
           </a>
           <SalinMesej mesej={o.waMessage} />
         </div>
-        <p className="text-sm text-yk-muted mt-4">
+        <p className="text-[15px] text-yk-muted mt-4">
           Simpan rujukan <strong className="text-yk-cream">{o.ref}</strong>.{' '}
           <Link href={`/semak?ref=${o.ref}`} className="font-semibold text-yk-cream">Semak status tempahan</Link> dengan rujukan dan 4 digit akhir telefon anda.
         </p>
@@ -50,26 +50,29 @@ export default async function HalamanSelepasTempah({ params, searchParams }: Pro
           {o.items.map((i) => (
             <li key={i.id} className="p-3.5 border-b border-yk-line">
               <p className="font-serif text-[19px] leading-tight">{i.productName}</p>
-              <p className="text-[13px] text-yk-muted">
+              <p className="text-[14.5px] text-yk-muted">
                 {i.sizeLabel}{i.qty > 1 ? `, ${i.qty} biji` : ''}{i.cakeMessage ? `, tulisan: ${i.cakeMessage}` : ''}
               </p>
-              <p className="text-sm mt-0.5">{formatRM(i.unitPriceSen * i.qty)}</p>
+              <p className="text-[15px] mt-0.5">{formatRM(i.unitPriceSen * i.qty)}</p>
             </li>
           ))}
           {o.addons.map((a) => (
-            <li key={a.id} className="px-3.5 py-2.5 border-b border-yk-line flex justify-between text-sm">
+            <li key={a.id} className="px-3.5 py-2.5 border-b border-yk-line flex justify-between text-[15px]">
               <span>{a.name} x{a.qty}{a.text ? `: ${a.text}` : ''}</span>
               <span>{formatRM(a.unitPriceSen * a.qty)}</span>
             </li>
           ))}
         </ul>
-        <dl className="grid gap-1.5 m-0 p-3.5 text-sm">
-          <div className="flex justify-between gap-4"><dt className="text-yk-muted">Anggaran, dibayar di WhatsApp</dt><dd className="m-0 font-bold">{formatRM(o.totalSen)}</dd></div>
+        <dl className="grid gap-1.5 m-0 p-3.5 text-[15px]">
+          {o.deliveryFeeSen != null && (
+            <div className="flex justify-between gap-4"><dt className="text-yk-muted">Caj hantar</dt><dd className="m-0">{formatRM(o.deliveryFeeSen)}</dd></div>
+          )}
+          <div className="flex justify-between gap-4"><dt className="text-yk-muted">Jumlah, dibayar di WhatsApp</dt><dd className="m-0 font-bold">{formatRM(o.totalSen + (o.deliveryFeeSen ?? 0))}</dd></div>
           <div className="flex justify-between gap-4"><dt className="text-yk-muted">Bila</dt><dd className="m-0 text-right">{bila}</dd></div>
         </dl>
         <details className="border-t border-yk-line px-3.5">
-          <summary className="text-sm">Lihat mesej</summary>
-          <pre className="m-0 pb-3.5 whitespace-pre-wrap font-sans text-[13px] text-[#ECDDD3]">{o.waMessage}</pre>
+          <summary className="text-[15px]">Lihat mesej</summary>
+          <pre className="m-0 pb-3.5 whitespace-pre-wrap font-sans text-[14.5px] text-[#ECDDD3]">{o.waMessage}</pre>
         </details>
       </section>
     </div>

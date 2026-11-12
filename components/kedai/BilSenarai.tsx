@@ -11,7 +11,7 @@ export function PautanSenaraiPhone() {
       <IkonSenarai />
       <span
         aria-hidden="true"
-        className="absolute top-[5px] right-[3px] min-w-[18px] h-[18px] rounded-full bg-yk-accent text-yk-bg text-[11px] font-bold leading-[18px] text-center px-1"
+        className="absolute top-[5px] right-[3px] min-w-[18px] h-[18px] rounded-full bg-yk-accent text-yk-bg text-[13px] font-bold leading-[18px] text-center px-1"
       >
         {bil}
       </span>
@@ -24,7 +24,7 @@ export function PautanSenaraiDesktop() {
   return (
     <Link
       href="/senarai"
-      className="inline-flex items-center gap-2 min-h-11 px-3.5 border border-yk-line-strong rounded-full no-underline font-semibold text-[14.5px]"
+      className="inline-flex items-center gap-2 min-h-11 px-3.5 border border-yk-line-strong rounded-full no-underline font-semibold text-[15.5px]"
     >
       <IkonSenarai />
       Senarai ({bil})

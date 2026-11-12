@@ -73,7 +73,7 @@ test.describe('halaman kek', () => {
 
     await page.getByRole('button', { name: /Tambah ke senarai/ }).click();
     await expect(bil(page)).toHaveAccessibleName(bilDua);
-    await expect(page.getByRole('button', { name: /Dalam senarai/ })).toBeVisible();
+    await expect(page.getByRole('link', { name: /Dalam senarai/ })).toHaveAttribute('href', '/senarai');
     await page.reload();
     await expect(bil(page)).toHaveAccessibleName(bilDua);
   });
@@ -83,11 +83,15 @@ test.describe('halaman kek', () => {
     await page.goto('/kek/italian-cake');
     await page.getByRole('group', { name: 'Saiz' }).getByRole('button', { name: /8 inci/ }).click();
     await page.getByLabel('Tulisan atas kek (pilihan)').fill('Selamat Pengantin Baru');
+    const hari = page.getByRole('group', { name: 'Tarikh' }).getByRole('button', { disabled: false }).first();
+    const tarikh = await hari.getAttribute('data-tarikh');
+    await hari.click();
     await page.getByRole('button', { name: /Tempah di WhatsApp/ }).click();
     await expect(page).toHaveURL(/\/tempahan\/YK-\d+\?t=/);
     const [o] = await db.select().from(s.order).orderBy(desc(s.order.createdAt)).limit(1);
     expect(o.kind).toBe('QUICK');
     expect(o.totalSen).toBe(28000);
+    expect(o.date).toBe(tarikh);
     const [i] = await db.select().from(s.orderItem).where(eq(s.orderItem.orderId, o.id));
     expect(i.cakeMessage).toBe('Selamat Pengantin Baru');
     const wa = await urlDibuka(page);

@@ -21,7 +21,7 @@ export function PilihJenis({ jenis }: { jenis: JenisPapar[] }) {
             <span aria-hidden="true" className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(42,9,14,.05), rgba(42,9,14,.88))' }} />
             <span className="absolute left-3.5 right-3.5 bottom-3">
               <span className="block font-serif text-[26px] leading-[1.05]">{j.name}</span>
-              <span className="text-[12.5px] text-yk-accent font-semibold">{ringkas(j)}</span>
+              <span className="text-[14px] text-yk-accent font-semibold">{ringkas(j)}</span>
             </span>
           </Link>
         ))}
@@ -52,7 +52,7 @@ export function PilihJenis({ jenis }: { jenis: JenisPapar[] }) {
               <span className="yk-pi absolute left-7 right-7 bottom-[26px]">
                 <span className="block font-serif text-[44px] leading-none">{j.name}</span>
                 <span className="block mt-2 text-[#ECDDD3] max-w-[380px]">{j.blurb}</span>
-                <span className="inline-flex gap-4 mt-3.5 text-sm text-yk-accent font-semibold">{ringkas(j)}</span>
+                <span className="inline-flex gap-4 mt-3.5 text-[15px] text-yk-accent font-semibold">{ringkas(j)}</span>
               </span>
             </Link>
           );

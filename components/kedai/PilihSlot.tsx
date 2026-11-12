@@ -5,7 +5,7 @@ export type SlotPapar = { id: string; label: string; baki: number };
 export function PilihSlot({ slot, pilih, onPilih, ralat }: { slot: SlotPapar[]; pilih: string | null; onPilih: (id: string) => void; ralat?: string }) {
   return (
     <>
-      <h3 className="font-serif font-normal text-2xl lg:text-[13.5px] lg:font-sans lg:font-semibold lg:text-yk-cream-2 px-4 pt-4 lg:px-0 lg:pt-0 lg:mt-[18px] lg:mb-1.5">Masa</h3>
+      <h3 className="font-serif font-normal text-2xl lg:text-[15px] lg:font-sans lg:font-semibold lg:text-yk-cream-2 px-4 pt-4 lg:px-0 lg:pt-0 lg:mt-[18px] lg:mb-1.5">Masa</h3>
       <div
         role="group"
         aria-label="Masa"
@@ -22,11 +22,11 @@ export function PilihSlot({ slot, pilih, onPilih, ralat }: { slot: SlotPapar[]; 
             onClick={() => onPilih(t.id)}
           >
             {t.label}
-            <span className="text-[12.5px] text-yk-muted lg:block">{t.baki > 0 ? `${t.baki} lagi` : 'Penuh'}</span>
+            <span className="text-[14px] text-yk-muted lg:block">{t.baki > 0 ? `${t.baki} lagi` : 'Penuh'}</span>
           </button>
         ))}
       </div>
-      {ralat && <p id="ralat-slot" className="px-4 lg:px-0 mt-1.5 text-[13.5px] text-yk-error">{ralat}</p>}
+      {ralat && <p id="ralat-slot" className="px-4 lg:px-0 mt-1.5 text-[15px] text-yk-error">{ralat}</p>}
     </>
   );
 }

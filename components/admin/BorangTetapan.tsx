@@ -34,12 +34,13 @@ export function Kad({ id, tajuk, nota, children }: { id: string; tajuk: string; 
   );
 }
 
-type Umum = { minLeadDays: number; dailyCapacity: number; holdHours: number; whatsappNumber: string };
+type Umum = { minLeadDays: number; dailyCapacity: number; holdHours: number; whatsappNumber: string; deliveryFees: Record<string, number> };
 
-export function BorangUmum({ awal, bolehUbah, simpan }: { awal: Umum; bolehUbah: boolean; simpan: (v: Umum) => Promise<HasilTetapan> }) {
+export function BorangUmum({ awal, kawasan, bolehUbah, simpan }: { awal: Umum; kawasan: string[]; bolehUbah: boolean; simpan: (v: Umum) => Promise<HasilTetapan> }) {
   const [v, setV] = useState(awal);
+  const [caj, setCaj] = useState<Record<string, string>>(() => Object.fromEntries(kawasan.map((k) => [k, awal.deliveryFees[k] != null ? (awal.deliveryFees[k] / 100).toFixed(2) : ''])));
   const { sibuk, jalan, papar } = useTindakan();
-  const nombor = (k: keyof Umum, label: string, min: number, max: number, nota: string) => (
+  const nombor = (k: 'minLeadDays' | 'dailyCapacity' | 'holdHours', label: string, min: number, max: number, nota: string) => (
     <div>
       <label className="ad-lbl" htmlFor={`u-${k}`}>{label}</label>
       <input id={`u-${k}`} className="ad-in" type="number" min={min} max={max} value={v[k]} onChange={(e) => setV({ ...v, [k]: Number(e.target.value) })} />
@@ -51,7 +52,14 @@ export function BorangUmum({ awal, bolehUbah, simpan }: { awal: Umum; bolehUbah:
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          jalan(() => simpan(v));
+          const fees: Record<string, number> = {};
+          for (const k of kawasan) {
+            const x = caj[k]?.trim();
+            if (!x) continue;
+            const sen = Math.round(Number(x.replace(',', '.')) * 100);
+            fees[k] = Number.isFinite(sen) ? sen : -1;
+          }
+          jalan(() => simpan({ ...v, deliveryFees: fees }));
         }}
       >
         <fieldset disabled={!bolehUbah || sibuk} className="grid gap-3 sm:grid-cols-2 border-0 p-0 m-0">
@@ -63,6 +71,13 @@ export function BorangUmum({ awal, bolehUbah, simpan }: { awal: Umum; bolehUbah:
             <input id="u-wa" className="ad-in" inputMode="numeric" value={v.whatsappNumber} onChange={(e) => setV({ ...v, whatsappNumber: e.target.value.replace(/\s/g, '') })} />
             <p className="text-[12.5px] text-[#6B5B4E] mt-1">Format 601XXXXXXXX. Semua butang WhatsApp di laman guna nombor ini.</p>
           </div>
+          {kawasan.map((k) => (
+            <div key={k}>
+              <label className="ad-lbl" htmlFor={`caj-${k}`}>Caj hantar ke {k} (RM)</label>
+              <input id={`caj-${k}`} className="ad-in" inputMode="decimal" placeholder="Kosong = maklum di WhatsApp" value={caj[k] ?? ''} onChange={(e) => setCaj({ ...caj, [k]: e.target.value })} />
+              <p className="text-[12.5px] text-[#6B5B4E] mt-1">Dipapar kepada pelanggan dan ditambah dalam jumlah tempahan.</p>
+            </div>
+          ))}
           {bolehUbah && <div className="sm:col-span-2"><button type="submit" className="ad-btn">Simpan tetapan</button></div>}
         </fieldset>
       </form>

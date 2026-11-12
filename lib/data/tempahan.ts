@@ -91,6 +91,7 @@ export async function simpanTempahan(input: unknown, ctx: { ip: string; now?: Da
   }
   if (!uuidSah(v.timeSlotId)) return { ok: false, ralat: 'INPUT', medan: { timeSlotId: 'Pilih slot masa' } };
 
+  const caj = v.mode === 'DELIVERY' ? (tetapan.deliveryFees[v.area!] ?? null) : null;
   const dedupeKey = sha(['LIST', v.phone, v.date, ...v.items.map((i) => i.productId).sort()].join('|'));
   const hargaBerubah = ctx.hargaPelanggan !== undefined && ctx.hargaPelanggan !== h.totalSen;
 
@@ -119,13 +120,13 @@ export async function simpanTempahan(input: unknown, ctx: { ip: string; now?: Da
           const token = randomBytes(16).toString('hex');
           const waMessage = binaMesejWhatsApp({
             ref, kind: 'LIST', items: h.items, addons: h.addons, totalSen: h.totalSen,
-            tarikh: v.date, slotLabel: slot.label, mode: v.mode, area: v.area, address: v.address, name: v.name,
+            tarikh: v.date, slotLabel: slot.label, mode: v.mode, area: v.area, address: v.address, name: v.name, cajHantarSen: caj,
           });
           const [o] = await tx
             .insert(s.order)
             .values({
               ref, token, kind: 'LIST', customerName: v.name, phone: v.phone, mode: v.mode, area: v.area ?? null,
-              address: v.address ?? null, date: v.date, timeSlotId: slot.id, notes: v.notes ?? null,
+              address: v.address ?? null, date: v.date, timeSlotId: slot.id, notes: v.notes ?? null, deliveryFeeSen: caj,
               cakeSubtotalSen: h.cakeSubtotalSen, addonSubtotalSen: h.addonSubtotalSen, totalSen: h.totalSen,
               waMessage, ipHash, dedupeKey, createdAt: now, updatedAt: now,
             })
@@ -148,30 +149,43 @@ export async function simpanTempahanCepat(input: unknown, ctx: { ip: string; now
   const ipHash = hashIp(ctx.ip);
   if (!(await hadKadar(`tempah:${ipHash}`, HAD_TEMPAH.had, HAD_TEMPAH.saat, now))) return { ok: false, ralat: 'HAD_KADAR' };
 
-  const [saiz, tetapan] = await Promise.all([katalogSaiz([v.sizeId]), bacaTetapan()]);
+  const [saiz, tetapan, tutup] = await Promise.all([katalogSaiz([v.sizeId]), bacaTetapan(), senaraiHariTutup()]);
   const h = kiraHarga([{ productId: v.productId, sizeId: v.sizeId, qty: v.qty, cakeMessage: v.cakeMessage }], [], saiz, new Map());
   if (!h.ok) return { ok: false, ralat: h.ralat, ...(h.indeks !== undefined ? { indeks: h.indeks } : {}) };
+  const t = tarikhDibenarkan(v.date, now, h.items.map((i) => i.leadDays), tetapan.minLeadDays, tutup);
+  if (!t.ok) {
+    if (t.sebab === 'FORMAT') return { ok: false, ralat: 'INPUT', medan: { date: 'Pilih tarikh' } };
+    return { ok: false, ralat: t.sebab };
+  }
 
-  const dedupeKey = sha(['QUICK', ipHash, v.productId, v.sizeId].join('|'));
+  const dedupeKey = sha(['QUICK', ipHash, v.productId, v.sizeId, v.date].join('|'));
   return denganCubaSemula<HasilTempahan>(
     () =>
       db.transaction(async (tx) => {
         await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtext(${dedupeKey}))`);
         const ada = await cariPendua(tx, dedupeKey, now);
         if (ada) return { ok: true as const, ref: ada.ref, token: ada.token, waUrl: waUrl(tetapan.whatsappNumber, ada.waMessage), totalSen: ada.totalSen, hargaBerubah: false };
+        // Kapasiti harian (slot masa disahkan kemudian di WhatsApp).
+        const sedia = await tx
+          .select({ date: s.order.date, timeSlotId: s.order.timeSlotId, status: s.order.status, createdAt: s.order.createdAt })
+          .from(s.order)
+          .where(and(eq(s.order.date, v.date), ne(s.order.status, 'DIBATALKAN')));
+        if (bakiSlot(v.date, [], tetapan.dailyCapacity, sedia.map((o) => ({ ...o, date: o.date! })), now, tetapan.holdHours).harian <= 0) {
+          throw new Ditolak({ ok: false, ralat: 'HARI_PENUH' });
+        }
         const ref = await rujukanBaru(tx);
         const token = randomBytes(16).toString('hex');
-        const waMessage = binaMesejWhatsApp({ ref, kind: 'QUICK', items: h.items, addons: [], totalSen: h.totalSen });
+        const waMessage = binaMesejWhatsApp({ ref, kind: 'QUICK', items: h.items, addons: [], totalSen: h.totalSen, tarikh: v.date });
         const [o] = await tx
           .insert(s.order)
           .values({
-            ref, token, kind: 'QUICK', cakeSubtotalSen: h.cakeSubtotalSen, addonSubtotalSen: 0, totalSen: h.totalSen,
+            ref, token, kind: 'QUICK', date: v.date, cakeSubtotalSen: h.cakeSubtotalSen, addonSubtotalSen: 0, totalSen: h.totalSen,
             waMessage, ipHash, dedupeKey, createdAt: now, updatedAt: now,
           })
           .returning({ id: s.order.id });
         await tx.insert(s.orderItem).values(h.items.map((i) => barisItem(i, o.id)));
         return { ok: true as const, ref, token, waUrl: waUrl(tetapan.whatsappNumber, waMessage), totalSen: h.totalSen, hargaBerubah: false };
-      }),
+      }, { isolationLevel: 'serializable' }),
     () => ({ ok: false, ralat: 'HAD_KADAR' }),
   );
 }

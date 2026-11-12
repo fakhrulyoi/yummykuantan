@@ -1,0 +1,1 @@
+ALTER TABLE "settings" ADD COLUMN "delivery_fees" jsonb DEFAULT '{}'::jsonb NOT NULL;

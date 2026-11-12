@@ -20,7 +20,7 @@ test.describe('rangka kedai', () => {
     } else {
       expect(Math.round(tinggi)).toBe(76);
       const nav = page.getByRole('navigation', { name: 'Menu utama' });
-      for (const t of ['Koleksi', 'Reka kek', 'Tarikh kosong', 'Tentang kami']) await expect(nav.getByRole('link', { name: t })).toBeVisible();
+      for (const t of ['Koleksi', 'Rekaan khas', 'Tarikh kosong', 'Tentang kami']) await expect(nav.getByRole('link', { name: t })).toBeVisible();
       await expect(page.getByRole('link', { name: /Senarai \(0\)/ })).toBeVisible();
     }
   });

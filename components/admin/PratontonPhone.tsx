@@ -18,7 +18,7 @@ export function PratontonPhone({ hero }: { hero: NilaiKandungan['hero'] }) {
           <p className="text-[10.5px] text-[#ECDDD3]">{hero.ayatPendek}</p>
           <div className="grid grid-cols-2 gap-1.5 mt-2.5">
             <span className="h-7 grid place-items-center bg-[#EBCFC3] text-[#4B141B] text-[10px] font-semibold">Lihat koleksi</span>
-            <span className="h-7 grid place-items-center border border-[#F2E7DE] text-[10px] font-semibold">Reka kek</span>
+            <span className="h-7 grid place-items-center border border-[#F2E7DE] text-[10px] font-semibold">Rekaan khas</span>
           </div>
         </div>
       </div>

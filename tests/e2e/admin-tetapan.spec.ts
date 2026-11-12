@@ -71,3 +71,22 @@ test('nombor WhatsApp sah diselaraskan ke laman', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('link', { name: /WhatsApp sekarang/ })).toHaveAttribute('href', /wa\.me\/60198765432/);
 });
+
+test('caj hantar: ditetapkan di admin, dipapar dan ditambah dalam jumlah senarai', async ({ page }) => {
+  await masukAdmin(page);
+  await page.goto('/admin/tetapan');
+  await page.getByLabel('Caj hantar ke Kuantan (RM)').fill('10');
+  await page.getByLabel('Caj hantar ke Pekan (RM)').fill('15');
+  await page.getByRole('button', { name: 'Simpan tetapan' }).click();
+  await expect(page.getByRole('status').filter({ hasText: 'Tetapan disimpan' })).toBeVisible();
+
+  await kekDalamSenarai(page);
+  await page.getByRole('group', { name: 'Cara terima' }).getByRole('button', { name: /Penghantaran/ }).click();
+  await page.getByRole('group', { name: 'Kawasan' }).getByRole('button', { name: /Pekan/ }).click();
+  await expect(page.getByRole('group', { name: 'Kawasan' }).getByRole('button', { name: /Pekan/ })).toContainText('RM 15.00');
+  await expect(page.getByTestId('jumlah').first()).toContainText('RM 115.00');
+  await expect(page.getByTestId('pratonton')).toContainText('Caj hantar ke Pekan: RM15.00');
+
+  await page.goto('/kek/italian-cake');
+  await expect(page.getByText(/Pekan \(RM 15\.00\)/)).toBeAttached();
+});

@@ -1,15 +1,7 @@
-/** Papar teks; bahagian `[...]` (belum disahkan pemilik) ditanda supaya jelas ia contoh. */
-export function TeksTbc({ teks }: { teks: string }) {
-  const bahagian = teks.split(/(\[[^\]]+\])/g);
-  return (
-    <>
-      {bahagian.map((b, i) =>
-        b.startsWith('[') && b.endsWith(']') ? (
-          <span key={i} className="yk-tbc">{b}</span>
-        ) : (
-          <span key={i}>{b}</span>
-        ),
-      )}
-    </>
-  );
+import { sudahDiisi } from '@/lib/kandungan/kurungan';
+
+/** Papar teks hanya jika sudah diisi pemilik. Teks `[...]` (belum disahkan) tidak dipapar langsung di laman. */
+export function TeksTbc({ teks, sebelum = '', selepas = '' }: { teks: string | null | undefined; sebelum?: string; selepas?: string }) {
+  if (!sudahDiisi(teks)) return null;
+  return <>{sebelum}{teks}{selepas}</>;
 }

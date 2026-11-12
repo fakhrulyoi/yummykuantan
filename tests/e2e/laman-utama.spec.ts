@@ -16,7 +16,7 @@ test('susunan bahagian ikut design', async ({ page }) => {
     'Tarikh yang masih kosong',
     'Pilih kek terus dari meja kami.',
     'Pilih ikut jenis',
-    'Nak rekaan sendiri? Tengok dulu dalam 3D.',
+    'Nak rekaan sendiri? Kami bantu rekakan.',
     'Cara tempah',
     'Kata pelanggan',
     'Soalan lazim',
@@ -62,7 +62,7 @@ test('tepat 3 soalan lazim dan boleh dibuka', async ({ page }) => {
 
 test('jalur reka memaut ke /reka', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('link', { name: 'Buka studio 3D' })).toHaveAttribute('href', '/reka');
+  await expect(page.getByRole('link', { name: 'Tempahan rekaan khas' })).toHaveAttribute('href', '/reka');
 });
 
 test('tiada isu aksesibiliti serius', async ({ page }) => {

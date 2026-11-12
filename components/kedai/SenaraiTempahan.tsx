@@ -31,6 +31,7 @@ type Props = {
   hariIni: string;
   minLeadDays: number;
   kawasan: string[];
+  caj: Record<string, number>;
   alamatAmbil: string;
   whatsapp: string;
 };
@@ -38,7 +39,7 @@ type Props = {
 const BIL_HARI = 14;
 const TIDAK_AKTIF = 'Kek ini tidak lagi ditawarkan, jadi kami keluarkan dari senarai.';
 
-export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDays, kawasan, alamatAmbil, whatsapp }: Props) {
+export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDays, kawasan, caj, alamatAmbil, whatsapp }: Props) {
   const { senarai, ganti, ubah, buang, ubahAddon, kosongkan } = useSenarai();
   const router = useRouter();
   const [dimuat, setDimuat] = useState(false);
@@ -106,6 +107,9 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
   const tambahSen = barisTambahan.reduce((t, a) => t + a.unitPriceSen * a.qty, 0);
   const jumlahPaparan = kekSen + tambahSen;
   const jumlah = hargaServer ?? jumlahPaparan;
+  const cajSen = mode === 'DELIVERY' ? (caj[area] ?? null) : null;
+  const jumlahPenuh = jumlah + (cajSen ?? 0);
+  const cajKawasan = (k: string) => (caj[k] != null ? formatRM(caj[k]) : null);
 
   // Jalur 14 hari bermula dari tarikh paling awal yang dibenarkan untuk semua kek dalam senarai.
   const awal = tambahHari(hariIni, Math.max(minLeadDays, ...baris.map((b) => b.leadDays)));
@@ -122,7 +126,7 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
   const mesej = binaMesejWhatsApp({
     ref: '(diberi selepas hantar)', kind: 'LIST', items: baris, addons: barisTambahan, totalSen: jumlah,
     tarikh: tarikhSah ?? undefined, slotLabel, mode, area: mode === 'DELIVERY' ? area : undefined,
-    address: mode === 'DELIVERY' ? alamat.trim() || undefined : undefined, name: nama.trim() || undefined,
+    address: mode === 'DELIVERY' ? alamat.trim() || undefined : undefined, name: nama.trim() || undefined, cajHantarSen: cajSen,
   });
 
   const bilaLabel = tarikhSah ? `${tarikhPenuh(tarikhSah)}${slotLabel ? `, ${slotLabel}` : ''}` : 'Pilih tarikh dan masa';
@@ -192,7 +196,7 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
     'aria-describedby': medan[kunci] ? `ralat-${id}` : undefined,
   });
   const ralatMedan = (kunci: string, id: string) =>
-    medan[kunci] ? <p id={`ralat-${id}`} className="mt-1.5 text-[13.5px] text-yk-error">{medan[kunci]}</p> : null;
+    medan[kunci] ? <p id={`ralat-${id}`} className="mt-1.5 text-[15px] text-yk-error">{medan[kunci]}</p> : null;
 
   if (!dimuat) {
     return <div className="min-h-[60vh]" aria-busy="true" />;
@@ -204,18 +208,18 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
     <div className="pb-36 lg:pb-24 lg:max-w-[1240px] lg:mx-auto lg:px-10 lg:pt-9">
       <div className="px-4 pt-4 lg:p-0">
         <h1 className="text-[40px] leading-none lg:text-[56px]">Senarai tempahan</h1>
-        <p className="text-yk-muted text-sm mt-1.5 lg:text-base lg:mt-2">
+        <p className="text-yk-muted text-[15px] mt-1.5 lg:text-base lg:mt-2">
           Isi butiran, kemudian hantar melalui WhatsApp. Bayaran dan caj penghantaran disahkan di WhatsApp.
         </p>
       </div>
       {notis && (
-        <p role="status" className="mx-4 lg:mx-0 mt-3 px-3.5 py-2.5 border border-yk-line bg-yk-panel text-sm text-yk-warn">{notis}</p>
+        <p role="status" className="mx-4 lg:mx-0 mt-3 px-3.5 py-2.5 border border-yk-line bg-yk-panel text-[15px] text-yk-warn">{notis}</p>
       )}
 
       {kosong ? (
         <div className="mx-4 lg:mx-0 mt-5 py-8 px-6 border border-dashed border-yk-line-strong text-center">
           <p className="font-serif text-2xl">Senarai kosong.</p>
-          <p className="text-yk-muted text-sm mt-1.5">Pilih kek dari koleksi, kemudian tekan Tambah ke senarai.</p>
+          <p className="text-yk-muted text-[15px] mt-1.5">Pilih kek dari koleksi, kemudian tekan Tambah ke senarai.</p>
           <Link className="b-btn mt-4 w-full lg:w-auto" href="/koleksi">Lihat koleksi</Link>
         </div>
       ) : (
@@ -242,8 +246,8 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
                       <p className="font-serif text-[19px] lg:text-[22px] leading-[1.15]">
                         <Link href={`/kek/${b.slug}`} className="no-underline">{b.productName}</Link>
                       </p>
-                      <p className="text-[13px] lg:text-sm text-yk-muted">{b.sizeLabel}</p>
-                      {b.cakeMessage && <p className="text-[12.5px] lg:text-[13.5px] text-yk-cream-2">Tulisan: {b.cakeMessage}</p>}
+                      <p className="text-[14.5px] lg:text-[15px] text-yk-muted">{b.sizeLabel}</p>
+                      {b.cakeMessage && <p className="text-[14px] lg:text-[15px] text-yk-cream-2">Tulisan: {b.cakeMessage}</p>}
                       <div className="flex justify-between items-center gap-3 mt-1.5">
                         <div className="flex items-center border border-yk-line-strong">
                           <button type="button" className="w-10 h-10 lg:w-9 lg:h-9 bg-transparent border-0 text-lg cursor-pointer disabled:opacity-40" aria-label={`Kurangkan ${b.productName}`} disabled={b.qty <= HAD.qtyMin} onClick={() => { ubah(i, b.qty - 1); ubahSesuatu(); }}>
@@ -254,7 +258,7 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
                             +
                           </button>
                         </div>
-                        <button type="button" className="bg-transparent border-0 p-0 text-[13.5px] text-yk-cream-2 underline cursor-pointer min-h-10" onClick={() => { buang(i); ubahSesuatu(); }}>
+                        <button type="button" className="bg-transparent border-0 p-0 text-[15px] text-yk-cream-2 underline cursor-pointer min-h-10" onClick={() => { buang(i); ubahSesuatu(); }}>
                           Buang<span className="sr-only"> {b.productName}</span>
                         </button>
                         <span className="font-semibold lg:w-[100px] lg:text-right">{formatRM(b.unitPriceSen * b.qty)}</span>
@@ -263,7 +267,7 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
                   </li>
                 ))}
               </ul>
-              <Link href="/koleksi" className="inline-block mt-2.5 lg:mt-3 font-semibold text-sm lg:text-base underline-offset-[5px]">Tambah kek lain</Link>
+              <Link href="/koleksi" className="inline-block mt-2.5 lg:mt-3 font-semibold text-[15px] lg:text-base underline-offset-[5px]">Tambah kek lain</Link>
               <TambahSekali tambahan={tambahan} pilihan={senarai.addons} onUbah={(id, q, t) => { ubahAddon(id, q, t); ubahSesuatu(); }} />
             </section>
 
@@ -272,11 +276,13 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
               <div role="group" aria-label="Cara terima" className="grid grid-cols-2 gap-2 px-4 mt-2.5 lg:px-0 lg:mt-3.5">
                 <button type="button" className="b-pill" aria-pressed={mode === 'PICKUP'} onClick={() => { setMode('PICKUP'); ubahSesuatu(); }}>
                   Ambil sendiri
-                  <span className="block text-xs lg:text-[13px] text-yk-muted"><span className="lg:hidden">Di Kuantan</span><span className="hidden lg:inline"><TeksTbc teks={alamatAmbil} /></span></span>
+                  <span className="block text-[13px] lg:text-[14.5px] text-yk-muted"><span className="lg:hidden">Di Kuantan</span><span className="hidden lg:inline"><TeksTbc teks={alamatAmbil} /></span></span>
                 </button>
                 <button type="button" className="b-pill" aria-pressed={mode === 'DELIVERY'} onClick={() => { setMode('DELIVERY'); ubahSesuatu(); }}>
                   Penghantaran
-                  <span className="block text-xs lg:text-[13px] text-yk-muted">{kawasan.join(' dan ')} sahaja</span>
+                  <span className="block text-[13px] lg:text-[14.5px] text-yk-muted">
+                    {kawasan.every((k) => caj[k] != null) ? kawasan.map((k) => `${k} ${cajKawasan(k)}`).join(', ') : `${kawasan.join(' dan ')} sahaja`}
+                  </span>
                 </button>
               </div>
               {mode === 'DELIVERY' && (
@@ -287,6 +293,7 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
                       {kawasan.map((k) => (
                         <button key={k} type="button" className="b-pill text-center lg:flex-1 lg:!min-h-[50px]" aria-pressed={area === k} onClick={() => { setArea(k); ubahSesuatu(); }}>
                           {k}
+                          {cajKawasan(k) && <span className="block text-[13px] text-yk-muted">Caj {cajKawasan(k)}</span>}
                         </button>
                       ))}
                     </div>
@@ -297,12 +304,12 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
                     <input {...medanProps('address', 'alamat')} className="b-in" placeholder="No. rumah, jalan, taman" autoComplete="street-address" value={alamat} onChange={(e) => setAlamat(e.target.value)} maxLength={300} />
                     {ralatMedan('address', 'alamat')}
                   </div>
-                  <p className="text-[12.5px] lg:text-[13.5px] text-yk-muted mt-1 lg:col-span-2">Caj penghantaran dimaklumkan di WhatsApp.</p>
+                  <p className="text-[14px] lg:text-[15px] text-yk-muted mt-1 lg:col-span-2">{cajSen != null ? `Caj hantar ke ${area}: ${formatRM(cajSen)}, sudah dimasukkan dalam jumlah.` : 'Caj penghantaran dimaklumkan di WhatsApp.'}</p>
                 </div>
               )}
               <div className="pt-6 lg:pt-0">
                 <JalurTarikh hari={jalur} pilih={tarikhSah} onPilih={(t) => { setTarikh(t); ubahSesuatu(); }} />
-                {medan.date && <p className="px-4 lg:px-0 mt-1.5 text-[13.5px] text-yk-error">{medan.date}</p>}
+                {medan.date && <p className="px-4 lg:px-0 mt-1.5 text-[15px] text-yk-error">{medan.date}</p>}
                 <PilihSlot slot={slotPapar} pilih={slotSah} onPilih={(id) => { setSlotId(id); ubahSesuatu(); }} ralat={tarikhSah ? medan.timeSlotId : medan.timeSlotId && 'Pilih tarikh dahulu'} />
               </div>
             </section>
@@ -332,25 +339,25 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
 
           <aside aria-label="Ringkasan" className="mx-4 mt-6 lg:m-0 lg:flex-[1_1_360px] lg:max-w-[420px] lg:border lg:border-yk-line lg:bg-yk-panel lg:p-6 lg:sticky lg:top-6">
             <h2 className="hidden lg:block text-[26px]">Ringkasan</h2>
-            <p className="hidden lg:block text-sm text-yk-cream-2 mt-2">{bilaLabel}</p>
+            <p className="hidden lg:block text-[15px] text-yk-cream-2 mt-2">{bilaLabel}</p>
             <dl className="hidden lg:grid gap-2 mt-4 text-[15px]">
               <div className="flex justify-between"><dt className="text-yk-muted">Kek</dt><dd>{formatRM(kekSen)}</dd></div>
               {tambahSen > 0 && <div className="flex justify-between"><dt className="text-yk-muted">Tambahan</dt><dd>{formatRM(tambahSen)}</dd></div>}
-              <div className="flex justify-between items-baseline"><dt className="text-yk-muted">Anggaran jumlah</dt><dd className="font-serif text-[26px] leading-none" data-testid="jumlah">{formatRM(jumlah)}</dd></div>
-              <div className="flex justify-between"><dt className="text-yk-muted">Penghantaran</dt><dd>{mode === 'PICKUP' ? 'Ambil sendiri, tiada caj' : 'Dimaklumkan di WhatsApp'}</dd></div>
+              <div className="flex justify-between items-baseline"><dt className="text-yk-muted">Anggaran jumlah</dt><dd className="font-serif text-[26px] leading-none" data-testid="jumlah">{formatRM(jumlahPenuh)}</dd></div>
+              <div className="flex justify-between"><dt className="text-yk-muted">Penghantaran</dt><dd>{mode === 'PICKUP' ? 'Ambil sendiri, tiada caj' : cajSen != null ? formatRM(cajSen) : 'Dimaklumkan di WhatsApp'}</dd></div>
             </dl>
             <p className="b-lbl lg:mt-[18px]" id="lbl-pratonton">Mesej yang akan dihantar</p>
             <pre
               data-testid="pratonton"
               aria-labelledby="lbl-pratonton"
               tabIndex={0}
-              className="m-0 whitespace-pre-wrap font-sans text-[13px] lg:text-[13.5px] leading-normal bg-yk-panel lg:bg-yk-bg border border-yk-line p-3 lg:max-h-[260px] lg:overflow-y-auto text-[#ECDDD3]"
+              className="m-0 whitespace-pre-wrap font-sans text-[14.5px] lg:text-[15px] leading-normal bg-yk-panel lg:bg-yk-bg border border-yk-line p-3 lg:max-h-[260px] lg:overflow-y-auto text-[#ECDDD3]"
             >
               {mesej}
             </pre>
             <div aria-live="polite">
               {ralat && (
-                <p role="alert" className={`text-[13.5px] lg:text-sm mt-2.5 lg:mt-3 ${hargaServer !== null ? 'text-yk-warn' : 'text-yk-error'}`}>{ralat}</p>
+                <p role="alert" className={`text-[15px] lg:text-[15px] mt-2.5 lg:mt-3 ${hargaServer !== null ? 'text-yk-warn' : 'text-yk-error'}`}>{ralat}</p>
               )}
             </div>
             {gagal && (
@@ -360,15 +367,15 @@ export function SenaraiTempahan({ kek, tambahan, hari, slot, hariIni, minLeadDay
             )}
             <div className="fixed inset-x-0 bottom-0 z-40 flex gap-3 items-center px-4 pt-2.5 pb-4 bg-[rgba(60,13,19,.97)] border-t border-yk-line lg:static lg:z-auto lg:block lg:p-0 lg:mt-4 lg:bg-transparent lg:border-0">
               <div className="lg:hidden">
-                <span className="block text-xs text-yk-muted">Anggaran</span>
-                <span className="font-serif text-[26px] leading-none" data-testid="jumlah">{formatRM(jumlah)}</span>
+                <span className="block text-[13px] text-yk-muted">Anggaran</span>
+                <span className="font-serif text-[26px] leading-none" data-testid="jumlah">{formatRM(jumlahPenuh)}</span>
               </div>
               <button type="submit" className="b-btn yk-pulse relative flex-1 !px-2.5 lg:w-full" disabled={sibuk}>
                 <IkonWhatsApp />
                 <span>{sibuk ? 'Menyimpan…' : <>Hantar<span className="sr-only lg:not-sr-only"> tempahan</span> di WhatsApp</>}</span>
               </button>
             </div>
-            <p className="text-[12.5px] text-[#C0948F] mt-3">Rekaan dan warna mungkin tidak 100% sama dengan gambar, kerana setiap kek dibuat dengan tangan.</p>
+            <p className="text-[14px] text-yk-muted mt-3">Rekaan dan warna mungkin tidak 100% sama dengan gambar, kerana setiap kek dibuat dengan tangan.</p>
           </aside>
         </form>
       )}

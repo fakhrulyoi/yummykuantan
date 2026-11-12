@@ -67,9 +67,10 @@ describe('skemaTempahan', () => {
 
 describe('skemaTempahanCepat dan skemaSemak', () => {
   test('tempahan cepat', () => {
-    expect(skemaTempahanCepat.safeParse({ productId: 'p', sizeId: 's', qty: 1, lamanWeb: '' }).success).toBe(true);
-    expect(skemaTempahanCepat.safeParse({ productId: 'p', sizeId: 's', qty: 11, lamanWeb: '' }).success).toBe(false);
-    expect(skemaTempahanCepat.safeParse({ productId: 'p', sizeId: 's', qty: 1, cakeMessage: 'a'.repeat(31), lamanWeb: '' }).success).toBe(false);
+    expect(skemaTempahanCepat.safeParse({ productId: 'p', sizeId: 's', qty: 1, date: '2026-11-11', lamanWeb: '' }).success).toBe(true);
+    expect(skemaTempahanCepat.safeParse({ productId: 'p', sizeId: 's', qty: 1, lamanWeb: '' }).success).toBe(false);
+    expect(skemaTempahanCepat.safeParse({ productId: 'p', sizeId: 's', qty: 11, date: '2026-11-11', lamanWeb: '' }).success).toBe(false);
+    expect(skemaTempahanCepat.safeParse({ productId: 'p', sizeId: 's', qty: 1, cakeMessage: 'a'.repeat(31), date: '2026-11-11', lamanWeb: '' }).success).toBe(false);
   });
 
   test('semak status', () => {

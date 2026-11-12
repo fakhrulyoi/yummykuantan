@@ -14,7 +14,7 @@ export function CaraTempah() {
             <span className="font-serif text-[40px] lg:text-[56px] leading-none text-yk-accent" aria-hidden="true">{i + 1}</span>
             <span className="lg:block">
               <h3 className="font-sans font-bold text-[15.5px] lg:font-serif lg:font-normal lg:text-[26px] lg:mt-2.5">{l.t}</h3>
-              <span className="text-yk-muted text-sm lg:hidden">{l.p}</span>
+              <span className="text-yk-muted text-[15px] lg:hidden">{l.p}</span>
               <p className="hidden lg:block mt-1.5 text-yk-muted">{l.d}</p>
             </span>
           </li>

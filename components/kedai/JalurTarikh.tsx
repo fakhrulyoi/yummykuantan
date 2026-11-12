@@ -9,8 +9,8 @@ export function JalurTarikh({ hari, pilih, onPilih }: { hari: HariJalur[]; pilih
   const bulan = [...new Set(hari.map((h) => tarikhPenuh(h.tarikh).split(' ').slice(-2).join(' ')))].join(' dan ');
   return (
     <>
-      <h3 id="h-tarikh" className="font-serif font-normal text-2xl lg:text-[13.5px] lg:font-sans lg:font-semibold lg:text-yk-cream-2 px-4 lg:px-0 lg:mt-5 lg:mb-1.5">
-        Tarikh<span className="hidden lg:inline">, {bulan}</span>
+      <h3 id="h-tarikh" className="font-serif font-normal text-2xl lg:text-[15px] lg:font-sans lg:font-semibold lg:text-yk-cream-2 px-4 lg:px-0 lg:mt-5 lg:mb-1.5">
+        Tarikh<span className="text-yk-muted lg:text-yk-cream-2">, {bulan}</span>
       </h3>
       <div role="group" aria-label="Tarikh" className="flex gap-1.5 overflow-x-auto px-4 pt-2.5 pb-1 lg:grid lg:grid-cols-7 lg:p-0 lg:overflow-visible">
         {hari.map((h) => {
@@ -27,12 +27,12 @@ export function JalurTarikh({ hari, pilih, onPilih }: { hari: HariJalur[]; pilih
               disabled={h.status !== 'ada'}
               onClick={() => onPilih(h.tarikh)}
             >
-              <span className="text-xs lg:text-[12.5px] text-yk-muted">{p.hari}<span className="sr-only"> </span></span>
+              <span className="text-[13px] lg:text-[14px] text-yk-muted">{p.hari}<span className="sr-only"> </span></span>
               <span className="font-serif text-[22px] leading-[1.1] whitespace-nowrap">
                 {p.tarikh}<span className="hidden lg:inline"> {p.bulan}</span><span className="sr-only lg:hidden"> {p.bulan}</span>
                 <span className="sr-only">, </span>
               </span>
-              <span className="text-[11.5px] lg:text-xs" style={{ color: warna }}>{teks}</span>
+              <span className="text-[13px] lg:text-[13px]" style={{ color: warna }}>{teks}</span>
             </button>
           );
         })}

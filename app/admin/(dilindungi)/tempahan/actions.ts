@@ -77,12 +77,12 @@ export async function kemaskiniTempahan(id: string, data: z.input<typeof skemaKe
   const tarikh = baru.date !== undefined ? baru.date : o.date;
   const slot = baru.timeSlotId !== undefined ? baru.timeSlotId : o.timeSlotId;
   const tarikhBerubah = tarikh !== o.date || slot !== o.timeSlotId;
-  if (tarikh && !slot) return { ok: false, ralat: 'Pilih slot masa untuk tarikh ini.' };
+  if (tarikh && !slot && o.kind === 'LIST') return { ok: false, ralat: 'Pilih slot masa untuk tarikh ini.' };
 
   try {
     await db.transaction(
       async (tx) => {
-        if (tarikh && slot && tarikhBerubah && o.status !== 'DIBATALKAN') {
+        if (tarikh && tarikhBerubah && o.status !== 'DIBATALKAN') {
           const [tetapan, tutup] = await Promise.all([bacaTetapan(tx), senaraiHariTutup(tx)]);
           if (tutup.has(tarikh)) throw new Error('Kedai tutup pada tarikh ini.');
           const semuaSlot = await tx.select({ id: s.timeSlot.id, capacity: s.timeSlot.capacity, active: s.timeSlot.active }).from(s.timeSlot);
@@ -91,7 +91,7 @@ export async function kemaskiniTempahan(id: string, data: z.input<typeof skemaKe
             .from(s.order)
             .where(and(eq(s.order.date, tarikh), ne(s.order.id, id), ne(s.order.status, 'DIBATALKAN')));
           const b = bakiSlot(tarikh, semuaSlot, tetapan.dailyCapacity, lain.map((x) => ({ ...x, date: x.date! })), new Date(), tetapan.holdHours);
-          if (b.harian <= 0 || (b.slot[slot] ?? 0) <= 0) throw new Error('Slot ini penuh. Pilih tarikh atau slot lain.');
+          if (b.harian <= 0 || (slot && (b.slot[slot] ?? 0) <= 0)) throw new Error('Slot ini penuh. Pilih tarikh atau slot lain.');
         }
         const ubah = Object.fromEntries(Object.entries(baru).filter(([k, val]) => (o as Record<string, unknown>)[k] !== val));
         if (!Object.keys(ubah).length) return;

@@ -20,3 +20,22 @@ export const WARNA_STATUS: Record<OrderStatus, { bg: string; fg: string }> = {
   SELESAI: { bg: '#ECE5DB', fg: '#4F4337' },
   DIBATALKAN: { bg: '#F1E8E6', fg: '#7A6A66' },
 };
+
+/** Langkah biasa seterusnya untuk satu tempahan (butang sekali tekan di admin). */
+export function langkahSeterusnya(status: OrderStatus, mode: string | null): { status: OrderStatus; label: string } | null {
+  switch (status) {
+    case 'BARU_WA':
+      return { status: 'MENUNGGU_BAYARAN', label: 'Minta bayaran' };
+    case 'MENUNGGU_BAYARAN':
+      return { status: 'DISAHKAN', label: 'Sudah bayar, sahkan' };
+    case 'DISAHKAN':
+      return { status: 'DALAM_PENYEDIAAN', label: 'Mula sediakan' };
+    case 'DALAM_PENYEDIAAN':
+      return mode === 'DELIVERY' ? { status: 'DALAM_PENGHANTARAN', label: 'Mula hantar' } : { status: 'SEDIA_DIAMBIL', label: 'Sedia diambil' };
+    case 'SEDIA_DIAMBIL':
+    case 'DALAM_PENGHANTARAN':
+      return { status: 'SELESAI', label: 'Tandakan selesai' };
+    default:
+      return null;
+  }
+}

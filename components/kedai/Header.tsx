@@ -7,7 +7,7 @@ import { MenuPhone } from './MenuPhone';
 
 const NAV = [
   { href: '/koleksi', label: 'Koleksi' },
-  { href: '/reka', label: 'Reka kek' },
+  { href: '/reka', label: 'Rekaan khas' },
   { href: '/#slot', label: 'Tarikh kosong' },
   { href: '/#tentang', label: 'Tentang kami' },
 ];

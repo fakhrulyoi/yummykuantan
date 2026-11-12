@@ -158,6 +158,25 @@ describe('simpanTempahan', () => {
     expect(await simpanTempahan(await inputSah({ phone: '0199999999', date: '2026-11-25' }), ctx)).toMatchObject({ ok: false, ralat: 'HAD_KADAR' });
   });
 
+  test('caj hantar ikut kawasan disimpan dan dimasukkan dalam mesej', async () => {
+    await db.update(s.settings).set({ deliveryFees: { Kuantan: 1000, Pekan: 1500 } });
+    const r = await simpanTempahan(await inputSah({ mode: 'DELIVERY', area: 'Pekan', address: 'No 1, Jalan Sultan' }), ctx);
+    if (!r.ok) throw new Error(JSON.stringify(r));
+    const [o] = await db.select().from(s.order).where(eq(s.order.ref, r.ref));
+    expect(o.deliveryFeeSen).toBe(1500);
+    expect(o.totalSen).toBe(21600);
+    expect(o.waMessage).toContain('Caj hantar ke Pekan: RM15.00');
+    expect(o.waMessage).toContain('Jumlah: RM231.00');
+  });
+
+  test('caj belum ditetapkan: tiada caj disimpan', async () => {
+    const r = await simpanTempahan(await inputSah({ mode: 'DELIVERY', area: 'Kuantan', address: 'No 1, Jalan Beserah' }), ctx);
+    if (!r.ok) throw new Error();
+    const [o] = await db.select().from(s.order).where(eq(s.order.ref, r.ref));
+    expect(o.deliveryFeeSen).toBeNull();
+    expect(o.waMessage).toContain('(belum termasuk caj penghantaran)');
+  });
+
   test('perangkap bot', async () => {
     expect(await simpanTempahan(await inputSah({ lamanWeb: 'http://spam' }), ctx)).toMatchObject({ ok: false, ralat: 'INPUT' });
     expect(await bilOrder()).toBe(0);
@@ -165,31 +184,49 @@ describe('simpanTempahan', () => {
 });
 
 describe('simpanTempahanCepat', () => {
-  test('rekod QUICK tanpa tarikh dan nama', async () => {
-    const it = await saizIkutSlug('italian-cake', '8 inci');
-    const r = await simpanTempahanCepat({ ...it, qty: 1, lamanWeb: '' }, ctx);
+  const cepat = async (over: Record<string, unknown> = {}, slug = 'italian-cake', saiz = '8 inci') => ({
+    ...(await saizIkutSlug(slug, saiz)), qty: 1, date: '2026-11-11', lamanWeb: '', ...over,
+  });
+
+  test('rekod QUICK dengan tarikh, tanpa slot dan nama', async () => {
+    const r = await simpanTempahanCepat(await cepat(), ctx);
     expect(r).toMatchObject({ ok: true, totalSen: 28000 });
     if (!r.ok) throw new Error();
     const [o] = await db.select().from(s.order).where(eq(s.order.ref, r.ref));
     expect(o.kind).toBe('QUICK');
-    expect(o.date).toBeNull();
+    expect(o.date).toBe('2026-11-11');
+    expect(o.timeSlotId).toBeNull();
     expect(o.customerName).toBeNull();
-    expect(o.waMessage).toContain('Tarikh yang saya mahu: ');
+    expect(o.waMessage).toContain('Tarikh yang saya mahu: Rabu, 11 November 2026');
     expect(o.waMessage).toContain(r.ref);
   });
 
+  test('tarikh wajib', async () => {
+    expect(await simpanTempahanCepat(await cepat({ date: undefined }), ctx)).toMatchObject({ ok: false, ralat: 'INPUT' });
+    expect(await bilOrder()).toBe(0);
+  });
+
+  test('terlalu awal, hari tutup dan hari penuh ditolak', async () => {
+    expect(await simpanTempahanCepat(await cepat({ date: '2026-11-04' }), ctx)).toMatchObject({ ok: false, ralat: 'TERLALU_AWAL' });
+    await db.insert(s.closedDate).values({ date: '2026-11-12', reason: 'Cuti' });
+    expect(await simpanTempahanCepat(await cepat({ date: '2026-11-12' }), ctx)).toMatchObject({ ok: false, ralat: 'HARI_TUTUP' });
+    await db.update(s.settings).set({ dailyCapacity: 1 });
+    expect((await simpanTempahanCepat(await cepat({ date: '2026-11-13' }), ctx)).ok).toBe(true);
+    expect(await simpanTempahanCepat(await cepat({ date: '2026-11-13' }, 'italian-cake', '6 inci'), { ...ctx, ip: '10.0.0.9' })).toMatchObject({ ok: false, ralat: 'HARI_PENUH' });
+  });
+
   test('dua kali dari IP sama memulangkan rujukan sama', async () => {
-    const it = await saizIkutSlug('italian-cake', '8 inci');
-    const a = await simpanTempahanCepat({ ...it, qty: 1, lamanWeb: '' }, ctx);
-    const b = await simpanTempahanCepat({ ...it, qty: 1, lamanWeb: '' }, ctx);
+    const a = await simpanTempahanCepat(await cepat(), ctx);
+    const b = await simpanTempahanCepat(await cepat(), ctx);
     expect(a.ok && b.ok && a.ref === b.ref).toBe(true);
     expect(await bilOrder()).toBe(1);
   });
 
-  test('saiz lain dianggap tempahan lain', async () => {
-    const a = await simpanTempahanCepat({ ...(await saizIkutSlug('italian-cake', '8 inci')), qty: 1, lamanWeb: '' }, ctx);
-    const b = await simpanTempahanCepat({ ...(await saizIkutSlug('italian-cake', '6 inci')), qty: 1, lamanWeb: '' }, ctx);
-    expect(a.ok && b.ok && a.ref !== b.ref).toBe(true);
+  test('saiz atau tarikh lain dianggap tempahan lain', async () => {
+    const a = await simpanTempahanCepat(await cepat(), ctx);
+    const b = await simpanTempahanCepat(await cepat({}, 'italian-cake', '6 inci'), ctx);
+    const c = await simpanTempahanCepat(await cepat({ date: '2026-11-14' }), ctx);
+    expect(a.ok && b.ok && c.ok && a.ref !== b.ref && a.ref !== c.ref).toBe(true);
   });
 });
 

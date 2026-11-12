@@ -33,6 +33,6 @@ test('semak status: digit salah', async ({ page }) => {
 
 test('halaman reka: studio akan datang', async ({ page }) => {
   await page.goto('/reka');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Studio 3D akan datang');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Tempahan rekaan khas');
   await expect(page.getByRole('link', { name: /WhatsApp/ }).first()).toHaveAttribute('href', /^https:\/\/wa\.me\/601123023447\?text=/);
 });

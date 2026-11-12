@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { NilaiKandungan } from '@/lib/kandungan/jenis';
 import { Logo } from './Logo';
-import { TeksTbc } from './TeksTbc';
+import { sudahDiisi } from '@/lib/kandungan/kurungan';
 
 type Kat = { name: string; slug: string };
 
@@ -15,12 +15,12 @@ export function Footer({ hubungi, footer, kategori }: { hubungi: NilaiKandungan[
   );
   return (
     <footer className="border-t border-yk-line bg-[#3F1017] text-yk-muted">
-      <div className="max-w-[1360px] mx-auto px-5 pt-7 pb-8 lg:px-10 lg:pt-14 lg:pb-6 grid gap-8 lg:grid-cols-4 text-[14.5px] lg:text-[15px]">
+      <div className="max-w-[1360px] mx-auto px-5 pt-7 pb-8 lg:px-10 lg:pt-14 lg:pb-6 grid gap-8 lg:grid-cols-4 text-[15.5px] lg:text-[15px]">
         <div>
           <div className="lg:hidden"><Logo tinggi={92} /></div>
           <div className="hidden lg:block"><Logo tinggi={110} /></div>
-          <p className="mt-3.5"><TeksTbc teks={hubungi.alamat} />, Kuantan, Pahang</p>
-          <p><TeksTbc teks={hubungi.waktu} /></p>
+          <p className="mt-3.5">{sudahDiisi(hubungi.alamat) ? `${hubungi.alamat}, ` : ''}Kuantan, Pahang</p>
+          {sudahDiisi(hubungi.waktu) && <p>{hubungi.waktu}</p>}
           <p>Penghantaran: {hubungi.kawasan}</p>
           <p className="mt-2.5 max-w-[300px] hidden lg:block">{footer.ayat}</p>
           <div className="mt-2.5 lg:hidden">{hubung}</div>
@@ -46,7 +46,7 @@ export function Footer({ hubungi, footer, kategori }: { hubungi: NilaiKandungan[
           <div className="mt-2">{hubung}</div>
         </div>
       </div>
-      <div className="max-w-[1360px] mx-auto px-5 lg:px-10 pt-4 pb-28 lg:pb-7 border-t border-[#64262E] flex justify-between flex-wrap gap-3 text-[13.5px] text-[#C0948F]">
+      <div className="max-w-[1360px] mx-auto px-5 lg:px-10 pt-4 pb-28 lg:pb-7 border-t border-[#64262E] flex justify-between flex-wrap gap-3 text-[15px] text-yk-muted">
         <span>© {new Date().getFullYear()} Yummy Kuantan</span>
       </div>
     </footer>

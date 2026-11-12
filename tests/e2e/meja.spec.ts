@@ -41,7 +41,7 @@ test.describe('meja kek', () => {
     await expect(meja.getByRole('button', { name: /^Italian Cake,/ })).toBeFocused();
   });
 
-  test('phone: sapu, pilih saiz, tempah di WhatsApp', async ({ page }, info) => {
+  test('phone: sapu, pilih saiz, pilih tarikh, tempah di WhatsApp', async ({ page }, info) => {
     test.skip(info.project.name !== 'phone');
     await pintasWhatsApp(page);
     await page.goto('/');
@@ -58,10 +58,17 @@ test.describe('meja kek', () => {
     await expect(d).toBeVisible();
     await d.getByRole('button', { name: /8 inci/ }).click();
     await expect(d).toContainText('RM 280.00');
-    await d.getByRole('button', { name: 'Tempah di WhatsApp' }).click();
+    await d.getByRole('link', { name: /Pilih tarikh dan tempah/ }).click();
+    await expect(page).toHaveURL(/\/kek\/italian-cake\?saiz=.+#tempah$/);
+    await expect(page.getByRole('group', { name: 'Saiz' }).getByRole('button', { name: /8 inci/ })).toHaveAttribute('aria-pressed', 'true');
+    // Tanpa tarikh: diminta pilih tarikh dahulu.
+    await page.getByRole('button', { name: /Tempah di WhatsApp/ }).click();
+    await expect(page.getByRole('alert').filter({ hasText: 'Pilih tarikh dahulu.' })).toBeVisible();
+    await page.getByRole('group', { name: 'Tarikh' }).getByRole('button', { disabled: false }).first().click();
+    await page.getByRole('button', { name: /Tempah di WhatsApp/ }).click();
     await page.waitForURL(/\/tempahan\/YK-\d+\?t=/);
     const dibuka = await urlDibuka(page);
-    expect(dibuka.some((u) => u.startsWith('https://wa.me/601123023447?text=') && decodeURIComponent(u).includes('YK-') && decodeURIComponent(u).includes('RM280.00'))).toBe(true);
+    expect(dibuka.some((u) => u.startsWith('https://wa.me/601123023447?text=') && decodeURIComponent(u).includes('YK-') && decodeURIComponent(u).includes('RM280.00') && decodeURIComponent(u).includes('Tarikh yang saya mahu: '))).toBe(true);
   });
 
   test('kurang pergerakan: tiada tukar automatik', async ({ page }, info) => {

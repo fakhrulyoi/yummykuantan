@@ -13,7 +13,7 @@ async function tambahKek(page: Page, slug: string, saiz?: RegExp) {
   await page.goto(`/kek/${slug}`);
   if (saiz) await page.getByRole('group', { name: 'Saiz' }).getByRole('button', { name: saiz }).click();
   await page.getByRole('button', { name: /^Tambah ke senarai/ }).click();
-  await expect(page.getByRole('button', { name: /^Dalam senarai/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /^Dalam senarai/ })).toBeVisible();
 }
 
 async function isiBorang(page: Page, o: { nama?: string; telefon?: string } = {}) {

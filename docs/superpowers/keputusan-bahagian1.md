@@ -82,3 +82,14 @@ Final: minor (deferred): uploaded draft images are publicly reachable by their (
 Final: minor (deferred): login lockout is per IP+email; distributed guessing relies on Supabase Auth's own rate limits.
 Final: minor (deferred): header logo is requested twice on phone (desktop and phone headers both render it).
 Final: minor (deferred): admin item-text error for add-ons ("Sila isi teks untuk tambahan ini.") is shown in the summary, not next to the card/candle field.
+
+## Semakan UI/UX (12 November 2026)
+
+- Tempah cepat kini wajib pilih tarikh (jalur 14 hari dengan baki kapasiti); server tolak hari tutup, terlalu awal dan hari penuh; slot masa disahkan di WhatsApp. Tarikh disimpan dalam tempahan dan dikira dalam kapasiti harian.
+- Satu aliran utama: halaman kek → saiz → tarikh → "Tempah di WhatsApp". "Tambah ke senarai" jadi pilihan kedua untuk lebih dari satu kek. Dialog meja kek membawa ke halaman kek ("Pilih tarikh dan tempah").
+- "Reka kek" / "Buka studio 3D" ditukar kepada "Rekaan khas": halaman /reka kini halaman tempahan rekaan khas (3 langkah, contoh kek, WhatsApp dengan mesej siap). Studio 3D kekal untuk Bahagian 2.
+- Saiz teks kedai dinaikkan (sekunder 13–15.5px, medan input 16px untuk elak zum iPhone).
+- Caj penghantaran ikut kawasan ditetapkan di Tetapan admin; dipapar di halaman kek dan senarai, ditambah dalam jumlah dan mesej WhatsApp, disimpan dalam tempahan. Kawasan tanpa caj = dimaklumkan di WhatsApp.
+- Teks [kurungan] tidak lagi dipapar di laman (bahagian itu disembunyikan); admin menanda bahagian kandungan "Perlu diisi".
+- Admin: papan pemuka "Hari ini dan esok" dengan butang status sekali tekan dan WhatsApp; halaman butiran tempahan letak butang langkah seterusnya paling atas, borang butiran pelanggan dilipat. "Tempahan cepat belum lengkap" = tiada nama pelanggan.
+- Meja kek (phone): petunjuk "Leret untuk lihat N kek" (hilang selepas sentuhan pertama atau 7 saat) dan butang "Lihat semua kek".

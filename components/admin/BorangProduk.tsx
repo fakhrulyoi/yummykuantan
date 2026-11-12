@@ -149,7 +149,7 @@ export function BorangProduk({ id, slug, awal, kategori, pemilik, slotMeja }: Pr
             <input id="pos" className="ad-in !w-20" type="number" min={1} max={20} value={f.tablePosition ?? ''} onChange={(e) => ubah('tablePosition', e.target.value ? Number(e.target.value) : null)} />
           </div>
         )}
-        <Suis id="s-reka" label="Reka sendiri" nota="Tunjuk pautan ke studio reka kek" nilai={f.allowDesign} onUbah={(v) => ubah('allowDesign', v)} />
+        <Suis id="s-reka" label="Rekaan khas" nota="Tunjuk pautan Tempahan rekaan khas di halaman kek" nilai={f.allowDesign} onUbah={(v) => ubah('allowDesign', v)} />
         <Suis id="s-tulis" label="Tulisan atas kek" nota="Pelanggan boleh tulis ucapan (30 aksara)" nilai={f.allowMessage} onUbah={(v) => ubah('allowMessage', v)} />
       </div>
 

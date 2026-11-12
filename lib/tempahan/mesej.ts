@@ -14,6 +14,8 @@ export type MesejTempahan = {
   area?: string;
   address?: string;
   name?: string;
+  /** Caj hantar yang diketahui (sen); tiada = dimaklumkan di WhatsApp. */
+  cajHantarSen?: number | null;
 };
 
 const rm = (sen: number) => formatRM(sen, { rapat: true });
@@ -37,7 +39,7 @@ export function binaMesejWhatsApp(t: MesejTempahan): string {
 
   b.push('');
   if (t.kind === 'QUICK') {
-    b.push('Tarikh yang saya mahu: ');
+    b.push(t.tarikh ? `Tarikh yang saya mahu: ${tarikhPenuh(t.tarikh)} (masa ambil atau hantar disahkan di WhatsApp)` : 'Tarikh yang saya mahu: ');
   } else {
     const tarikh = t.tarikh ? tarikhPenuh(t.tarikh) : '';
     b.push(`Tarikh: ${tarikh}${t.slotLabel ? `, ${t.slotLabel}` : ''}`);
@@ -50,7 +52,11 @@ export function binaMesejWhatsApp(t: MesejTempahan): string {
     if (t.name) b.push(`Nama: ${t.name}`);
   }
 
-  b.push('', `Anggaran: ${rm(t.totalSen)}${t.mode === 'DELIVERY' ? ' (belum termasuk caj penghantaran)' : ''}`);
+  if (t.mode === 'DELIVERY' && t.cajHantarSen != null) {
+    b.push('', `Kek dan tambahan: ${rm(t.totalSen)}`, `Caj hantar ke ${t.area ?? ''}: ${rm(t.cajHantarSen)}`, `Jumlah: ${rm(t.totalSen + t.cajHantarSen)}`);
+  } else {
+    b.push('', `Anggaran: ${rm(t.totalSen)}${t.mode === 'DELIVERY' ? ' (belum termasuk caj penghantaran)' : ''}`);
+  }
   b.push(`Rujukan: ${t.ref}`, '', 'Boleh sahkan slot dan cara bayaran? Terima kasih.');
   return b.join('\n');
 }

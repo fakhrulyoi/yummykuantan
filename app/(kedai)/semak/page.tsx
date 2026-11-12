@@ -15,7 +15,7 @@ export default async function HalamanSemak({ searchParams }: { searchParams: Pro
         Masukkan rujukan tempahan (bermula YK-) dan 4 digit akhir nombor telefon yang anda berikan.
       </p>
       <SemakStatus refAwal={typeof ref === 'string' ? ref.slice(0, 12) : ''} />
-      <p className="mt-10 text-sm text-yk-muted">
+      <p className="mt-10 text-[15px] text-yk-muted">
         Tempah melalui meja kek atau halaman kek? Status boleh disemak selepas kami simpan nombor telefon anda.{' '}
         <a href={waUrl(hubungi.whatsapp, 'Salam Yummy Kuantan, saya nak tanya tentang tempahan saya.')} className="font-semibold text-yk-cream">Tanya di WhatsApp</a>
       </p>

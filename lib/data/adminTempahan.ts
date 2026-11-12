@@ -75,7 +75,7 @@ export async function ringkasanPapan(now = new Date()) {
   const [[baru], [bayar], [cepat], dekat] = await Promise.all([
     db.select({ n: sql<number>`count(*)::int` }).from(s.order).where(and(gte(s.order.createdAt, awal), ne(s.order.status, 'DIBATALKAN'))),
     db.select({ n: sql<number>`count(*)::int` }).from(s.order).where(eq(s.order.status, 'MENUNGGU_BAYARAN')),
-    db.select({ n: sql<number>`count(*)::int` }).from(s.order).where(and(eq(s.order.kind, 'QUICK'), isNull(s.order.date), notInArray(s.order.status, ['DIBATALKAN', 'SELESAI']))),
+    db.select({ n: sql<number>`count(*)::int` }).from(s.order).where(and(eq(s.order.kind, 'QUICK'), isNull(s.order.customerName), notInArray(s.order.status, ['DIBATALKAN', 'SELESAI']))),
     db
       .select({ ...PILIH, slotLabel: s.timeSlot.label })
       .from(s.order)
@@ -86,7 +86,7 @@ export async function ringkasanPapan(now = new Date()) {
   const cepatBaru = await db
     .select(PILIH)
     .from(s.order)
-    .where(and(eq(s.order.kind, 'QUICK'), isNull(s.order.date), notInArray(s.order.status, ['DIBATALKAN', 'SELESAI'])))
+    .where(and(eq(s.order.kind, 'QUICK'), isNull(s.order.customerName), notInArray(s.order.status, ['DIBATALKAN', 'SELESAI'])))
     .orderBy(desc(s.order.createdAt))
     .limit(10);
   return { baru: baru.n, menungguBayar: bayar.n, cepat: cepat.n, dekat: await denganKek(dekat), cepatBaru: await denganKek(cepatBaru) };
@@ -129,5 +129,5 @@ export async function binaPautanBalas(o: { ref: string; status: OrderStatus; pho
   if (!o.phone) return '';
   const t = await bacaKandungan('waTemplates');
   const jumlah = formatRM(o.totalSen + (o.deliveryFeeSen ?? 0));
-  return waUrl(o.phone, isiTemplat(t[o.status] ?? 'Salam, berkenaan tempahan {ref}.', { ref: o.ref, jumlah, caraBayar: t.caraBayar ?? '' }));
+  return waUrl(o.phone, isiTemplat(t[o.status] ?? 'Salam, berkenaan tempahan {ref}.', { ref: o.ref, jumlah, caraBayar: t.caraBayar && !t.caraBayar.includes('[') ? t.caraBayar : 'akan kami maklumkan' }));
 }

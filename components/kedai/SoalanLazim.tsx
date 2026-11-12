@@ -13,11 +13,11 @@ export function SoalanLazim({ soalan, waHref }: { soalan: { question: string; an
         {soalan.map((s) => (
           <details key={s.question} className="yk-faq">
             <summary className="font-serif font-normal text-[17px] lg:text-[22px]">{s.question}</summary>
-            <p className="text-yk-cream-2 text-sm lg:text-base pb-[18px] lg:pr-10"><TeksTbc teks={s.answer} /></p>
+            <p className="text-yk-cream-2 text-[15px] lg:text-base pb-[18px] lg:pr-10"><TeksTbc teks={s.answer} /></p>
           </details>
         ))}
       </div>
-      <p className="lg:hidden text-[13px] text-yk-muted mt-3">
+      <p className="lg:hidden text-[14.5px] text-yk-muted mt-3">
         Tak jumpa jawapan? <a href={waHref} className="font-semibold">Tanya di WhatsApp</a>
       </p>
     </section>

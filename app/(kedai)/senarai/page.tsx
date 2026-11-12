@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { SenaraiTempahan } from '@/components/kedai/SenaraiTempahan';
+import { sudahDiisi } from '@/lib/kandungan/kurungan';
 import { bakiTarikh } from '@/lib/data/kapasiti';
 import { bacaKandungan } from '@/lib/data/kandungan';
 import { produkAktif, tambahanAktif } from '@/lib/data/produk';
@@ -26,7 +27,8 @@ export default async function HalamanSenarai() {
       hariIni={hariIni}
       minLeadDays={tetapan.minLeadDays}
       kawasan={tetapan.deliveryAreas}
-      alamatAmbil={`${hubungi.alamat}, Kuantan`}
+      caj={tetapan.deliveryFees}
+      alamatAmbil={sudahDiisi(hubungi.alamat) ? `${hubungi.alamat}, Kuantan` : 'Di dapur kami, Kuantan'}
       whatsapp={tetapan.whatsappNumber}
     />
   );

@@ -30,7 +30,7 @@ export function KadKek({ p, bentuk, kelewatan, awal = false }: { p: ProdukPapar;
       </Link>
       <span aria-hidden="true" className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,rgba(42,9,14,0)_42%,rgba(42,9,14,.9)_100%)]" />
       <div className="absolute left-3 right-3 bottom-2.5 lg:left-[18px] lg:right-[18px] lg:bottom-4 pointer-events-none">
-        <p className="hidden lg:block text-yk-accent text-[12.5px] font-semibold">{p.category}</p>
+        <p className="hidden lg:block text-yk-accent text-[14px] font-semibold">{p.category}</p>
         <h2
           className={
             bentuk.phone === 'lebar'
@@ -41,18 +41,18 @@ export function KadKek({ p, bentuk, kelewatan, awal = false }: { p: ProdukPapar;
           <Link href={href} className="no-underline pointer-events-auto">{p.name}</Link>
         </h2>
         <div className="flex justify-between items-center gap-2.5 mt-0.5 lg:mt-2 flex-wrap">
-          <span className="text-[12.5px] lg:text-[14.5px] text-[#ECDDD3]">
+          <span className="text-[14px] lg:text-[15.5px] text-[#ECDDD3]">
             dari {formatRM(p.hargaDari)}
             <span className="hidden lg:inline text-yk-muted">, {saizTeks}</span>
           </span>
           <span className="yk-act hidden lg:flex gap-1.5 pointer-events-auto">
-            <Link className="b-btn !min-h-10 !px-3.5 !text-[13.5px]" href={href}>
+            <Link className="b-btn !min-h-10 !px-3.5 !text-[15px]" href={href}>
               {satuSaiz ? 'Tempah' : 'Pilih saiz'}
             </Link>
             {satuSaiz && (
               <button
                 type="button"
-                className="b-btn b-line !min-h-10 !px-3.5 !text-[13.5px] bg-[rgba(60,13,19,.55)]"
+                className="b-btn b-line !min-h-10 !px-3.5 !text-[15px] bg-[rgba(60,13,19,.55)]"
                 aria-label={dalam ? `${p.name} dalam senarai` : `Tambah ${p.name} ke senarai`}
                 onClick={() => !dalam && tambah({ productId: p.id, sizeId: satuSaiz.id, qty: 1 })}
               >

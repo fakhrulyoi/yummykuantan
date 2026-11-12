@@ -26,7 +26,7 @@ export default async function HalamanTetapan() {
     <>
       <TajukAdmin tajuk="Tetapan" sub={boleh ? 'Peraturan tempahan, slot masa, hari tutup dan tambahan.' : 'Dibaca sahaja. Hanya pemilik boleh ubah tetapan.'} />
       {!boleh && <p role="note" className="ad-card px-4 py-3 text-[13.5px] bg-[#FFF8EA]">Anda log masuk sebagai staf. Tetapan dibaca sahaja.</p>}
-      <BorangUmum awal={{ minLeadDays: t.minLeadDays, dailyCapacity: t.dailyCapacity, holdHours: t.holdHours, whatsappNumber: t.whatsappNumber }} bolehUbah={boleh} simpan={simpanTetapan} />
+      <BorangUmum awal={{ minLeadDays: t.minLeadDays, dailyCapacity: t.dailyCapacity, holdHours: t.holdHours, whatsappNumber: t.whatsappNumber, deliveryFees: t.deliveryFees }} kawasan={t.deliveryAreas} bolehUbah={boleh} simpan={simpanTetapan} />
       <BorangSlot slot={slot.map((z) => ({ id: z.id, label: z.label, startsAt: z.startsAt, endsAt: z.endsAt, capacity: z.capacity, active: z.active }))} bolehUbah={boleh} />
       <HariTutup hari={tutup} bolehUbah={boleh} />
       <BorangTambahan tambahan={tambahan.map((x) => ({ id: x.id, name: x.name, note: x.note, priceSen: x.priceSen, textKind: x.textKind, active: x.active }))} bolehUbah={boleh} />

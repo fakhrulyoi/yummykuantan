@@ -17,15 +17,15 @@ export function TambahSekali({
   return (
     <div className="mt-5 lg:mt-7">
       <h3 id="h-tambah" className="font-serif font-normal text-xl lg:text-[22px]">Tambah sekali</h3>
-      <p className="text-[13px] lg:text-sm text-yk-muted">Pilihan untuk majlis anda. Dibungkus bersama kek.</p>
+      <p className="text-[14.5px] lg:text-[15px] text-yk-muted">Pilihan untuk majlis anda. Dibungkus bersama kek.</p>
       <ul aria-labelledby="h-tambah" className="list-none mt-1.5 p-0 grid lg:grid-cols-2 lg:gap-x-6">
         {tambahan.map((a) => {
           const n = qty(a.id);
           return (
             <li key={a.id} className="flex items-center gap-3 py-3 border-b border-yk-line">
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-sm lg:text-[15px]">{a.name}</p>
-                <p className="text-[12.5px] text-yk-muted">{a.note ? `${a.note}, ` : ''}{formatRM(a.priceSen)}</p>
+                <p className="font-semibold text-[15px] lg:text-[15px]">{a.name}</p>
+                <p className="text-[14px] text-yk-muted">{a.note ? `${a.note}, ` : ''}{formatRM(a.priceSen)}</p>
               </div>
               <div className="flex items-center border border-yk-line-strong">
                 <button type="button" className="w-10 h-10 bg-transparent border-0 text-lg cursor-pointer disabled:opacity-40" aria-label={`Kurangkan ${a.name}`} disabled={n === 0} onClick={() => onUbah(a.id, n - 1, teks(a.id) || undefined)}>

@@ -32,9 +32,9 @@ export function TarikhKosong({ hari }: { hari: HariPapar[] }) {
           simpan(h.tarikh);
         }}
       >
-        <span className="text-yk-muted text-[12.5px] lg:text-[13px]">{h.hari}<span className="sr-only"> </span></span>
+        <span className="text-yk-muted text-[14px] lg:text-[14.5px]">{h.hari}<span className="sr-only"> </span></span>
         <span className="font-serif whitespace-nowrap text-[22px] lg:text-[25px] leading-[1.15] lg:leading-[1.1]">{h.tarikhNo} {h.bulan}<span className="sr-only">, </span></span>
-        <span className="text-xs lg:text-[13px]" style={{ color: warna }}>{teks}</span>
+        <span className="text-[13px] lg:text-[14.5px]" style={{ color: warna }}>{teks}</span>
       </button>
     );
   };

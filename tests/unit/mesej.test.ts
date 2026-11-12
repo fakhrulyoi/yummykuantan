@@ -43,9 +43,15 @@ describe('binaMesejWhatsApp', () => {
     expect(m).toContain('Anggaran: RM106.00 (belum termasuk caj penghantaran)');
   });
 
-  test('tempahan cepat minta tarikh, tiada Cara dan Nama', () => {
-    const m = binaMesejWhatsApp({ ref: 'YK-24118', kind: 'QUICK', items: [{ ...asas.items[0], cakeMessage: undefined }], addons: [], totalSen: 10000 });
-    expect(m).toContain('Tarikh yang saya mahu: ');
+  test('hantar dengan caj diketahui: caj dan jumlah', () => {
+    const m = binaMesejWhatsApp({ ...asas, mode: 'DELIVERY', area: 'Pekan', address: 'No 1', cajHantarSen: 1500 });
+    expect(m).toContain('Caj hantar ke Pekan: RM15.00\nJumlah: RM121.00');
+    expect(m).not.toContain('belum termasuk');
+  });
+
+  test('tempahan cepat dengan tarikh, tiada Cara dan Nama', () => {
+    const m = binaMesejWhatsApp({ ref: 'YK-24118', kind: 'QUICK', items: [{ ...asas.items[0], cakeMessage: undefined }], addons: [], totalSen: 10000, tarikh: '2026-11-11' });
+    expect(m).toContain('Tarikh yang saya mahu: Rabu, 11 November 2026 (masa ambil atau hantar disahkan di WhatsApp)');
     expect(m).not.toContain('Cara:');
     expect(m).not.toContain('Nama:');
     expect(m).not.toContain('Tambahan:');
