@@ -719,7 +719,7 @@
  "soalan": [
   {
    "soalan": "Macam mana nak tempah?",
-   "jawapan": "Pilih kek atau reka kek sendiri, kemudian tekan Tempah. WhatsApp akan dibuka dengan butiran kek, tarikh dan cara terima yang siap ditulis. Tekan hantar, dan kami sahkan harga serta slot di WhatsApp."
+   "jawapan": "Pilih kek dan tarikh, kemudian tekan Tempah. WhatsApp akan dibuka dengan butiran kek, tarikh dan cara terima yang siap ditulis. Tekan hantar, dan kami sahkan harga serta slot di WhatsApp."
   },
   {
    "soalan": "Berapa hari awal perlu tempah?",
@@ -755,7 +755,7 @@
   },
   {
    "soalan": "Saya ada gambar contoh. Boleh hantar?",
-   "jawapan": "Boleh. Di halaman Reka kek, tambah sehingga 4 gambar rujukan. Pautannya dimasukkan terus dalam mesej WhatsApp anda."
+   "jawapan": "Boleh. Hantar gambar contoh terus di WhatsApp. Untuk rekaan sendiri, lihat halaman Rekaan khas."
   }
  ]
 }
